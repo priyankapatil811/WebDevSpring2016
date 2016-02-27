@@ -31,7 +31,7 @@
         $scope.updateForm = function()
         {
             console.log("in update form" + $scope.formId);
-            FormService.updateFormById($scope.formId,$scope.form,
+            FormService.updateFormById($scope.formId, $scope.form,
                 function(response){
                     $scope.viewForms = response;
             });
@@ -65,7 +65,9 @@
             FormService.getFormByIndex(formIndex,
                 function(response)
                 {
-                    $scope.form = response;
+                    $scope.form = {
+                        title: response.title
+                    };
                 });
 
             FormService.getFormIdByIndex(formIndex,

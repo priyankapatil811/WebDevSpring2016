@@ -9,7 +9,6 @@
 
     function LoginController($scope, $rootScope, UserService, $location)
     {
-        var flag = 0;
         $scope.login = function ()
         {
             console.log("in login");
@@ -24,21 +23,9 @@
                     else
                     {
                         $rootScope.currentuser = response;
-
-                        for(var i=0;i<$rootScope.currentuser.roles.length;i++)
-                            if($rootScope.currentuser.roles[i] == "admin")
-                            {
-                                flag = 1;
-                                break;
-                            }
-
-                        if(flag==0)
-                            $location.url('/profile');
-                        else
-                            $location.url('/admin');
+                        $location.url('/profile');
                     }
                 });
-            //console.log($rootScope.currentuser);
         };
     };
 })();

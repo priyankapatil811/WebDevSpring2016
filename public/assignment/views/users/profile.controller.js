@@ -9,15 +9,25 @@
 
     function ProfileController($scope, $rootScope, UserService, $location)
     {
-        $scope.update = function()
+        $scope.user = {
+            _id: $rootScope.currentuser._id,
+            username : $rootScope.currentuser.username,
+            password : $rootScope.currentuser.password,
+            firstName : $rootScope.currentuser.firstName,
+            lastName : $rootScope.currentuser.lastName,
+            email : $rootScope.currentuser.email,
+            roles : $rootScope.currentuser.roles
+        };
+
+        $scope.update = function(user)
         {
             console.log("in update");
-            UserService.updateUser($rootScope.newuser._id,$scope.user,
+            UserService.updateUser(user._id, user,
                 function (response) {
-                    $rootScope.newuser = response;
-                    $location.url('/profile');
+                    $rootScope.currentuser = response;
+                    $location.url("/profile");
                 });
-            console.log($rootScope.user);
         };
     };
+
 })();

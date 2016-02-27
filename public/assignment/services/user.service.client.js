@@ -87,7 +87,7 @@
             };
 
             curUsers.push(newUser);
-            console.log(curUsers);
+         //   console.log(curUsers);
 
             callback(newUser);
         }
@@ -122,16 +122,18 @@
                 }
             }
 
-            updateUser[index] =
+            curUsers[index] =
             {
                 _id : userId,
                 firstName : user.firstName,
                 lastName : user.lastName,
                 password : user.password,
-                username : user.username
+                username : user.username,
+                email : user.email,
+                roles: user.roles
             };
 
-            callback(updateUser);
+            callback(curUsers[index]);
         }
     }
 })();

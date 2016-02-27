@@ -96,11 +96,7 @@
             };
 
             console.log(forms[index]);
-        /*    forms = forms.filter(function(fId){
-                return fId._id != formId;
-            });
 
-            forms.push(updateForm);*/
             findAllFormsForUser($rootScope.currentuser._id, callback)
         }
     }

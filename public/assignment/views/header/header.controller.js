@@ -10,7 +10,6 @@
     function HeaderController($scope,$location,$rootScope)
     {
         $scope.$location = $location;
-        //$scope.user.username = $rootScope.currentuser.username;
 
         $scope.logout = function ()
         {
