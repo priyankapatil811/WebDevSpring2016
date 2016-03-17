@@ -9,7 +9,10 @@
 
     function ProfileController($scope, $rootScope, UserService, $location)
     {
-        $scope.user = {
+        var vm = this;
+        vm.update = update;
+
+        vm.user = {
             _id: $rootScope.currentuser._id,
             username : $rootScope.currentuser.username,
             password : $rootScope.currentuser.password,
@@ -19,7 +22,8 @@
             roles : $rootScope.currentuser.roles
         };
 
-        $scope.update = function(user)
+        //$scope.update = function(user)
+        function update(user)
         {
             console.log("in update");
             UserService.updateUser(user._id, user)
