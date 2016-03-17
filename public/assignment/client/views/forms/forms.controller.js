@@ -7,41 +7,49 @@
         .module("FormBuilderApp")
         .controller("FormController",FormController);
 
-    function FormController(FormService,$scope,$rootScope)
+    function FormController(FormService,$rootScope)
     {
-        $scope.init = function()
+        var vm = this;
+        vm.addForm = addForm;
+        vm.selectForm = selectForm;
+        vm.updateForm = updateForm;
+        vm.deleteForm = deleteForm;
+
+        function init()
         {
             FormService.findAllFormsForUser($rootScope.currentuser._id).then(
                 function(response){
-                    $scope.viewForms = response.data;
+                    vm.viewForms = response.data;
                 });
         };
 
         if($rootScope.currentuser != null)
         {
-            $scope.init();
+            init();
         }
 
-        $scope.addForm = function()
+      
+        function addForm()
         {
             console.log($rootScope.currentuser._id);
-            FormService.createFormForUser($rootScope.currentuser._id,$scope.form).then(
+            FormService.createFormForUser($rootScope.currentuser._id,vm.form).then(
                 function(response){
                     if(response.data == "ok")
                     {
-                        $scope.init();
+                        init();
                     }
             });
         };
 
-        $scope.selectForm = function(index)
-        {
-            $scope.formIndex = index;
 
-            FormService.getFormByIndex($scope.formIndex).then(
+        function selectForm(index)
+        {
+            vm.formIndex = index;
+
+            FormService.getFormByIndex(vm.formIndex).then(
                 function(response)
                 {
-                    $scope.form = {
+                    vm.form = {
                         _id: response.data._id,
                         title: response.data.title,
                         userId : response.data.userId
@@ -57,20 +65,22 @@
              console.log($scope.formId); */
         };
 
-        $scope.updateForm = function(form)
+
+        function updateForm(form)
         {
-           // console.log("in update form" + $scope.formId);
+            console.log("in update form" + vm.form._id);
             // FormService.updateFormById($scope.formId, $scope.form).then(
             FormService.updateFormById(form._id, form).then(
                 function(response){
                     if(response.data == "ok")
                     {
-                        $scope.init();
+                        init();
                     }
             });
         };
 
-        $scope.deleteForm = function(index)
+
+        function deleteForm(index)
         {
             var formIndex = index;
 
@@ -87,7 +97,7 @@
                 function(response){
                     if(response.data == "ok")
                     {
-                        $scope.init();
+                        init();
                     }
             });
 

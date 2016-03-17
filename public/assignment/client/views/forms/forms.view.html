@@ -27,23 +27,23 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="text" class="form-control" ng-model="form.title" id="name" placeholder="Name">
+                                        <input type="text" class="form-control" ng-model="model.form.title" id="name" placeholder="Name">
                                     </td>
                                     <td align="right">
-                                        <button type="button" class="glyphicon glyphicon-plus btn btn-primary" ng-click="addForm()"></button>
+                                        <button type="button" class="glyphicon glyphicon-plus btn btn-primary" ng-click="model.addForm()"></button>
                                         <!--<span class="glyphicon glyphicon-plus"></span> &nbsp;-->
-                                        <button type="button" class="glyphicon glyphicon-ok btn btn-primary btn-success" ng-click="updateForm(form)"></button>
+                                        <button type="button" class="glyphicon glyphicon-ok btn btn-primary btn-success" ng-click="model.updateForm(model.form)"></button>
                                         <!--<span class="glyphicon glyphicon-ok"></span>-->
                                     </td>
                                 </tr>
-                                <tr ng-repeat="form in viewForms">
+                                <tr ng-repeat="form in model.viewForms">
                                     <td>
                                         <a href="#/form/{{form._id}}/fields">{{form.title}}</a>
                                     </td>
                                     <td align="right">
-                                        <button type="button" class="glyphicon glyphicon-remove btn btn-danger" ng-click="deleteForm($index)"></button>&nbsp;
+                                        <button type="button" class="glyphicon glyphicon-remove btn btn-danger" ng-click="model.deleteForm($index)"></button>&nbsp;
                                         <!--<span class="glyphicon glyphicon-remove"></span> &nbsp;-->
-                                        <button type="button" class="glyphicon glyphicon-pencil btn btn-warning" ng-click="selectForm($index)"></button>
+                                        <button type="button" class="glyphicon glyphicon-pencil btn btn-warning" ng-click="model.selectForm($index)"></button>
                                         <!--<span class="glyphicon glyphicon-pencil"></span>-->
                                     </td>
                                 </tr>
