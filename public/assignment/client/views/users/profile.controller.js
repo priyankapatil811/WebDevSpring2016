@@ -7,7 +7,7 @@
         .module("FormBuilderApp")
         .controller("ProfileController",ProfileController);
 
-    function ProfileController($scope, $rootScope, UserService, $location)
+    function ProfileController($rootScope, UserService, $location)
     {
         var vm = this;
         vm.update = update;
@@ -22,13 +22,12 @@
             roles : $rootScope.currentuser.roles
         };
 
-        //$scope.update = function(user)
+
         function update(user)
         {
             console.log("in update");
             UserService.updateUser(user._id, user)
                 .then(function (response) {
-                   // $rootScope.currentuser = response;
                     UserService.setCurrentUser(response.data);
                     $location.url("/profile");
                 });

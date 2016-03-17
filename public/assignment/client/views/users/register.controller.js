@@ -7,19 +7,18 @@
         .module("FormBuilderApp")
         .controller("RegisterController",RegisterController);
 
-    function RegisterController($scope, $rootScope, UserService, $location)
+    function RegisterController(UserService, $location)
     {
-        $scope.register = function ()
+        var vm = this;
+        vm.register = register;
+
+        function register()
         {
-            console.log("in register");
-            if($scope.user.password == $scope.user.verpwd)
+            if(vm.user.password == vm.user.verpwd)
             {
-                UserService.createUser($scope.user).
+                UserService.createUser(vm.user).
                     then(function (response) {
-                        console.log(response);
-                        $rootScope.currentuser = response.data;
-                        console.log($rootScope.currentuser);
-                        $scope.visibility = true;
+                        UserService.setCurrentUser(response.data);
                         $location.url('/profile');
                     });
             }
