@@ -7,14 +7,15 @@
         .module("FormBuilderApp")
         .controller("LoginController",LoginController);
 
-    function LoginController($scope, $rootScope, UserService, $location)
+    function LoginController(UserService, $location)
     {
-        $scope.login = function ()
+        var vm = this;
+        vm.login = login;
+
+        function login()
         {
-            console.log("in login");
-            UserService.findUserByCredentials($scope.user.username,$scope.user.password)
+            UserService.findUserByCredentials(vm.user.username,vm.user.password)
                 .then( function (response) {
-                    console.log(response.data);
                     if(response.data == null)
                     {
                         console.log("Please register!");
@@ -22,7 +23,6 @@
                     }
                     else
                     {
-                        //$rootScope.currentuser = response;
                         UserService.setCurrentUser(response.data);
                         $location.url('/profile');
                     }
