@@ -32,8 +32,26 @@
             init();
         }
 
-        function addField()
+        function addField(field)
         {
+            console.log(field.type);
+
+            if(field.type=="Single Line Text")
+                vm.type = "TEXT";
+            else if(field.type == "Dropdown")
+                vm.type = "OPTIONS";
+            else if(field.type == "Date")
+                vm.type = "DATE";
+            else if(field.type == "Checkboxes")
+                vm.type = "CHECKBOX";
+            else if(field.type == "Radio buttons")
+                vm.type = "RADIO"
+            else
+                vm.type = "TEXTAREA";
+
+            var id = Math.floor((Math.random() * 1000) + 1);
+            var field = {"_id": id, "label": "New Field", "type": vm.type, "placeholder": ""};
+
             FieldService.createFieldForForm(vm.formId,field).then(
                 function(response)
                 {
@@ -42,9 +60,10 @@
             )
         }
 
-        function deleteField()
+        function deleteField(field)
         {
-            FieldService.deleteFieldFromForm(vm.formId,fieldId).then(
+            console.log(field);
+            FieldService.deleteFieldFromForm(vm.formId,field._id).then(
                 function(response)
                 {
                     init();

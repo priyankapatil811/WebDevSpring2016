@@ -27,7 +27,7 @@
                                                 <br/>
                                                 <button type="button" class="btn btn-default glyphicon glyphicon-pencil"></button>
                                                 <button type="button" class="btn btn-default glyphicon glyphicon-plus"></button>
-                                                <button type="button" class="btn btn-default glyphicon glyphicon-remove"></button>
+                                                <button type="button" class="btn btn-default glyphicon glyphicon-remove" ng-click="model.deleteField(field)"></button>
                                                 <button type="button" class="btn btn-default glyphicon glyphicon-align-justify"></button>
                                             </div>
                                         </div>
@@ -44,7 +44,7 @@
                                                 <br/>
                                                 <button type="button" class="btn btn-default glyphicon glyphicon-pencil"></button>
                                                 <button type="button" class="btn btn-default glyphicon glyphicon-plus"></button>
-                                                <button type="button" class="btn btn-default glyphicon glyphicon-remove"></button>
+                                                <button type="button" class="btn btn-default glyphicon glyphicon-remove" ng-click="model.deleteField(field)"></button>
                                                 <button type="button" class="btn btn-default glyphicon glyphicon-align-justify"></button>
                                             </div>
                                         </div>
@@ -61,7 +61,7 @@
                                                 <br/>
                                                 <button type="button" class="btn btn-default glyphicon glyphicon-pencil"></button>
                                                 <button type="button" class="btn btn-default glyphicon glyphicon-plus"></button>
-                                                <button type="button" class="btn btn-default glyphicon glyphicon-remove"></button>
+                                                <button type="button" class="btn btn-default glyphicon glyphicon-remove" ng-click="model.deleteField(field)"></button>
                                                 <button type="button" class="btn btn-default glyphicon glyphicon-align-justify"></button>
                                             </div>
                                         </div>
@@ -78,7 +78,7 @@
                                                 <br/>
                                                 <button type="button" class="btn btn-default glyphicon glyphicon-pencil"></button>
                                                 <button type="button" class="btn btn-default glyphicon glyphicon-plus"></button>
-                                                <button type="button" class="btn btn-default glyphicon glyphicon-remove"></button>
+                                                <button type="button" class="btn btn-default glyphicon glyphicon-remove" ng-click="model.deleteField(field)"></button>
                                                 <button type="button" class="btn btn-default glyphicon glyphicon-align-justify"></button>
                                             </div>
                                         </div>
@@ -98,7 +98,7 @@
                                                 <br/>
                                                 <button type="button" class="btn btn-default glyphicon glyphicon-pencil"></button>
                                                 <button type="button" class="btn btn-default glyphicon glyphicon-plus"></button>
-                                                <button type="button" class="btn btn-default glyphicon glyphicon-remove"></button>
+                                                <button type="button" class="btn btn-default glyphicon glyphicon-remove" ng-click="model.deleteField(field)"></button>
                                                 <button type="button" class="btn btn-default glyphicon glyphicon-align-justify"></button>
                                             </div>
                                         </div>
@@ -112,8 +112,7 @@
                                                 <div class="form-group">
                                                     <label for="addNewField">Add New Field:</label>
                                                     <br>
-                                                    <select class="form-control">
-                                                        <option>Select a field type</option>
+                                                    <select class="form-control" ng-model="field.type">
                                                         <option>Single Line Text</option>
                                                         <option>Date</option>
                                                         <option>Dropdown</option>
@@ -126,7 +125,7 @@
                                             <div class="col-md-5"></div>
                                             <div class="col-md-2" align="right">
                                                 <br>
-                                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                                <button type="button" class="btn btn-default glyphicon glyphicon-plus" ng-click="model.addField(field)"></button>
                                             </div>
                                         </div>
                                     </td>

@@ -9,4 +9,18 @@ module.exports = function (app,fieldModel) {
         var fields = fieldModel.getFieldsForForm(formId);
         res.json(fields);
     });
+
+    app.post("/api/assignment/form/:formId/field",function(req,res){
+        var formId = req.params.formId;
+        var newField = req.body;
+        res.json(fieldModel.createFieldForForm(formId,newField));
+    });
+
+    app.delete("/api/assignment/form/:formId/field/:fieldId",function(req,res){
+        console.log("in delete");
+        var formId = req.params.formId;
+        var fieldId = req.params.fieldId;
+        fieldModel.deleteFieldFromForm(formId,fieldId);
+        res.send("ok");
+    });
 };
