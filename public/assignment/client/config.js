@@ -37,9 +37,9 @@
                 controller: "FormController",
                 controllerAs : "model"
             })
-            .when("/fields", {
+            .when("/form/:formId/fields", {
                 templateUrl: "views/forms/fields.view.html",
-                controller: "",
+                controller: "FieldController",
                 controllerAs : "model"
             })
             .otherwise({

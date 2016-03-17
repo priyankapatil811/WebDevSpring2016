@@ -38,7 +38,7 @@
                                 </tr>
                                 <tr ng-repeat="form in viewForms">
                                     <td>
-                                        {{form.title}}
+                                        <a href="#/form/{{form._id}}/fields">{{form.title}}</a>
                                     </td>
                                     <td align="right">
                                         <button type="button" class="glyphicon glyphicon-remove btn btn-danger" ng-click="deleteForm($index)"></button>&nbsp;
