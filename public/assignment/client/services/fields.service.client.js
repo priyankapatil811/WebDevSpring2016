@@ -11,6 +11,7 @@
     {
         var api =
         {
+            getFormName : getFormName,
             getFieldsForForm : getFieldsForForm,
             createFieldForForm : createFieldForForm,
             getFieldForForm : getFieldForForm,
@@ -19,6 +20,11 @@
         };
 
         return api;
+
+        function getFormName(formId)
+        {
+            return $http.get("/api/assignment/form/"+formId);
+        }
 
         function getFieldsForForm(formId)
         {

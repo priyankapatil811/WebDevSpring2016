@@ -11,7 +11,9 @@ module.exports = function()
         getFieldsForForm : getFieldsForForm,
         createFieldForForm : createFieldForForm,
         deleteFieldFromForm : deleteFieldFromForm,
-        updateField : updateField
+        updateField : updateField,
+        updateFieldAsPerType : updateFieldAsPerType,
+        getFormName : getFormName
     };
 
     return api;
@@ -22,7 +24,6 @@ module.exports = function()
         {
             if(formId == forms[i]._id)
             {
-                console.log(forms[i].fields);
                 return forms[i].fields;
             }
         }
@@ -36,16 +37,50 @@ module.exports = function()
         {
             if(formId == forms[i]._id)
             {
-                console.log(formId + " " + newField);
+                var upNewField = createFieldAsPerType(id,newField);
+
+                /*
                 var upNewField =
                 {
                  "_id": id, "label": newField.label, "type": newField.type
                 };
+                */
 
                 return forms[i].fields.push(upNewField);
             }
         }
     }
+
+
+    function createFieldAsPerType(formId,newField)
+    {
+        var upNewField = "";
+        if(newField.type == "TEXT" || newField.type == "TEXTAREA")
+        {
+            upNewField =
+            {
+                "_id": formId, "label": newField.label, "type": newField.type, "placeholder" : newField.placeholder
+            };
+
+        }
+        else if(newField.type == "DATE")
+        {
+            upNewField =
+            {
+                "_id": formId, "label": newField.label, "type": newField.type
+            };
+        }
+        else if(newField.type == "OPTIONS" || newField.type == "CHECKBOXES" || newField.type == "RADIOS")
+        {
+            upNewField =
+            {
+                "_id": formId, "label": newField.label, "type": newField.type, "options" : newField.options
+            };
+        }
+
+        return upNewField;
+    }
+
 
     function deleteFieldFromForm(formId, fieldId)
     {
@@ -54,7 +89,6 @@ module.exports = function()
         {
             if(formId == forms[i]._id)
             {
-                console.log(formId + " " + fieldId);
                 form = forms[i];
             }
         }
@@ -75,24 +109,78 @@ module.exports = function()
         {
             if(formId == forms[i]._id)
             {
-                console.log(formId + " " + fieldId);
                 form = forms[i];
             }
         }
+
 
         for(var i=0;i<form.fields.length;i++)
         {
             if(fieldId == form.fields[i]._id)
             {
-                form.fields[i] =
-                {
-                    _id : formId,
-                    label : upField.label,
-                    type : upField.type,
-                    placeholder : upField.placeholder
-                }
+                updateFieldAsPerType(i,form,fieldId,upField);
             }
         }
+    }
 
+    function updateFieldAsPerType(index,form,fieldId,upField)
+    {
+        if(upField.type == "TEXT" || upField.type == "TEXTAREA")
+        {
+            form.fields[index] =
+            {
+                _id : fieldId,
+                label : upField.label,
+                type : upField.type,
+                placeholder : upField.placeholder
+            }
+        }
+        else if(upField.type == "DATE")
+        {
+            form.fields[index] =
+            {
+                _id : fieldId,
+                label : upField.label,
+                type : upField.type
+            }
+        }
+        else if(upField.type == "OPTIONS" || upField.type == "CHECKBOXES" || upField.type == "RADIOS")
+        {
+            var optionsList = [];
+            for(var i=0;i<upField.options.length;i++)
+            {
+                var opObject = new Object();
+
+                var option = upField.options[i];
+                var parts = option.split(":");
+
+                opObject.label = parts[0];
+                opObject.value = parts[1];
+                optionsList.push(opObject);
+            }
+            console.log(optionsList);
+
+            form.fields[index] =
+            {
+                _id : fieldId,
+                label : upField.label,
+                type : upField.type,
+                options : optionsList
+            }
+        }
+    }
+
+    function getFormName(formId)
+    {
+        var form = "";
+        for(var i=0;i<forms.length;i++)
+        {
+            if(formId == forms[i]._id)
+            {
+                form = forms[i];
+            }
+        }
+        console.log(form);
+        return form;
     }
 };

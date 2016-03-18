@@ -13,6 +13,7 @@
 
         vm.popupField = "";
         vm.formId = $routeParams.formId;
+        vm.getField = getField;
         vm.addField = addField;
         vm.updateField = updateField;
         vm.deleteField = deleteField;
@@ -25,6 +26,14 @@
                 function(response)
                 {
                     vm.fieldsList = response.data;
+                    console.log(vm.fieldsList);
+                }
+            );
+
+            FieldService.getFormName(vm.formId).then(
+                function(response)
+                {
+                    vm.form = response.data;
                 }
             );
         }
@@ -100,7 +109,9 @@
             console.log(field);
 
             var fieldId = vm.popupField._id;
+
             field.type = vm.popupField.type;
+
             FieldService.updateField(vm.formId,fieldId,field).then(
                 function(response)
                 {
@@ -110,23 +121,13 @@
 
         }
 
-
-       /* FieldService.getFieldForForm(vm.formId).then(
-            function(response)
-            {
-                vm.field = response.data;
-            }
-        ) */
-/*
-
-        createFieldForForm(formId, field);
-
-        getFieldForForm(formId, fieldId);
-
-        deleteFieldFromForm(formId, fieldId);
-
-        updateField(formId, fieldId, field);
-*/
-
+        function getField()
+        {
+            FieldService.getFieldForForm(vm.formId).then(
+                function (response) {
+                    vm.field = response.data;
+                }
+            );
+        }
     }
 })();

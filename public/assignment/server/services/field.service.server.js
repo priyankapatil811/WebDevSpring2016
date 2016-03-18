@@ -31,4 +31,10 @@ module.exports = function (app,fieldModel) {
         fieldModel.updateField(formId,fieldId,updatedField);
         res.send("ok");
     });
+
+    app.get("/api/assignment/form/:formId",function(req,res){
+        var formId = req.params.formId;
+        var form = fieldModel.getFormName(formId);
+        res.json(form);
+    });
 };
