@@ -28,7 +28,7 @@
             init();
         }
 
-      
+
         function addForm()
         {
             console.log($rootScope.currentuser._id);

@@ -23,4 +23,12 @@ module.exports = function (app,fieldModel) {
         fieldModel.deleteFieldFromForm(formId,fieldId);
         res.send("ok");
     });
+
+    app.put("/api/assignment/form/:formId/field/:fieldId",function(req,res){
+        var formId = req.params.formId;
+        var fieldId = req.params.fieldId;
+        var updatedField = req.body;
+        fieldModel.updateField(formId,fieldId,updatedField);
+        res.send("ok");
+    });
 };

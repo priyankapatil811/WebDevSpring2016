@@ -10,7 +10,8 @@ module.exports = function()
     {
         getFieldsForForm : getFieldsForForm,
         createFieldForForm : createFieldForForm,
-        deleteFieldFromForm : deleteFieldFromForm
+        deleteFieldFromForm : deleteFieldFromForm,
+        updateField : updateField
     };
 
     return api;
@@ -29,12 +30,19 @@ module.exports = function()
 
     function createFieldForForm(formId,newField)
     {
+        var id = Math.floor((Math.random() * 1000) + 1);
+
         for(var i=0;i<forms.length;i++)
         {
             if(formId == forms[i]._id)
             {
                 console.log(formId + " " + newField);
-                return forms[i].fields.push(newField);
+                var upNewField =
+                {
+                 "_id": id, "label": newField.label, "type": newField.type
+                };
+
+                return forms[i].fields.push(upNewField);
             }
         }
     }
@@ -60,4 +68,31 @@ module.exports = function()
         }
     }
 
+    function updateField(formId,fieldId,upField)
+    {
+        var form = "";
+        for(var i=0;i<forms.length;i++)
+        {
+            if(formId == forms[i]._id)
+            {
+                console.log(formId + " " + fieldId);
+                form = forms[i];
+            }
+        }
+
+        for(var i=0;i<form.fields.length;i++)
+        {
+            if(fieldId == form.fields[i]._id)
+            {
+                form.fields[i] =
+                {
+                    _id : formId,
+                    label : upField.label,
+                    type : upField.type,
+                    placeholder : upField.placeholder
+                }
+            }
+        }
+
+    }
 };

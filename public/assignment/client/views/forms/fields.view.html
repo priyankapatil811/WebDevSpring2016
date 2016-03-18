@@ -24,11 +24,7 @@
                                             </div>
                                             <div class="col-md-4"></div>
                                             <div class="col-md-3" align="right">
-                                                <br/>
-                                                <button type="button" class="btn btn-default glyphicon glyphicon-pencil"></button>
-                                                <button type="button" class="btn btn-default glyphicon glyphicon-plus"></button>
-                                                <button type="button" class="btn btn-default glyphicon glyphicon-remove" ng-click="model.deleteField(field)"></button>
-                                                <button type="button" class="btn btn-default glyphicon glyphicon-align-justify"></button>
+                                                <div ng-include="'views/forms/buttons.view.html'"></div>
                                             </div>
                                         </div>
 
@@ -41,11 +37,7 @@
                                             </div>
                                             <div class="col-md-4"></div>
                                             <div class="col-md-3" align="right">
-                                                <br/>
-                                                <button type="button" class="btn btn-default glyphicon glyphicon-pencil"></button>
-                                                <button type="button" class="btn btn-default glyphicon glyphicon-plus"></button>
-                                                <button type="button" class="btn btn-default glyphicon glyphicon-remove" ng-click="model.deleteField(field)"></button>
-                                                <button type="button" class="btn btn-default glyphicon glyphicon-align-justify"></button>
+                                                <div ng-include="'views/forms/buttons.view.html'"></div>
                                             </div>
                                         </div>
 
@@ -58,11 +50,7 @@
                                             </div>
                                             <div class="col-md-4"></div>
                                             <div class="col-md-3" align="right">
-                                                <br/>
-                                                <button type="button" class="btn btn-default glyphicon glyphicon-pencil"></button>
-                                                <button type="button" class="btn btn-default glyphicon glyphicon-plus"></button>
-                                                <button type="button" class="btn btn-default glyphicon glyphicon-remove" ng-click="model.deleteField(field)"></button>
-                                                <button type="button" class="btn btn-default glyphicon glyphicon-align-justify"></button>
+                                                <div ng-include="'views/forms/buttons.view.html'"></div>
                                             </div>
                                         </div>
 
@@ -75,11 +63,7 @@
                                             </div>
                                             <div class="col-md-4"></div>
                                             <div class="col-md-3" align="right">
-                                                <br/>
-                                                <button type="button" class="btn btn-default glyphicon glyphicon-pencil"></button>
-                                                <button type="button" class="btn btn-default glyphicon glyphicon-plus"></button>
-                                                <button type="button" class="btn btn-default glyphicon glyphicon-remove" ng-click="model.deleteField(field)"></button>
-                                                <button type="button" class="btn btn-default glyphicon glyphicon-align-justify"></button>
+                                                <div ng-include="'views/forms/buttons.view.html'"></div>
                                             </div>
                                         </div>
 
@@ -95,11 +79,7 @@
                                             </div>
                                             <div class="col-md-4"></div>
                                             <div class="col-md-3" align="right">
-                                                <br/>
-                                                <button type="button" class="btn btn-default glyphicon glyphicon-pencil"></button>
-                                                <button type="button" class="btn btn-default glyphicon glyphicon-plus"></button>
-                                                <button type="button" class="btn btn-default glyphicon glyphicon-remove" ng-click="model.deleteField(field)"></button>
-                                                <button type="button" class="btn btn-default glyphicon glyphicon-align-justify"></button>
+                                                <div ng-include="'views/forms/buttons.view.html'"></div>
                                             </div>
                                         </div>
                                     </td>
@@ -112,7 +92,7 @@
                                                 <div class="form-group">
                                                     <label for="addNewField">Add New Field:</label>
                                                     <br>
-                                                    <select class="form-control" ng-model="field.type">
+                                                    <select class="form-control" ng-model="model.fieldType" id="addNewField">
                                                         <option>Single Line Text</option>
                                                         <option>Date</option>
                                                         <option>Dropdown</option>
@@ -125,7 +105,7 @@
                                             <div class="col-md-5"></div>
                                             <div class="col-md-2" align="right">
                                                 <br>
-                                                <button type="button" class="btn btn-default glyphicon glyphicon-plus" ng-click="model.addField(field)"></button>
+                                                <button type="button" class="btn btn-default glyphicon glyphicon-plus" ng-click="model.addField(model.fieldType)"></button>
                                             </div>
                                         </div>
                                     </td>
@@ -133,6 +113,36 @@
                             </table>
                         </table>
                     </table>
+                </div>
+
+                <div id="myEditFieldModal" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h3 class="modal-title">Single Line Field</h3>
+                            </div>
+                            <div class="modal-body" ng-switch="model.popupField.type">
+                                <div ng-switch-when="TEXT">
+                                    <!--<div class="col-md-5">-->
+                                        <div class="form-group">
+                                            <label for="label">Label</label>
+                                            <input type="text" class="form-control input-sm" id="label" placeholder="" ng-model="model.upPopupField.label">
+                                            <br>
+                                            <label for="placeholder">PlaceHolder</label>
+                                            <input type="text" class="form-control input-sm" id="placeholder" placeholder="" ng-model="model.upPopupField.placeholder">
+                                        </div>
+                                    <!--</div>-->
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-default" ng-click="model.updateField(model.upPopupField)" data-dismiss="modal">Ok</button>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>
