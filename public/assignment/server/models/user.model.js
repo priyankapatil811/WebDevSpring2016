@@ -69,7 +69,11 @@ module.exports = function()
             _id : Math.floor((Math.random() * 1000) + 1),
             //_id : (new Date).getTime(),
             username : user.username,
-            password : user.password
+            password : user.password,
+            email : user.email,
+            firstName : null,
+            lastName: null,
+            roles : null
         };
 
         curUsers.push(newUser);

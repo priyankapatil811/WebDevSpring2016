@@ -13,14 +13,16 @@
 
         $scope.adminrole = function ()
         {
-            var userroles = $rootScope.currentuser.roles;
+             if($rootScope.currentuser.roles != null)
+             {
+                 var userroles = $rootScope.currentuser.roles;
 
-            for(var i=0;i<userroles.length;i++)
-            {
-                if(userroles[i]=="admin")
-                    return true;
-            }
-            return false;
+                 for (var i = 0; i < userroles.length; i++) {
+                     if (userroles[i] == "admin")
+                         return true;
+                 }
+             }
+             return false;
         }
     }
 })();
