@@ -39,15 +39,16 @@ module.exports = function()
             if(formId == forms[i]._id)
             {
                 var upNewField = createFieldAsPerType(id,newField);
-
-                /*
-                var upNewField =
+                
+                if(forms[i].hasOwnProperty("fields"))
                 {
-                 "_id": id, "label": newField.label, "type": newField.type
-                };
-                */
-
-                return forms[i].fields.push(upNewField);
+                    return forms[i].fields.push(upNewField);
+                }
+                else
+                {
+                    forms[i].fields = [];
+                    return forms[i].fields.push(upNewField);
+                }
             }
         }
     }
