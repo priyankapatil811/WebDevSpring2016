@@ -7,11 +7,12 @@
         .module("FormBuilderApp")
         .controller("FieldController", FieldController);
 
-    function FieldController(FieldService,$routeParams,$rootScope) {
+    function FieldController(FieldService,$routeParams,$rootScope,FormService) {
 
         var vm = this;
 
         vm.popupField = "";
+        vm.form = "";
         vm.formId = $routeParams.formId;
         vm.getField = getField;
         vm.addField = addField;
@@ -30,12 +31,14 @@
                 }
             );
 
-            FieldService.getFormName(vm.formId).then(
-                function(response)
+            FormService.getFormById(vm.formId).then(
+                function (response)
                 {
-                    vm.form = response.data;
-                }
-            );
+                    console.log(response);
+                    vm.form =  response.data.title;
+                    console.log(vm.form.title);
+                });
+
         }
 
         if($rootScope.currentuser != null)
@@ -74,10 +77,8 @@
                     "label": field.label,
                     "type": field.type,
                     "options" : convertArrayToJson(field.options)
-                    //JSON.stringify(field.options)
 
                 };
-                console.log(vm.popupField);
             }
         }
 

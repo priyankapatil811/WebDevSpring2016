@@ -38,4 +38,13 @@ module.exports = function(app,userModel,formModel)
         var forms = formModel.findAllFormsForUser(userId);
         res.json(forms);
     });
+
+    app.get("/api/assignment/form",function(req,res)
+    {
+        console.log("in get form");
+        var formId = req.query.formId;
+        var form = formModel.getFormById(formId);
+        res.json(form);
+    });
+
 };

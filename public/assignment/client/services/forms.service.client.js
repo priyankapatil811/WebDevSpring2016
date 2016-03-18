@@ -12,14 +12,20 @@
     {
         var api =
         {
+            getFormById : getFormById,
+            getFormByIndex : getFormByIndex,
             createFormForUser : createFormForUser,
             findAllFormsForUser : findAllFormsForUser,
             deleteFormById : deleteFormById,
-            updateFormById : updateFormById,
-            getFormByIndex : getFormByIndex
+            updateFormById : updateFormById
         };
 
         return api;
+
+        function getFormById(formId)
+        {
+            return $http.get("/api/assignment/form?formId="+formId);
+        }
 
         function getFormByIndex(index)
         {

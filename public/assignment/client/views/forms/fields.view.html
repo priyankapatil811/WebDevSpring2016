@@ -13,9 +13,9 @@
                     <table role="tabpanel" class="tab-pane active" id="fields">
                         <table class="table-responsive">
                             <table class="table">
-                                <tbody fieldsSortable sortAxis="y">
-                                <tr ng-repeat="field in model.fields">
-                                    <td ng-switch="field.type">
+                                <tbody id="tbody-sortable" jga-sortable jga-axis="y">
+                                <tr ng-repeat="field in model.fields" style="border: none">
+                                    <td ng-switch="field.type" nowrap="true">
                                         <div class="row" ng-switch-when="TEXT">
                                             <div class="col-md-5">
                                                 <div class="form-group">

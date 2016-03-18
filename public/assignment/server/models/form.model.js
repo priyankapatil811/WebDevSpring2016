@@ -7,11 +7,12 @@
  {
      var api =
      {
-      createFormForUser : createFormForUser,
-      findAllFormsForUser : findAllFormsForUser,
-      deleteFormById : deleteFormById,
-      updateFormById : updateFormById,
-      getFormByIndex : getFormByIndex
+          getFormByIndex : getFormByIndex,
+          getFormById : getFormById,
+          createFormForUser : createFormForUser,
+          findAllFormsForUser : findAllFormsForUser,
+          deleteFormById : deleteFormById,
+          updateFormById : updateFormById
      };
 
      return api;
@@ -20,6 +21,18 @@
      function getFormByIndex(index)
      {
         return forms[index];
+     }
+
+     function getFormById(formId)
+     {
+         console.log(formId);
+         for(var i=0;i<forms.length;i++)
+         {
+            if(formId == forms[i]._id)
+            {
+                return forms[i];
+            }
+         }
      }
 
      function createFormForUser(userId, form)

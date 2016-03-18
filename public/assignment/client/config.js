@@ -3,7 +3,7 @@
  */
 (function(){
     angular
-        .module("FormBuilderApp",['ngRoute'])
+        .module("FormBuilderApp",['ngRoute',"jgaSortable"])
         .config(configuration);
 
     function configuration($routeProvider) {
