@@ -13,7 +13,8 @@
                     <table role="tabpanel" class="tab-pane active" id="fields">
                         <table class="table-responsive">
                             <table class="table">
-                                <tr ng-repeat="field in model.fieldsList">
+                                <tbody fieldsSortable sortAxis="y">
+                                <tr ng-repeat="field in model.fields">
                                     <td ng-switch="field.type">
                                         <div class="row" ng-switch-when="TEXT">
                                             <div class="col-md-5">
@@ -147,6 +148,7 @@
                                         </div>
                                     </td>
                                 </tr>
+                                </tbody>
                             </table>
                         </table>
                     </table>
@@ -165,15 +167,15 @@
                                     <!--<div class="col-md-5">-->
                                         <div class="form-group">
                                             <label for="label">Label</label>
-                                            <input type="text" class="form-control input-sm" id="label" placeholder="" ng-model="model.upPopupField.label">
+                                            <input type="text" class="form-control input-sm" id="label" placeholder="" ng-model="model.popupField.label">
                                             <br>
                                             <label for="placeholder">PlaceHolder</label>
-                                            <input type="text" class="form-control input-sm" id="placeholder" placeholder="" ng-model="model.upPopupField.placeholder">
+                                            <input type="text" class="form-control input-sm" id="placeholder" placeholder="" ng-model="model.popupField.placeholder">
                                         </div>
                                     <!--</div>-->
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                        <button type="button" class="btn btn-default" ng-click="model.updateField(model.upPopupField)" data-dismiss="modal">Ok</button>
+                                        <button type="button" class="btn btn-default" ng-click="model.updateField(model.popupField)" data-dismiss="modal">Ok</button>
                                     </div>
                                 </div>
 
@@ -181,15 +183,15 @@
                                     <!--<div class="col-md-5">-->
                                     <div class="form-group">
                                         <label for="label">Label</label>
-                                        <input type="text" class="form-control input-sm" id="label" placeholder="" ng-model="model.upPopupField.label">
+                                        <input type="text" class="form-control input-sm" id="label" placeholder="" ng-model="model.popupField.label">
                                         <br>
                                         <label for="placeholder">PlaceHolder</label>
-                                        <input type="text" class="form-control input-sm" id="placeholder" placeholder="" ng-model="model.upPopupField.placeholder">
+                                        <input type="text" class="form-control input-sm" id="placeholder" placeholder="" ng-model="model.popupField.placeholder">
                                     </div>
                                     <!--</div>-->
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                        <button type="button" class="btn btn-default" ng-click="model.updateField(model.upPopupField)" data-dismiss="modal">Ok</button>
+                                        <button type="button" class="btn btn-default" ng-click="model.updateField(model.popupField)" data-dismiss="modal">Ok</button>
                                     </div>
                                 </div>
 
@@ -197,12 +199,12 @@
                                     <!--<div class="col-md-5">-->
                                     <div class="form-group">
                                         <label for="label">Label</label>
-                                        <input type="text" class="form-control input-sm" id="label" placeholder="" ng-model="model.upPopupField.label">
+                                        <input type="text" class="form-control input-sm" id="label" placeholder="" ng-model="model.popupField.label">
                                     </div>
                                     <!--</div>-->
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                        <button type="button" class="btn btn-default" ng-click="model.updateField(model.upPopupField)" data-dismiss="modal">Ok</button>
+                                        <button type="button" class="btn btn-default" ng-click="model.updateField(model.popupField)" data-dismiss="modal">Ok</button>
                                     </div>
                                 </div>
 
@@ -211,15 +213,15 @@
                                     <!--<div class="col-md-5">-->
                                     <div class="form-group">
                                         <label for="label">Label</label>
-                                        <input type="text" class="form-control input-sm" id="label" placeholder="" ng-model="model.upPopupField.label">
+                                        <input type="text" class="form-control input-sm" id="label" placeholder="" ng-model="model.popupField.label">
                                         <br>
                                         <label for="placeholder">Options</label>
-                                        <textarea class="form-control input-sm" id="placeholder" placeholder="" ng-model="model.upPopupField.options" ng-list="&#10;" ng-trim="false"></textarea>
+                                        <textarea class="form-control input-sm" id="placeholder" placeholder="" ng-model="model.popupField.options" ng-list="&#10;" ng-trim="false"></textarea>
                                     </div>
                                     <!--</div>-->
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                        <button type="button" class="btn btn-default" ng-click="model.updateField(model.upPopupField)" data-dismiss="modal">Ok</button>
+                                        <button type="button" class="btn btn-default" ng-click="model.updateField(model.popupField)" data-dismiss="modal">Ok</button>
                                     </div>
                                 </div>
 
@@ -228,15 +230,15 @@
                                     <!--<div class="col-md-5">-->
                                     <div class="form-group">
                                         <label for="label">Label</label>
-                                        <input type="text" class="form-control input-sm" id="label" placeholder="" ng-model="model.upPopupField.label">
+                                        <input type="text" class="form-control input-sm" id="label" placeholder="" ng-model="model.popupField.label">
                                         <br>
                                         <label for="placeholder">Options</label>
-                                        <textarea class="form-control input-sm" id="placeholder" placeholder="" ng-model="model.upPopupField.options" ng-list="&#10;" ng-trim="false"></textarea>
+                                        <textarea class="form-control input-sm" id="placeholder" placeholder="" ng-model="model.popupField.options" ng-list="&#10;" ng-trim="false"></textarea>
                                     </div>
                                     <!--</div>-->
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                        <button type="button" class="btn btn-default" ng-click="model.updateField(model.upPopupField)" data-dismiss="modal">Ok</button>
+                                        <button type="button" class="btn btn-default" ng-click="model.updateField(model.popupField)" data-dismiss="modal">Ok</button>
                                     </div>
                                 </div>
 
@@ -244,14 +246,14 @@
                                     <!--<div class="col-md-5">-->
                                     <div class="form-group">
                                         <label for="label">Label</label>
-                                        <input type="text" class="form-control input-sm" id="label" placeholder="" ng-model="model.upPopupField.label">
+                                        <input type="text" class="form-control input-sm" id="label" placeholder="" ng-model="model.popupField.label">
                                         <br>
                                         <label for="placeholder">Options</label>
-                                        <textarea class="form-control input-sm" id="placeholder" placeholder="" ng-model="model.upPopupField.options" ng-list="&#10;" ng-trim="false"></textarea>
+                                        <textarea class="form-control input-sm" id="placeholder" placeholder="" ng-model="model.popupField.options" ng-list="&#10;" ng-trim="false"></textarea>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                        <button type="button" class="btn btn-default" ng-click="model.updateField(model.upPopupField)" data-dismiss="modal">Ok</button>
+                                        <button type="button" class="btn btn-default" ng-click="model.updateField(model.popupField)" data-dismiss="modal">Ok</button>
                                     </div>
                                     <!--</div>-->
                                 </div>

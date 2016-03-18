@@ -17,16 +17,16 @@
         vm.addField = addField;
         vm.updateField = updateField;
         vm.deleteField = deleteField;
-        vm.openField = openField;
+        vm.selectField = selectField;
 
         function init()
         {
-            vm.fieldsList = [];
+            vm.fields = [];
             FieldService.getFieldsForForm(vm.formId).then(
                 function(response)
                 {
-                    vm.fieldsList = response.data;
-                    console.log(vm.fieldsList);
+                    vm.fields = response.data;
+                    console.log(vm.fields);
                 }
             );
 
@@ -43,9 +43,42 @@
             init();
         }
 
-        function openField(field)
+        function selectField(field)
         {
-            vm.popupField = field;
+            if(field.type == "TEXT" || field.type == "TEXTAREA") {
+
+                vm.popupField =
+                {
+                    "_id": field._id,
+                    "label": field.label,
+                    "type": field.type,
+                    "placeholder" :  field.placeholder
+                };
+
+            }
+            else if(field.type == "DATE")
+            {
+                vm.popupField =
+                 {
+                    "_id": field._id,
+                    "label": field.label,
+                    "type": field.type
+                };
+
+            }
+            else
+            {
+                vm.popupField =
+                {
+                    "_id": field._id,
+                    "label": field.label,
+                    "type": field.type,
+                    "options" : JSON.stringify(field.options)
+                    //convertArrayToJson(field.options)
+                };
+                console.log(vm.popupField);
+            }
+
         }
 
         function addField(fieldType)
@@ -120,6 +153,7 @@
             )
 
         }
+
 
         function getField()
         {

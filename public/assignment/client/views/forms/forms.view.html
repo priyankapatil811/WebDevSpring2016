@@ -10,7 +10,6 @@
                         <a href="#/fields" aria-controls="fields">Fields</a></li>
                 </ul>
 
-                <!--<div class="tab-content" data-ng-init="displayAllForms()">-->
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active" id="forms">
                         <div class="table-responsive">
@@ -31,9 +30,7 @@
                                     </td>
                                     <td align="right">
                                         <button type="button" class="glyphicon glyphicon-plus btn btn-primary" ng-click="model.addForm()"></button>
-                                        <!--<span class="glyphicon glyphicon-plus"></span> &nbsp;-->
                                         <button type="button" class="glyphicon glyphicon-ok btn btn-primary btn-success" ng-click="model.updateForm(model.form)"></button>
-                                        <!--<span class="glyphicon glyphicon-ok"></span>-->
                                     </td>
                                 </tr>
                                 <tr ng-repeat="form in model.viewForms">
@@ -42,39 +39,12 @@
                                     </td>
                                     <td align="right">
                                         <button type="button" class="glyphicon glyphicon-remove btn btn-danger" ng-click="model.deleteForm($index)"></button>&nbsp;
-                                        <!--<span class="glyphicon glyphicon-remove"></span> &nbsp;-->
                                         <button type="button" class="glyphicon glyphicon-pencil btn btn-warning" ng-click="model.selectForm($index)"></button>
-                                        <!--<span class="glyphicon glyphicon-pencil"></span>-->
                                     </td>
                                 </tr>
-                                <!--<tr>-->
-                                    <!--<td>-->
-                                        <!--Contact List-->
-                                    <!--</td>-->
-                                    <!--<td align="right">-->
-                                        <!--<button type="button" class="glyphicon glyphicon-remove btn btn-danger" ng-click="addForm()"></button>-->
-                                        <!--&lt;!&ndash;<span class="glyphicon glyphicon-remove"></span> &nbsp;&ndash;&gt;-->
-                                        <!--<button type="button" class="glyphicon glyphicon-pencil btn btn-warning" ng-click="updateForm()"></button>-->
-                                        <!--&lt;!&ndash;<span class="glyphicon glyphicon-pencil"></span>&ndash;&gt;-->
-                                    <!--</td>-->
-                                <!--</tr>-->
-                                <!--<tr>-->
-                                    <!--<td>-->
-                                        <!--To Do List-->
-                                    <!--</td>-->
-                                    <!--<td align="right">-->
-                                        <!--<button type="button" class="glyphicon glyphicon-remove btn btn-danger" ng-click="addForm()"></button>-->
-                                        <!--&lt;!&ndash;<span class="glyphicon glyphicon-remove"></span> &nbsp;&ndash;&gt;-->
-                                        <!--<button type="button" class="glyphicon glyphicon-pencil btn btn-warning" ng-click="updateForm()"></button>-->
-                                        <!--&lt;!&ndash;<span class="glyphicon glyphicon-pencil"></span>&ndash;&gt;-->
-                                    <!--</td>-->
-                                <!--</tr>-->
                             </table>
                         </div>
                     </div>
-                    <!--<div role="tabpanel" class="tab-pane" id="fields">-->
-                        <!--<a href="/assignment/fields.view.html"></a>-->
-                    <!--</div>-->
                 </div>
             </div>
 

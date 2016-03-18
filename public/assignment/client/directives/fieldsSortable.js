@@ -10,20 +10,25 @@
         var start = null;
         var end = null;
         function link(scope, element, attributes) {
-            var jgaAxis = attributes.jgaAxis;
+            var sortAxis = attributes.sortAxis;
             $(element).sortable({
-                axis: jgaAxis,
+                axis: sortAxis,
                 start: function(event, ui) {
                     start = ui.item.index();
                 },
                 stop: function(event, ui) {
                     end = ui.item.index();
-                    FieldService.reorderFields().then(
+                    FieldService.getFieldsForForm(scope.formId).then(
                         function(response)
                         {
-
+                            scope.fields = response.data;
+                            console.log(scope.fields);
                         }
                     );
+
+                    var temp = scope.fields[start];
+                    scope.fields[start] = scope.fields[end];
+                    scope.fields[end] = temp;
                     scope.$apply();
                 /*
                     var temp = scope.users[start];
