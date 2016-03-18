@@ -2,6 +2,7 @@
  * Created by Priyanka on 3/16/16.
  */
  var forms = require("./form.mock.json");
+ var uuid = require('node-uuid');
 
  module.exports = function()
  {
@@ -18,9 +19,18 @@
      return api;
 
 
-     function getFormByIndex(index)
+     function getFormByIndex(index,userId)
      {
-        return forms[index];
+         var userForms = [];
+         for(var i=0;i<forms.length;i++)
+         {
+             if(userId == forms[i].userId)
+             {
+                 userForms.push(forms[i]);
+             }
+         }
+
+         return userForms[index];
      }
 
      function getFormById(formId)
@@ -38,7 +48,8 @@
      {
         var newform =
         {
-         "_id" : "0"+ Math.floor((Math.random() * 100) + 1),
+        // "_id" : "0"+ Math.floor((Math.random() * 100) + 1),
+         "_id" : uuid.v1(),
          "title" : form.title,
          "userId" : userId
         }
@@ -62,13 +73,23 @@
         return formsForUserId;
      }
 
-     function deleteFormById(formIndex)
+     function deleteFormById(formIndex,userId)
      {
-        var formId = forms[formIndex]._id;
+         var userForms = [];
+         for(var i=0;i<forms.length;i++)
+         {
+             if(userId == forms[i].userId)
+             {
+                 userForms.push(forms[i]);
+             }
+         }
+
+        var formId = userForms[formIndex]._id;
         console.log(formId);
 
-        forms = forms.filter(function(fId){
-         return fId._id != formId;
+        forms = forms.filter(function(fId)
+        {
+            return fId._id != formId;
         });
 
         console.log(forms);

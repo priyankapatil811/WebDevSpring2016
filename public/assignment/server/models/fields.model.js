@@ -3,6 +3,7 @@
  */
 
 var forms = require("./form.mock.json");
+var uuid = require('node-uuid');
 
 module.exports = function()
 {
@@ -59,7 +60,8 @@ module.exports = function()
         {
             upNewField =
             {
-                "_id": formId, "label": newField.label, "type": newField.type, "placeholder" : newField.placeholder
+                //"_id": formId,
+                "_id" : uuid.v1(), "label": newField.label, "type": newField.type, "placeholder" : newField.placeholder
             };
 
         }
@@ -67,14 +69,16 @@ module.exports = function()
         {
             upNewField =
             {
-                "_id": formId, "label": newField.label, "type": newField.type
+                //"_id": formId,
+                "_id" : uuid.v1() ,"label": newField.label, "type": newField.type
             };
         }
         else if(newField.type == "OPTIONS" || newField.type == "CHECKBOXES" || newField.type == "RADIOS")
         {
             upNewField =
             {
-                "_id": formId, "label": newField.label, "type": newField.type, "options" : newField.options
+                //"_id": formId,
+                "_id" : uuid.v1(),"label": newField.label, "type": newField.type, "options" : newField.options
             };
         }
 

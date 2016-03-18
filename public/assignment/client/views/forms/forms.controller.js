@@ -46,7 +46,7 @@
         {
             vm.formIndex = index;
 
-            FormService.getFormByIndex(vm.formIndex).then(
+            FormService.getFormByIndex(vm.formIndex,$rootScope.currentuser._id).then(
                 function(response)
                 {
                     vm.form = {
@@ -93,7 +93,7 @@
            */
 
             //FormService.deleteFormById($scope.formId).then(
-            FormService.deleteFormById(formIndex).then(
+            FormService.deleteFormById(formIndex,$rootScope.currentuser._id).then(
                 function(response){
                     if(response.data == "ok")
                     {

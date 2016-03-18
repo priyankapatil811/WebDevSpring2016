@@ -19,16 +19,20 @@ module.exports = function(app,userModel,formModel)
         res.json("ok");
     });
 
-    app.delete("/api/assignment/form/:formId", function(req,res) {
+    //added userId parameter
+    app.delete("/api/assignment/form/:formId/user/:userId", function(req,res) {
         var delFormId = req.params.formId;
-        formModel.deleteFormById(delFormId);
+        var userId = req.params.userId;
+        formModel.deleteFormById(delFormId,userId);
         res.json("ok");
     });
 
-    app.get("/api/assignment/form/:formId", function(req,res)
+    //added userId parameter
+    app.get("/api/assignment/form/:formId/user/:userId", function(req,res)
     {
         var formIndex = req.params.formId;
-        var form = formModel.getFormByIndex(formIndex);
+        var userId = req.params.userId;
+        var form = formModel.getFormByIndex(formIndex,userId);
         res.json(form);
     });
 

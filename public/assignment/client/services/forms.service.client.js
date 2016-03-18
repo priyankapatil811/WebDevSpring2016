@@ -27,9 +27,10 @@
             return $http.get("/api/assignment/form?formId="+formId);
         }
 
-        function getFormByIndex(index)
+        //added userId parameter
+        function getFormByIndex(index,userId)
         {
-            return $http.get("/api/assignment/form/"+index);
+            return $http.get("/api/assignment/form/"+index+"/user/"+userId);
         }
 
         function createFormForUser(userId, form)
@@ -42,9 +43,10 @@
             return $http.get("/api/assignment/user/"+userId+"/form");
         }
 
-        function deleteFormById(formId)
+        //added userId parameter
+        function deleteFormById(formId,userId)
         {
-            return $http.delete("/api/assignment/form/"+formId);
+            return $http.delete("/api/assignment/form/"+formId+"/user/"+userId);
         }
 
         function updateFormById(formId, newForm)
