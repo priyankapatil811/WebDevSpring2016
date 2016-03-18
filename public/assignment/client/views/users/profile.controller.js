@@ -22,10 +22,10 @@
             roles : $rootScope.currentuser.roles
         };
 
-
         function update(user)
         {
             console.log("in update");
+            console.log(user);
             UserService.updateUser(user._id, user)
                 .then(function (response) {
                     UserService.setCurrentUser(response.data);

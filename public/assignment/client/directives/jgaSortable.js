@@ -18,9 +18,8 @@
                 stop: function(event, ui) {
                     end = ui.item.index();
 
-                    FieldService.getFieldsForForm(scope.formId).then(function(response)
-                    {
-                       scope.fields = response.data;
+                    FieldService.getFieldsForForm(scope.formId).then(function(response) {
+                        scope.fields = response.data;
                     });
 
                     var temp = scope.fields[start];

@@ -28,7 +28,7 @@ module.exports = function(app,userModel)
     });
 
     app.put("/api/assignment/user/:id",function(req,res){
-        var userId = req.query.id;
+        var userId = req.params.id;
         var upUser = req.body;
         var user = userModel.updateUser(userId,upUser);
         res.json(user);

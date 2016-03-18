@@ -41,7 +41,6 @@ module.exports = function(app,userModel,formModel)
 
     app.get("/api/assignment/form",function(req,res)
     {
-        console.log("in get form");
         var formId = req.query.formId;
         var form = formModel.getFormById(formId);
         res.json(form);

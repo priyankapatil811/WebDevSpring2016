@@ -25,7 +25,6 @@
 
      function getFormById(formId)
      {
-         console.log(formId);
          for(var i=0;i<forms.length;i++)
          {
             if(formId == forms[i]._id)

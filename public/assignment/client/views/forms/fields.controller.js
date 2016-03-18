@@ -34,11 +34,8 @@
             FormService.getFormById(vm.formId).then(
                 function (response)
                 {
-                    console.log(response);
-                    vm.form =  response.data.title;
-                    console.log(vm.form.title);
+                    vm.form =  response.data;
                 });
-
         }
 
         if($rootScope.currentuser != null)
