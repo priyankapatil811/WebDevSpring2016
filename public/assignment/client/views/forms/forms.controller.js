@@ -21,13 +21,13 @@
                 function(response){
                     vm.viewForms = response.data;
                 });
+            console.log(vm.viewForms);
         };
 
         if($rootScope.currentuser != null)
         {
             init();
         }
-
 
         function addForm()
         {

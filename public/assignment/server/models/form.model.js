@@ -52,7 +52,7 @@
          "_id" : uuid.v1(),
          "title" : form.title,
          "userId" : userId
-        }
+        };
 
         forms.push(newform);
         console.log(forms);
@@ -97,9 +97,28 @@
 
      function updateFormById(formId, newForm)
      {
+         console.log(formId);
+
          for(var i=0;i<forms.length;i++) {
              if (formId == forms[i]._id) {
-                 forms[i] = newForm;
+                 if(forms[i].hasOwnProperty("fields")) {
+                     forms[i] =
+                     {
+                         "_id": forms[i]._id,
+                         "title": newForm.title,
+                         "userId": forms[i].userId,
+                         "fields": forms[i].fields
+                     }
+                 }
+                 else
+                 {
+                     forms[i] =
+                     {
+                         "_id": forms[i]._id,
+                         "title": newForm.title,
+                         "userId": forms[i].userId
+                     }
+                 }
              }
          }
          console.log(forms);
