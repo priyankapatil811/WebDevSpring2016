@@ -45,7 +45,7 @@
 
         function selectField(field)
         {
-            if(field.type == "TEXT" || field.type == "TEXTAREA") {
+            if(field.type == "TEXT" || field.type == "TEXTAREA" || field.type == "EMAIL") {
 
                 vm.popupField =
                 {
@@ -73,12 +73,22 @@
                     "_id": field._id,
                     "label": field.label,
                     "type": field.type,
-                    "options" : JSON.stringify(field.options)
-                    //convertArrayToJson(field.options)
+                    "options" : convertArrayToJson(field.options)
+                    //JSON.stringify(field.options)
+
                 };
                 console.log(vm.popupField);
             }
+        }
 
+        function convertArrayToJson(options)
+        {
+            var optionsStr = "";
+            for(var i=0;i<options.length;i++)
+            {
+                optionsStr = optionsStr + options[i].label + ":" + options[i].value + "\n";
+            }
+            return optionsStr;
         }
 
         function addField(fieldType)

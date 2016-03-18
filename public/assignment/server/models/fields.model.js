@@ -144,21 +144,25 @@ module.exports = function()
                 type : upField.type
             }
         }
-        else if(upField.type == "OPTIONS" || upField.type == "CHECKBOXES" || upField.type == "RADIOS")
+        else
         {
             var optionsList = [];
-            for(var i=0;i<upField.options.length;i++)
+
+            var options = upField.options;
+            var optionsParts = options.split("\n");
+
+            for(var i=0;i<optionsParts.length;i++)
             {
                 var opObject = new Object();
 
-                var option = upField.options[i];
-                var parts = option.split(":");
+                var parts = optionsParts[i].split(":");
 
                 opObject.label = parts[0];
                 opObject.value = parts[1];
                 optionsList.push(opObject);
             }
-            console.log(optionsList);
+
+            //console.log(optionsList);
 
             form.fields[index] =
             {
