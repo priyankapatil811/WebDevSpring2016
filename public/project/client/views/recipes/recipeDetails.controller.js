@@ -9,13 +9,14 @@
 
     function RecipeDetailsController($scope, RecipeService, $routeParams, $rootScope, UserService) {
 
+        var vm = this;
+
          RecipeService.findRecipeById($routeParams.recipeId, function (data) {
                 console.log("in recipe Id search");
                 console.log($routeParams.recipeId);
-                $scope.recipeData = data;
+                vm.recipeData = data;
 
-                console.log($scope.recipeData);
-
+                console.log(vm.recipeData);
             });
         };
 })();
