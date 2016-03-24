@@ -5,14 +5,14 @@
                 <label class="sr-only" for="topic">RECIPE</label>
                 <div class="input-group">
                     <div class="input-group-addon" style="font-size: xx-small">RECIPE</div>
-                    <input type="text" class="form-control" id="topic" placeholder="Cake" ng-model="r.recipe">
+                    <input type="text" class="form-control" id="topic" placeholder="Cake" ng-model="model.r.recipe">
                 </div>
             </div>
-            <button type="submit" class="btn btn-info" ng-click="searchRecipe(r)">GO</button>
+            <button type="submit" class="btn btn-info" ng-click="model.searchRecipe(model.r)">GO</button>
             <!--<button type="submit" class="btn btn-info" ng-click="#/recipeSearch/:r.recipe">GO</button>-->
         </form>
         <br>
-        <div class="row masonry-container border" ng-repeat="recipe in recipeDetails">
+        <div class="row masonry-container border" ng-repeat="recipe in model.recipeDetails">
             <div class="col-xs-6 col-sm-3 col-md-3 item">
                 <div class="thumbnail">
                     <img src="{{recipe.image}}" style="width: 100%">

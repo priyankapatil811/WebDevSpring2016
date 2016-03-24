@@ -9,25 +9,29 @@
 
     function RecipeController($scope, RecipeService, $rootScope, UserService) {
 
-        $scope.searchRecipe = function (r) {
+        var vm = this;
+        vm.recipeDetails = [];
+        vm.searchRecipe = searchRecipe;
 
+        //$scope.searchRecipe = function (r) {
+        function searchRecipe(r)
+        {
             RecipeService.findAllRecipes(r.recipe, function (data) {
                 console.log("in recipe search");
                 console.log(r.recipe);
-                $scope.recipeData = data;
-                $scope.recipeDetails = [];
+                vm.recipeData = data;
 
-                console.log($scope.recipeData);
+                console.log(vm.recipeData);
 
-                for(var i=0;i<$scope.recipeData.matches.length;i++)
+                for(var i=0;i<vm.recipeData.matches.length;i++)
                 {
                     var recipeObj = new Object();
-                    recipeObj.id = $scope.recipeData.matches[i].id;
-                    recipeObj.title = $scope.recipeData.matches[i].recipeName;
-                    recipeObj.image = $scope.recipeData.matches[i].smallImageUrls[0];
-                    $scope.recipeDetails.push(recipeObj);
+                    recipeObj.id = vm.recipeData.matches[i].id;
+                    recipeObj.title = vm.recipeData.matches[i].recipeName;
+                    recipeObj.image = vm.recipeData.matches[i].smallImageUrls[0];
+                    vm.recipeDetails.push(recipeObj);
                 }
-                console.log($scope.recipeDetails);
+                console.log(vm.recipeDetails);
             });
         };
 
