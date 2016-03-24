@@ -44,28 +44,26 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <input type="text" class="form-control" ng-model="event.title" id="title" placeholder="Title">
+                                    <input type="text" class="form-control" ng-model="model.event.title" id="title" placeholder="Title">
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control" ng-model="event.stime" id="stime" placeholder="StartTime">
+                                    <input type="text" class="form-control" ng-model="model.event.stime" id="stime" placeholder="StartTime">
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control" ng-model="event.etime" id="etime" placeholder="EndTime">
+                                    <input type="text" class="form-control" ng-model="model.event.etime" id="etime" placeholder="EndTime">
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control" ng-model="event.location" id="loc" placeholder="Location">
+                                    <input type="text" class="form-control" ng-model="model.event.location" id="loc" placeholder="Location">
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control" ng-model="event.venue" id="venue" placeholder="Venue">
+                                    <input type="text" class="form-control" ng-model="model.event.venue" id="venue" placeholder="Venue">
                                 </td>
                                 <td align="right" style="white-space:nowrap">
-                                    <button type="button" class="glyphicon glyphicon-thumbs-up btn btn-primary" ng-click="addEvent()"></button>
-                                    <!--<span class="glyphicon glyphicon-plus"></span> &nbsp;-->
-                                    <button type="button" class="glyphicon glyphicon-ok btn btn-primary btn-success" ng-click="updateEvent()"></button>
-                                    <!--<span class="glyphicon glyphicon-ok"></span>-->
+                                    <button type="button" class="glyphicon glyphicon-thumbs-up btn btn-primary" ng-click="model.addEvent()"></button>
+                                    <button type="button" class="glyphicon glyphicon-ok btn btn-primary btn-success" ng-click="model.updateEvent()"></button>
                                 </td>
                             </tr>
-                            <tr ng-repeat="event in eventList">
+                            <tr ng-repeat="event in model.eventList">
                                 <td>
                                     {{event.title}}
                                 </td>
@@ -82,10 +80,8 @@
                                     {{event.venue}}
                                 </td>
                                 <td align="right" style="white-space:nowrap">
-                                    <button type="button" class="glyphicon glyphicon-remove btn btn-danger" ng-click="deleteEvent($index)"></button>
-                                    <!--<span class="glyphicon glyphicon-remove"></span> &nbsp;-->
-                                    <button type="button" class="glyphicon glyphicon-pencil btn btn-warning" ng-click="selectEvent($index)"></button>
-                                    <!--<span class="glyphicon glyphicon-pencil"></span>-->
+                                    <button type="button" class="glyphicon glyphicon-remove btn btn-danger" ng-click="model.deleteEvent($index)"></button>
+                                    <button type="button" class="glyphicon glyphicon-pencil btn btn-warning" ng-click="model.selectEvent($index)"></button>
                                 </td>
                             </tr>
                         </table>

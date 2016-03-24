@@ -14,34 +14,6 @@
     function EventService($http, $rootScope)
     {
         $rootScope.eventDetails = [];
-        /********** POC ************/
-        var events = [
-            {"_id":123,
-                "title":"Blue Man Group",
-                "stime" :"06:00pm",
-                "etime":"09:00pm",
-                "location":"nyc",
-                "venue": "timesquare",
-                "userId":123},
-
-            {"_id":456,
-                "title":"Maroon5",
-                "stime" :"05:00pm",
-                "etime":"10:00pm",
-                "location":"boston",
-                "venue": "td garden",
-                "userId":234},
-
-            {"_id":345,
-                "title":"ellie goulding",
-                "stime" :"07:00pm",
-                "etime":"09:00pm",
-                "location":"boston",
-                "venue": "td garden",
-                "userId":123},
-        ];
-        /***************************/
-
 
         var apiKey = "rcnxbzfT3dLNF3ff";
         var pageNo = 1;
@@ -60,7 +32,6 @@
             findEvents : findEvents,
             deleteEventById : deleteEventById,
             updateEventById : updateEventById,
-            getEventIdByIndex : getEventIdByIndex,
             getEventByIndex : getEventByIndex
             /***************************/
         };
@@ -93,87 +64,29 @@
         }
 
         /********** POC ************/
-        function getEventIdByIndex(index,callback)
+        function getEventByIndex(index,userId)
         {
-            callback(events[index]._id);
+            return $http.get("/api/project/event/"+index+"/user/"+userId);
         }
 
-        function getEventByIndex(index,callback)
+        function createEvent(userId,event)
         {
-            callback(events[index]);
+            return $http.post("/api/project/user/"+userId+"/event",event);
         }
 
-        function createEvent(userId,event,callback)
+        function findEvents(userId)
         {
-            var newEvent =
-            {
-                _id : Math.floor((Math.random() * 1000) + 1),
-                //_id : (new Date).getTime(),
-                "title":event.title,
-                "stime" :event.stime,
-                "etime":event.etime,
-                "location":event.location,
-                "venue":event.venue,
-                "userId": userId
-            };
-
-            events.push(newEvent);
-            //   console.log(curEvents);
-
-            findEvents(userId,callback);
+            return $http.get("/api/project/user/"+userId+"/event");
         }
 
-        function findEvents(userId,callback)
+        function deleteEventById(eventId, userId)
         {
-            var eventsForUserId = [];
-            for(var i=0;i<events.length;i++)
-            {
-                if(userId==events[i].userId)
-                {
-                    eventsForUserId.push(events[i]);
-                }
-            }
-
-            callback(eventsForUserId);
-            //callback(events);
+            return $http.delete("/api/project/event/"+eventId+"/user/"+userId);
         }
 
-        function deleteEventById(eventId, callback)
+        function updateEventById(eventId, newEvent)
         {
-            console.log(eventId);
-
-            events = events.filter(function(eId){
-                return eId._id != eventId;
-            });
-
-            console.log(events);
-
-            findEvents($rootScope.currentuser._id,callback);
-        }
-
-        function updateEventById(eventId, newEvent, callback)
-        {
-            var index;
-            for(var i=0;i<events.length;i++) {
-                if (eventId == events[i]._id) {
-                    index = i;
-                    break;
-                }
-            }
-
-            events[index] =
-            {
-                "title":newEvent.title,
-                "stime" :newEvent.stime,
-                "etime":newEvent.etime,
-                "location":newEvent.location,
-                "venue": newEvent.venue,
-                "userId":$rootScope.currentuser._id
-            };
-
-            console.log(events[index]);
-
-            findEvents($rootScope.currentuser._id,callback);
+            return $http.put("/api/project/event/"+eventId,newEvent);
         }
         /***************************/
 

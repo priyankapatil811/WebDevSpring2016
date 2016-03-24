@@ -13,4 +13,7 @@ module.exports = function (app) {
   var newsModel = require("./models/news.model.js")();
   var newsService = require("./services/news.service.server.js")(app,userModel,newsModel);
 
+  var eventModel = require("./models/event.model.js")();
+  var eventService = require("./services/event.service.server.js")(app,userModel,eventModel);
+
 };
