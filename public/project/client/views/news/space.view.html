@@ -5,13 +5,13 @@
                 <label class="sr-only" for="topic">Topic</label>
                 <div class="input-group">
                     <div class="input-group-addon" style="font-size: xx-small">TOPIC</div>
-                    <input type="text" class="form-control" id="topic" placeholder="Gravitational Waves" ng-model="s.spacenews">
+                    <input type="text" class="form-control" id="topic" placeholder="Gravitational Waves" ng-model="model.s.spacenews">
                 </div>
             </div>
-            <button type="submit" class="btn btn-info" ng-click="searchSpaceNews(s)">GO</button>
+            <button type="submit" class="btn btn-info" ng-click="model.searchSpaceNews(model.s)">GO</button>
         </form>
         <br>
-        <div class="row masonry-container" ng-repeat="news in newsDetails">
+        <div class="row masonry-container" ng-repeat="news in model.newsDetails">
             <div class="col-xs-6 col-sm-3 col-md-3 item">
                 <div class="thumbnail">
                     <img src="{{news.image}}" alt="">

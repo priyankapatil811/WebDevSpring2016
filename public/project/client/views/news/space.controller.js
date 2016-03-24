@@ -9,33 +9,39 @@
 
     function SpaceController($scope, SpaceService, $rootScope, UserService) {
 
-        $scope.searchSpaceNews = function (s) {
+        var vm = this;
+        vm.newsDetails = [];
+        vm.searchSpaceNews = searchSpaceNews;
 
-            SpaceService.findAllNews(s.spacenews, function (data) {
+        //$scope.searchSpaceNews = function (s) {
+
+            function searchSpaceNews(s)
+            {
+              SpaceService.findAllNews(s.spacenews, function (data) {
 
                 console.log("in space related news search");
                 console.log(s.spacenews);
-                $scope.newsData = data;
-                $scope.newsDetails = [];
+                vm.newsData = data;
 
-                console.log($scope.newsData);
 
-                for(var i=0;i<$scope.newsData.responseData.results.length;i++)
+                console.log(vm.newsData);
+
+                for(var i=0;i<vm.newsData.responseData.results.length;i++)
                 {
                     var newsObj = new Object();
                     newsObj.relatedStories = [];
                     newsObj.id = parseInt(Math.random() * 100);
-                    newsObj.title = $scope.newsData.responseData.results[i].titleNoFormatting;
-                    newsObj.url = $scope.newsData.responseData.results[i].unescapedUrl;
-                    newsObj.content = $scope.newsData.responseData.results[i].content;
-                    newsObj.image = $scope.newsData.responseData.results[i].image.url;
-                    newsObj.relatedStories = $scope.newsData.responseData.results[i].relatedStories;
-                    newsObj.publishedDate = $scope.newsData.responseData.results[i].publishedDate;
-                    newsObj.publisher = $scope.newsData.responseData.results[i].publisher;
-                    $scope.newsDetails.push(newsObj);
+                    newsObj.title = vm.newsData.responseData.results[i].titleNoFormatting;
+                    newsObj.url = vm.newsData.responseData.results[i].unescapedUrl;
+                    newsObj.content = vm.newsData.responseData.results[i].content;
+                    newsObj.image = vm.newsData.responseData.results[i].image.url;
+                    newsObj.relatedStories = vm.newsData.responseData.results[i].relatedStories;
+                    newsObj.publishedDate = vm.newsData.responseData.results[i].publishedDate;
+                    newsObj.publisher = vm.newsData.responseData.results[i].publisher;
+                    vm.newsDetails.push(newsObj);
                     $rootScope.newsDetails.push(newsObj);
                 }
-                console.log($scope.newsDetails);
+                console.log(vm.newsDetails);
                 console.log($rootScope.newsDetails);
             });
         };
