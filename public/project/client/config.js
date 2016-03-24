@@ -27,19 +27,23 @@
                 controllerAs : "model"
             })
             .when("/myAccount", {
-                templateUrl: "views/users/myAccount.view.html"
+                templateUrl: "views/users/myAccount.view.html",
+                controllerAs : "model"
             })
             .when("/maevent", {
                 templateUrl: "views/events/myAccountEvent.view.html",
-                controller: "EventController"
+                controller: "EventController",
+                controllerAs : "model"
             })
             .when("/marecipe", {
                 templateUrl: "views/recipes/myAccountRecipe.view.html",
-                controller: "RecipeController"
+                controller: "RecipeController",
+                controllerAs : "model"
             })
             .when("/maspace", {
                 templateUrl: "views/news/myAccountSpace.view.html",
-                controller: "SpaceController"
+                controller: "SpaceController",
+                controllerAs : "model"
             })
             //.when("/recipeSearch/:recipe",
             //{

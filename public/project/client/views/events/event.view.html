@@ -1,18 +1,18 @@
 <div class="container-fluid">
     <br>
-    <div class="row" data-ng-init="getGeoLoc()">
+    <div class="row">
         <div class="col-xs-11">
             <form class="form-inline" role="form">
                 <div class="form-group">
                     <label class="sr-only" for="location">Location</label>
                     <div class="input-group">
                         <div class="input-group-addon" style="font-size: xx-small">CITY</div>
-                        <input type="text" class="form-control" id="location" placeholder="Newark" ng-model="e.city">
+                        <input type="text" class="form-control" id="location" placeholder="Newark" ng-model="model.e.city">
                         <label class="sr-only" for="radius">Radius</label>
                         <div class="input-group-addon" style="font-size: xx-small">RADIUS (miles)</div>
                         <input type="text" class="form-control" id="radius" placeholder="2">
                     </div>
-                    <button type="submit" class="btn btn-info" ng-click="searchLocation(e)">Go</button>
+                    <button type="submit" class="btn btn-info" ng-click="model.searchLocation(e)">Go</button>
                 </div>
             </form>
         </div>
@@ -28,7 +28,7 @@
                                 Events
                             </th>
                         </tr>
-                        <tr ng-repeat="event in eventDetails">
+                        <tr ng-repeat="event in model.eventDetails">
                             <td>
                                 <div>
                                     <img ng-src="{{event.image}}"/>
@@ -49,9 +49,9 @@
             </div>
         </div>
         <div class="col-md-6">
-            <ng-map center="{{where}}" zoom="10">
-                <marker position = "{{event.latitude}},{{event.longitude}}"
-                        ng-repeat="event in eventDetails"
+            <ng-map center="{{model.where}}" zoom="10">
+                <marker position = "{{model.event.latitude}},{{model.event.longitude}}"
+                        ng-repeat="event in model.eventDetails"
                         on-click="clickEventInfo(event,event)">
                 </marker>
                 <marker position="current-location"></marker>

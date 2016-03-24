@@ -8,42 +8,60 @@
         .controller("EventController", EventController);
 
     function EventController($scope, EventService, $rootScope, UserService) {
-        $scope.where = "";
-        $scope.getGeoLoc = function ()
+
+        var vm = this;
+        vm.eventDetails = [];
+        vm.where = "";
+        vm.getGeoLoc = getGeoLoc;
+        vm.searchLocation = searchLocation;
+        vm.showError = showError;
+        vm.showPosition = showPosition;
+        vm.search = search;
+
+        getGeoLoc();
+
+       // $scope.where = "";
+      //  $scope.getGeoLoc = function ()
+        function getGeoLoc()
         {
             if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition($scope.showPosition, $scope.showError);
+                navigator.geolocation.getCurrentPosition(showPosition, showError);
             }
             else {
-                $scope.error = "Geolocation is not supported by this browser";
+                vm.error = "Geolocation is not supported by this browser";
             }
         };
 
-         $scope.searchLocation = function (e)
+      //   $scope.searchLocation = function (e)
+        function searchLocation(e)
          {
                 console.log("in location search");
                 EventService.findEventByLocation(e.city, function (mapData) {
                     if (mapData.results.length != 0) {
-                        $scope.where = mapData.results[0].geometry.location.lat + "," + mapData.results[0].geometry.location.lng;
+                        vm.where = mapData.results[0].geometry.location.lat + "," + mapData.results[0].geometry.location.lng;
                     }
                     else {
-                        $scope.error = "Could not find entered location";
-                        $scope.showErr = true;
+                        vm.error = "Could not find entered location";
+                        vm.showErr = true;
                     }
-                    $scope.search($scope.where);
-                    console.log($scope.where);
+                    search(vm.where);
+                    console.log(vm.where);
                 });
 
          };
 
-        $scope.showPosition = function (position) {
+        //$scope.showPosition = function (position) {
+        function showPosition(position)
+        {
             console.log("in show position");
-            $scope.where = position.coords.latitude + "," + position.coords.longitude;
-            $scope.search($scope.where);
+            vm.where = position.coords.latitude + "," + position.coords.longitude;
+            search(vm.where);
             $scope.$apply();
         };
 
-        $scope.showError = function (error) {
+        //$scope.showError = function (error) {
+        function showError()
+        {
             switch (error.code) {
                 case error.PERMISSION_DENIED:
                     error = "User denied the request for Geolocation."
@@ -60,45 +78,46 @@
             }
         };
 
-        $scope.search = function (where) {
+       // $scope.search = function (where) {
+        function search(where)
+        {
             EventService.findAllEvents(where, function (data) {
                 console.log("in search!");
-                $scope.eventData = data;
-                $scope.eventDetails = [];
+                vm.eventData = data;
 
-                for (var j = 0; j < $scope.eventData.events.event.length; j++) {
+                for (var j = 0; j < vm.eventData.events.event.length; j++) {
                     var eventObj = new Object();
-                    eventObj.id = $scope.eventData.events.event[j].id;
-                    eventObj.url = $scope.eventData.events.event[j].url;
-                    eventObj.title = $scope.eventData.events.event[j].title;
-                    eventObj.desc = $scope.eventData.events.event[j].description;
+                    eventObj.id = vm.eventData.events.event[j].id;
+                    eventObj.url = vm.eventData.events.event[j].url;
+                    eventObj.title = vm.eventData.events.event[j].title;
+                    eventObj.desc = vm.eventData.events.event[j].description;
                     if (eventObj.desc == null)
                         eventObj.desc = "There is no description for this event.";
-                    eventObj.start_time = $scope.eventData.events.event[j].start_time;
-                    eventObj.stop_time = $scope.eventData.events.event[j].stop_time;
-                    eventObj.venue_name = $scope.eventData.events.event[j].venue_name;
-                    eventObj.venue_address = $scope.eventData.events.event[j].venue_address;
-                    eventObj.city = $scope.eventData.events.event[j].city_name;
-                    eventObj.latitude = $scope.eventData.events.event[j].latitude;
-                    eventObj.longitude = $scope.eventData.events.event[j].longitude;
+                    eventObj.start_time = vm.eventData.events.event[j].start_time;
+                    eventObj.stop_time = vm.eventData.events.event[j].stop_time;
+                    eventObj.venue_name = vm.eventData.events.event[j].venue_name;
+                    eventObj.venue_address = vm.eventData.events.event[j].venue_address;
+                    eventObj.city = vm.eventData.events.event[j].city_name;
+                    eventObj.latitude = vm.eventData.events.event[j].latitude;
+                    eventObj.longitude = vm.eventData.events.event[j].longitude;
                     eventObj.image = "images/default_image.png";
                     eventObj.price = "Free";
-                    if ($scope.eventData.events.event[j].links != null)
-                        eventObj.ticketLink = $scope.eventData.events.event[j].links.link[0].url;
+                    if (vm.eventData.events.event[j].links != null)
+                        eventObj.ticketLink = vm.eventData.events.event[j].links.link[0].url;
                     else
                         eventObj.ticketLink = "";
-                    if ($scope.eventData.events.event[j].price != null) {
-                        eventObj.price = "$ " + $scope.eventData.events.event[j].price;
+                    if (vm.eventData.events.event[j].price != null) {
+                        eventObj.price = "$ " + vm.eventData.events.event[j].price;
                     }
-                    if ($scope.eventData.events.event[j].image != null) {
-                        eventObj.image = $scope.eventData.events.event[j].image.medium.url;
+                    if (vm.eventData.events.event[j].image != null) {
+                        eventObj.image = vm.eventData.events.event[j].image.medium.url;
                     }
-                    eventObj.categories = $scope.eventData.events.event[j].categories.category;
+                    eventObj.categories = vm.eventData.events.event[j].categories.category;
 
-                    $scope.eventDetails.push(eventObj);
+                    vm.eventDetails.push(eventObj);
                     $rootScope.eventDetails.push(eventObj);
                 }
-                console.log($scope.eventDetails);
+                console.log(vm.eventDetails);
             });
         }
 
