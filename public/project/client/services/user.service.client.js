@@ -18,45 +18,56 @@
             createUser : createUser,
             updateUser : updateUser,
             deleteUserById : deleteUserById,
-            setCurrentUser : setCurrentUser
+            setCurrentUser : setCurrentUser,
+            getCurrentUser : getCurrentUser
         };
 
         return api;
 
         function findUserByUsername(username)
         {
-            return $http.get("/api/assignment/user?username="+username)
+            return $http.get("/api/project/user?username="+username)
         }
 
         function findUserByCredentials(username,password)
         {
-            return $http.get("/api/assignment/user?username="+username+"&password="+password)
+            return $http.get("/api/project/user?username="+username+"&password="+password)
         }
 
         function findAllUsers()
         {
-            return $http.get("/api/assignment/user");
+            return $http.get("/api/project/user");
         }
 
         function createUser(user)
         {
             console.log(user);
-            return $http.post("/api/assignment/user",user)
+            return $http.post("/api/project/user",user)
         }
 
         function updateUser(userId,user)
         {
-            return $http.put("/api/assignment/user/"+userId,user)
+            return $http.put("/api/project/user/"+userId,user)
         }
 
         function deleteUserById(userId)
         {
-            return $http.delete("/api/assignment/user="+userId);
+            return $http.delete("/api/project/user="+userId);
         }
 
         function setCurrentUser(user)
         {
             $rootScope.currentuser = user;
+        }
+
+        function getCurrentUser()
+        {
+            return $http.get("/api/project/loggedin");
+        }
+
+        function logout()
+        {
+            return $http.post("/api/project/logout");
         }
     }
 })();

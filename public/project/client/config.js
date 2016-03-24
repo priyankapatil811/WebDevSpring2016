@@ -24,26 +24,41 @@
             .when("/profile", {
                 templateUrl: "views/users/profile.view.html",
                 controller: "ProfileController",
-                controllerAs : "model"
+                controllerAs : "model",
+                resolve: {
+                    checkLoggedIn: checkLoggedIn
+                }
             })
             .when("/myAccount", {
                 templateUrl: "views/users/myAccount.view.html",
-                controllerAs : "model"
+                controllerAs : "model",
+                resolve: {
+                    getLoggedIn: getLoggedIn
+                }
             })
             .when("/maevent", {
                 templateUrl: "views/events/myAccountEvent.view.html",
                 controller: "EventController",
-                controllerAs : "model"
+                controllerAs : "model",
+                resolve: {
+                    getLoggedIn: getLoggedIn
+                }
             })
             .when("/marecipe", {
                 templateUrl: "views/recipes/myAccountRecipe.view.html",
                 controller: "RecipeController",
-                controllerAs : "model"
+                controllerAs : "model",
+                resolve: {
+                    getLoggedIn: getLoggedIn
+                }
             })
             .when("/maspace", {
                 templateUrl: "views/news/myAccountSpace.view.html",
                 controller: "SpaceController",
-                controllerAs : "model"
+                controllerAs : "model",
+                resolve: {
+                    getLoggedIn: getLoggedIn
+                }
             })
             //.when("/recipeSearch/:recipe",
             //{
@@ -54,22 +69,65 @@
             {
                 templateUrl: "views/recipes/recipeDetails.view.html",
                 controller: "RecipeDetailsController",
-                controllerAs : "model"
+                controllerAs : "model",
+                resolve: {
+                    getLoggedIn: getLoggedIn
+                }
             })
             .when("/event/:eventId",
             {
                 templateUrl: "views/events/eventDetails.view.html",
                 controller: "EventDetailsController",
-                controllerAs : "model"
+                controllerAs : "model",
+                resolve: {
+                    getLoggedIn: getLoggedIn
+                }
             })
             .when("/news/:newsId",
             {
                 templateUrl: "views/news/spaceDetails.view.html",
                 controller: "SpaceDetailsController",
-                controllerAs : "model"
+                controllerAs : "model",
+                resolve: {
+                    getLoggedIn: getLoggedIn
+                }
             })
             .otherwise({
                 redirectTo: "/home"
             });
+
+        function getLoggedIn(UserService, $q) {
+            var deferred = $q.defer();
+
+            UserService
+                .getCurrentUser()
+                .then(function(response){
+                    var currentUser = response.data;
+                    UserService.setCurrentUser(currentUser);
+                    deferred.resolve();
+                });
+
+            return deferred.promise;
+        }
+
+        function checkLoggedIn(UserService, $q, $location) {
+
+            var deferred = $q.defer();
+
+            UserService
+                .getCurrentUser()
+                .then(function(response) {
+                    var currentUser = response.data;
+                    if(currentUser) {
+                        UserService.setCurrentUser(currentUser);
+                        deferred.resolve();
+                    } else {
+                        deferred.reject();
+                        $location.url("/home");
+                    }
+                });
+
+            return deferred.promise;
+        }
     }
 })();

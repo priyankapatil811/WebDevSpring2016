@@ -1,9 +1,10 @@
-body {
+/*body {
     background-image: url("../images/background4.jpg");
+    background-color: white;
     background-repeat: no-repeat;
     background-position: 0 0;
     background-size: cover;
-}
+}*/
 
 .main-container {
     padding: 10px 15px;
