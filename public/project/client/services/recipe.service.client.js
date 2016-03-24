@@ -9,28 +9,6 @@
 
     function RecipeService($http, $rootScope)
     {
-        /********** POC ************/
-        var recipes = [
-            {"_id":123,
-                "title":"Red Velvet Cheesecake",
-                "url" :"www.recipes.com",
-                "image":"img1.jpeg",
-                "userId":123},
-
-            {"_id":456,
-                "title":"Mac & Cheese",
-                "url" :"www.allrecipes.com",
-                "image":"img2.jpeg",
-                "userId":234},
-
-            {"_id":345,
-                "title":"French Fries",
-                "url" :"www.allrecipes.com",
-                "image":"img3.jpeg",
-                "userId":123}
-        ];
-        /***************************/
-
         var apiId = "5b171984";
         var apiKey = "9f46fd1c44408240f0b10f3fbc39dca3";
         var url = "";
@@ -45,7 +23,7 @@
             findRecipes : findRecipes,
             deleteRecipeById : deleteRecipeById,
             updateRecipeById : updateRecipeById,
-            getRecipeIdByIndex : getRecipeIdByIndex,
+            //getRecipeIdByIndex : getRecipeIdByIndex,
             getRecipeByIndex : getRecipeByIndex
             /***************************/
         };
@@ -69,82 +47,35 @@
         }
 
         /********** POC ************/
-        function getRecipeIdByIndex(index,callback)
+      /*  function getRecipeIdByIndex(index,callback)
         {
             callback(recipes[index]._id);
         }
+       */
 
-        function getRecipeByIndex(index,callback)
+        function getRecipeByIndex(index,userId)
         {
-            callback(recipes[index]);
+            return $http.get("/api/project/recipe/"+index+"/user/"+userId);
         }
 
-        function createRecipe(userId,recipe,callback)
+        function createRecipe(userId,recipe)
         {
-            var newRecipe =
-            {
-                _id : Math.floor((Math.random() * 1000) + 1),
-                //_id : (new Date).getTime(),
-                "title":recipe.title,
-                "url" :recipe.url,
-                "image":recipe.image,
-                "userId" : userId
-            };
-
-            recipes.push(newRecipe);
-            //   console.log(curRecipes);
-
-            findRecipes($rootScope.currentuser._id,callback);
+           return $http.post("/api/project/user/"+userId+"/recipe",recipe);
         }
 
-        function findRecipes(userId,callback)
+        function findRecipes(userId)
         {
-            var recipesForUserId = [];
-            for(var i=0;i<recipes.length;i++)
-            {
-                if(userId==recipes[i].userId)
-                {
-                    recipesForUserId.push(recipes[i]);
-                }
-            }
-
-            callback(recipesForUserId);
+            return $http.get("/api/project/user/"+userId+"/recipe");
         }
 
-        function deleteRecipeById(recipeId, callback)
+        function deleteRecipeById(recipeId,userId)
         {
-            console.log(recipeId);
-
-            recipes = recipes.filter(function(rId){
-                return rId._id != recipeId;
-            });
-
-            console.log(recipes);
-
-            findRecipes($rootScope.currentuser._id,callback);
+            return $http.delete("/api/project/recipe/"+recipeId+"/user/"+userId);
         }
 
-        function updateRecipeById(recipeId, newRecipe, callback)
+        function updateRecipeById(recipeId, newRecipe)
         {
-            var index;
-            for(var i=0;i<recipes.length;i++) {
-                if (recipeId == recipes[i]._id) {
-                    index = i;
-                    break;
-                }
-            }
-
-            recipes[index] =
-            {
-                "title":newRecipe.title,
-                "url" :newRecipe.url,
-                "image":newRecipe.image,
-                "userId":$rootScope.currentuser._id
-            };
-
-            console.log(recipes[index]);
-
-            findRecipes($rootScope.currentuser._id,callback);
+            return $http.put("/api/project/recipe/"+recipeId,newRecipe);
         }
         /***************************/
 

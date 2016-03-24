@@ -7,11 +7,18 @@
         .module("infoPinStrap")
         .controller("RecipeController", RecipeController);
 
-    function RecipeController($scope, RecipeService, $rootScope, UserService) {
+    function RecipeController(RecipeService, $rootScope, UserService) {
 
         var vm = this;
+        vm.recipeList = [];
         vm.recipeDetails = [];
         vm.searchRecipe = searchRecipe;
+        vm.init = init;
+        vm.addRecipe = addRecipe;
+        vm.selectRecipe = selectRecipe;
+        vm.updateRecipe = updateRecipe;
+        vm.deleteRecipe = deleteRecipe;
+
 
         //$scope.searchRecipe = function (r) {
         function searchRecipe(r)
@@ -36,80 +43,86 @@
         };
 
         /********** POC ************/
-        if($rootScope.currentuser != null) {
-            RecipeService.findRecipes($rootScope.currentuser._id,
+
+        function init()
+        {
+            RecipeService.findRecipes($rootScope.currentuser._id).then(
                 function (response) {
-                    $scope.recipeList = response;
+                    vm.recipeList = response.data;
                 });
 
-            console.log($scope.recipeList);
+            console.log(vm.recipeList);
         }
 
-        $scope.addRecipe = function()
-        {
-            RecipeService.createRecipe($rootScope.currentuser._id,
-                $scope.recipe,
-                function(response){
-                    $scope.recipeList = response;
-                });
+        if($rootScope.currentuser != null) {
+            init();
+        }
 
-            console.log($scope.recipeList);
+        function addRecipe()
+        {
+            RecipeService.createRecipe($rootScope.currentuser._id,vm.recipe).then(
+                function(response){
+                    init();
+                });
         };
 
-        $scope.selectRecipe = function(index)
+        function selectRecipe(index)
         {
-            var recipeIndex = index;
+            vm.recipeIndex = index;
 
-            RecipeService.getRecipeByIndex(recipeIndex,
+            RecipeService.getRecipeByIndex(vm.recipeIndex,$rootScope.currentuser._id).then(
                 function(response)
                 {
-                    $scope.recipe = {
-                        "title":response.title,
-                        "url" :response.url,
-                        "image":response.image
+                    vm.recipe = {
+                        "_id" : response.data._id,
+                        "title":response.data.title,
+                        "url" :response.data.url,
+                        "image":response.data.image,
+                        "userId": response.data.userId
                     };
                 });
-
-            RecipeService.getRecipeIdByIndex(recipeIndex,
+/*
+            RecipeService.getRecipeIdByIndex(recipeIndex).then(
                 function(response)
                 {
-                    $scope.recipeId = response;
+                    vm.recipeId = response;
                 });
 
-            console.log($scope.recipeId);
+            console.log($scope.recipeId); */
         }
 
 
-        $scope.updateRecipe = function()
+        function updateRecipe()
         {
-            console.log("in update Recipe" + $scope.recipeId);
+            console.log("in update Recipe" + vm.recipe._id);
 
-            RecipeService.updateRecipeById($scope.recipeId,$scope.recipe,
+            RecipeService.updateRecipeById(vm.recipe._id,vm.recipe).then(
                 function(response){
-                    $scope.recipeList = response;
+                    init();
                 });
 
-            console.log($scope.recipeList);
         };
 
-        $scope.deleteRecipe = function(index)
+        function deleteRecipe(index)
         {
             var recipeIndex = index;
 
             //function call return formId
-            RecipeService.getRecipeIdByIndex(recipeIndex,
+         /*   RecipeService.getRecipeIdByIndex(recipeIndex).then(
                 function(response)
                 {
                     $scope.recipeId = response;
                 });
+                */
 
-            RecipeService.deleteRecipeById($scope.recipeId,
+        //    RecipeService.deleteRecipeById($scope.recipeId).then(
+            RecipeService.deleteRecipeById(recipeIndex,$rootScope.currentuser._id).then(
                 function(response){
-                    $scope.recipeList = response;
+                    init();
                 });
 
-            console.log($scope.recipeList);
-        }
+          //  console.log($scope.recipeList);
+        };
 
         /***************************/
     }

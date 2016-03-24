@@ -37,22 +37,20 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <input type="text" class="form-control" ng-model="recipe.title" id="title" placeholder="Title">
+                                    <input type="text" class="form-control" ng-model="model.recipe.title" id="title" placeholder="Title">
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control" ng-model="recipe.url" id="url" placeholder="Url">
+                                    <input type="text" class="form-control" ng-model="model.recipe.url" id="url" placeholder="Url">
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control" ng-model="recipe.image" id="img" placeholder="ImageUrl">
+                                    <input type="text" class="form-control" ng-model="model.recipe.image" id="img" placeholder="ImageUrl">
                                 </td>
                                 <td align="right" style="white-space:nowrap">
-                                    <button type="button" class="glyphicon glyphicon-thumbs-up btn btn-primary" ng-click="addRecipe()"></button>
-                                    <!--<span class="glyphicon glyphicon-plus"></span> &nbsp;-->
-                                    <button type="button" class="glyphicon glyphicon-ok btn btn-primary btn-success" ng-click="updateRecipe()"></button>
-                                    <!--<span class="glyphicon glyphicon-ok"></span>-->
+                                    <button type="button" class="glyphicon glyphicon-thumbs-up btn btn-primary" ng-click="model.addRecipe()"></button>
+                                    <button type="button" class="glyphicon glyphicon-ok btn btn-primary btn-success" ng-click="model.updateRecipe()"></button>
                                 </td>
                             </tr>
-                            <tr ng-repeat="recipe in recipeList">
+                            <tr ng-repeat="recipe in model.recipeList">
                                 <td>
                                     {{recipe.title}}
                                 </td>
@@ -63,10 +61,8 @@
                                     {{recipe.image}}
                                 </td>
                                 <td align="right" style="white-space:nowrap">
-                                    <button type="button" class="glyphicon glyphicon-remove btn btn-danger" ng-click="deleteRecipe($index)"></button>
-                                    <!--<span class="glyphicon glyphicon-remove"></span> &nbsp;-->
-                                    <button type="button" class="glyphicon glyphicon-pencil btn btn-warning" ng-click="selectRecipe($index)"></button>
-                                    <!--<span class="glyphicon glyphicon-pencil"></span>-->
+                                    <button type="button" class="glyphicon glyphicon-remove btn btn-danger" ng-click="model.deleteRecipe($index)"></button>
+                                    <button type="button" class="glyphicon glyphicon-pencil btn btn-warning" ng-click="model.selectRecipe($index)"></button>
                                 </td>
                             </tr>
                         </table>
