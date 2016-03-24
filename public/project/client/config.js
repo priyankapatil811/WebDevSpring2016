@@ -53,17 +53,20 @@
             .when("/recipe/:recipeId",
             {
                 templateUrl: "views/recipes/recipeDetails.view.html",
-                controller: "RecipeDetailsController"
+                controller: "RecipeDetailsController",
+                controllerAs : "model"
             })
             .when("/event/:eventId",
             {
                 templateUrl: "views/events/eventDetails.view.html",
-                controller: "EventDetailsController"
+                controller: "EventDetailsController",
+                controllerAs : "model"
             })
             .when("/news/:newsId",
             {
                 templateUrl: "views/news/spaceDetails.view.html",
-                controller: "SpaceDetailsController"
+                controller: "SpaceDetailsController",
+                controllerAs : "model"
             })
             .otherwise({
                 redirectTo: "/home"
