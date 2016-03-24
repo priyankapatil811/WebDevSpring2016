@@ -23,9 +23,24 @@
                 console.log(s.spacenews);
                 vm.newsData = data;
 
-
                 console.log(vm.newsData);
+                for(var i=0;i<vm.newsData.posts.length;i++)
+                {
+                    var newsObj = new Object();
+                    newsObj.id = vm.newsData.posts[i].uuid;
+                    newsObj.title = vm.newsData.posts[i].thread.title;
+                    newsObj.url = vm.newsData.posts[i].url;
+                    newsObj.publishedDate = vm.newsData.posts[i].thread.published;
+                    newsObj.image = vm.newsData.posts[i].thread.main_image;
+                    newsObj.content = vm.newsData.posts[i].text;
+                    newsObj.relatedStories = [];
 
+                    vm.newsDetails.push(newsObj);
+                    $rootScope.newsDetails.push(newsObj);
+                }
+                  console.log(vm.newsDetails);
+                  console.log($rootScope.newsDetails);
+/*
                 for(var i=0;i<vm.newsData.responseData.results.length;i++)
                 {
                     var newsObj = new Object();
@@ -43,7 +58,9 @@
                 }
                 console.log(vm.newsDetails);
                 console.log($rootScope.newsDetails);
+                */
             });
+
         };
 
         /********** POC ************/
