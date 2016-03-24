@@ -1,0 +1,25 @@
+[
+  {"_id":123,
+    "title":"Pluto New Horizons",
+    "url" :"www.nasa.com",
+    "image":"img1.jpeg",
+    "content" : "This ethereal scene captured by NASA’s New Horizons spacecraft tells yet another story of Pluto’s diversity ...",
+    "userId" : 123
+  },
+
+  {"_id":456,
+    "title":"Gravitational Waves Detected",
+    "url" :"www.nasa.com",
+    "image":"img2.jpeg",
+    "content" : "A team of scientists announced on Thursday that they had heard and recorded the sound of two black holes colliding a billion light-years away ...",
+    "userId" : 234
+  },
+
+  {"_id":345,
+    "title":"Ice Found on Mars",
+    "url" :"www.nasa.com",
+    "image":"img3.jpeg",
+    "content" : "A giant slab of ice as big as California and Texas combined lurks just beneath the surface of Mars between its equator and north pole, researchers say ...",
+    "userId" : 123
+  }
+]

@@ -11,12 +11,18 @@
 
         var vm = this;
         vm.newsDetails = [];
+        vm.spaceDetails = [];
         vm.searchSpaceNews = searchSpaceNews;
+        vm.init = init;
+        vm.addContent = addContent;
+        vm.selectContent = selectContent;
+        vm.updateContent = updateContent;
+        vm.deleteContent = deleteContent;
 
         //$scope.searchSpaceNews = function (s) {
 
-            function searchSpaceNews(s)
-            {
+        function searchSpaceNews(s)
+        {
               SpaceService.findAllNews(s.spacenews, function (data) {
 
                 console.log("in space related news search");
@@ -61,83 +67,86 @@
                 */
             });
 
-        };
-
-        /********** POC ************/
-        if($rootScope.currentuser != null) {
-            SpaceService.findAllSpaces($rootScope.currentuser._id,
-                function (response) {
-                    $scope.spaceDetails = response;
-                });
-
-            console.log($scope.spaceDetails);
         }
 
-        $scope.addContent = function()
+        /********** POC ************/
+        function init()
         {
-            SpaceService.createSpace($rootScope.currentuser._id,
-                $scope.space,
-                function(response){
-                    $scope.spaceDetails = response;
+            SpaceService.findNews($rootScope.currentuser._id).then(
+                function (response) {
+                    vm.spaceDetails = response.data;
                 });
 
-            console.log($scope.spaceDetails);
-        };
+            console.log(vm.spaceDetails);
+        }
 
-        $scope.selectContent = function(index)
+        if($rootScope.currentuser != null) {
+            init();
+        }
+
+
+        function addContent()
+        {
+            SpaceService.createNews($rootScope.currentuser._id, vm.space).then(
+                function(response){
+                   init();
+                });
+        }
+
+        function selectContent(index)
         {
             var spaceIndex = index;
 
-            SpaceService.getSpaceByIndex(spaceIndex,
+            SpaceService.getNewsByIndex(spaceIndex,$rootScope.currentuser._id).then(
                 function(response)
                 {
-                    $scope.space = {
-                        "title":response.title,
-                        "url" :response.url,
-                        "image":response.image,
-                        "content" : response.content
+                    vm.space = {
+                        "_id" : response.data._id,
+                        "title":response.data.title,
+                        "url" :response.data.url,
+                        "image":response.data.image,
+                        "content" : response.data.content,
+                        "userId" : response.data.userId
                     };
                 });
 
-            SpaceService.getSpaceIdByIndex(spaceIndex,
-                function(response)
-                {
-                    $scope.spaceId = response;
-                });
-
-            console.log($scope.spaceId);
+            //SpaceService.getSpaceIdByIndex(spaceIndex,
+            //    function(response)
+            //    {
+            //        $scope.spaceId = response;
+            //    });
+            //
+            //console.log($scope.spaceId);
         }
 
 
-        $scope.updateContent = function()
+        function updateContent()
         {
-            console.log("in update Space" + $scope.spaceId);
+            console.log("in update Space" + vm.space._id);
 
-            SpaceService.updateSpaceById($scope.spaceId,$scope.space,
+            SpaceService.updateNewsById(vm.space._id,vm.space).then(
                 function(response){
-                    $scope.spaceDetails = response;
+                    init();
                 });
+        }
 
-            console.log($scope.spaceDetails);
-        };
-
-        $scope.deleteContent = function(index)
+        function deleteContent(index)
         {
             var spaceIndex = index;
 
             //function call return formId
-            SpaceService.getSpaceIdByIndex(spaceIndex,
-                function(response)
-                {
-                    $scope.spaceId = response;
-                });
+            //SpaceService.getSpaceIdByIndex(spaceIndex,
+            //    function(response)
+            //    {
+            //        $scope.spaceId = response;
+            //    });
 
-            SpaceService.deleteSpaceById($scope.spaceId,
+            SpaceService.deleteNewsById(spaceIndex,$rootScope.currentuser._id).then(
                 function(response){
-                    $scope.spaceDetails = response;
+                    init();
                 });
 
-            console.log($scope.spaceDetails);
+            //console.log($scope.spaceDetails);
         }
         /***************************/
     }

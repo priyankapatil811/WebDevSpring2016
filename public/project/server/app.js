@@ -10,5 +10,7 @@ module.exports = function (app) {
   var recipeModel = require("./models/recipe.model.js")();
   var recipeService = require("./services/recipe.service.server.js")(app,userModel,recipeModel);
 
+  var newsModel = require("./models/news.model.js")();
+  var newsService = require("./services/news.service.server.js")(app,userModel,newsModel);
 
 };

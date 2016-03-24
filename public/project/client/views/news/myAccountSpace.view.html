@@ -41,25 +41,23 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <input type="text" class="form-control" ng-model="space.title" id="title" placeholder="Title">
+                                    <input type="text" class="form-control" ng-model="model.space.title" id="title" placeholder="Title">
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control" ng-model="space.url" id="url" placeholder="Url">
+                                    <input type="text" class="form-control" ng-model="model.space.url" id="url" placeholder="Url">
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control" ng-model="space.image" id="img" placeholder="ImageUrl">
+                                    <input type="text" class="form-control" ng-model="model.space.image" id="img" placeholder="ImageUrl">
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control" ng-model="space.content" id="content" placeholder="Content">
+                                    <input type="text" class="form-control" ng-model="model.space.content" id="content" placeholder="Content">
                                 </td>
                                 <td align="right" style="white-space:nowrap">
-                                    <button type="button" class="glyphicon glyphicon-thumbs-up btn btn-primary" ng-click="addContent()"></button>
-                                    <!--<span class="glyphicon glyphicon-plus"></span> &nbsp;-->
-                                    <button type="button" class="glyphicon glyphicon-ok btn btn-primary btn-success" ng-click="updateContent()"></button>
-                                    <!--<span class="glyphicon glyphicon-ok"></span>-->
+                                    <button type="button" class="glyphicon glyphicon-thumbs-up btn btn-primary" ng-click="model.addContent()"></button>
+                                    <button type="button" class="glyphicon glyphicon-ok btn btn-primary btn-success" ng-click="model.updateContent()"></button>
                                 </td>
                             </tr>
-                            <tr ng-repeat="space in spaceDetails">
+                            <tr ng-repeat="space in model.spaceDetails">
                                 <td>
                                     {{space.title}}
                                 </td>
@@ -73,10 +71,8 @@
                                     {{space.content}}
                                 </td>
                                 <td align="right" style="white-space:nowrap">
-                                    <button type="button" class="glyphicon glyphicon-remove btn btn-danger" ng-click="deleteContent($index)"></button>
-                                    <!--<span class="glyphicon glyphicon-remove"></span> &nbsp;-->
-                                    <button type="button" class="glyphicon glyphicon-pencil btn btn-warning" ng-click="selectContent($index)"></button>
-                                    <!--<span class="glyphicon glyphicon-pencil"></span>-->
+                                    <button type="button" class="glyphicon glyphicon-remove btn btn-danger" ng-click="model.deleteContent($index)"></button>
+                                    <button type="button" class="glyphicon glyphicon-pencil btn btn-warning" ng-click="model.selectContent($index)"></button>
                                 </td>
                             </tr>
 

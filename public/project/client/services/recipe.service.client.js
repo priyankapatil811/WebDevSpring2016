@@ -23,7 +23,6 @@
             findRecipes : findRecipes,
             deleteRecipeById : deleteRecipeById,
             updateRecipeById : updateRecipeById,
-            //getRecipeIdByIndex : getRecipeIdByIndex,
             getRecipeByIndex : getRecipeByIndex
             /***************************/
         };

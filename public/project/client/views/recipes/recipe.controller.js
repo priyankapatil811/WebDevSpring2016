@@ -7,7 +7,7 @@
         .module("infoPinStrap")
         .controller("RecipeController", RecipeController);
 
-    function RecipeController(RecipeService, $rootScope, UserService) {
+    function RecipeController(RecipeService, $rootScope) {
 
         var vm = this;
         vm.recipeList = [];
@@ -64,7 +64,7 @@
                 function(response){
                     init();
                 });
-        };
+        }
 
         function selectRecipe(index)
         {
@@ -101,7 +101,7 @@
                     init();
                 });
 
-        };
+        }
 
         function deleteRecipe(index)
         {
@@ -122,7 +122,7 @@
                 });
 
           //  console.log($scope.recipeList);
-        };
+        }
 
         /***************************/
     }
