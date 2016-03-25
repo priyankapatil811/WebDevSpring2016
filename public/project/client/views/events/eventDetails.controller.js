@@ -11,7 +11,7 @@
 
         var vm = this;
 
-        EventService.findEventById($routeParams.eventId, function (data) {
+        EventService.findEventById($routeParams.eventId,function (data) {
             console.log("in event Id search");
             console.log($routeParams.eventId);
             vm.eventData = data;

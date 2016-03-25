@@ -58,13 +58,13 @@
 
         function findEventById(eventId,callback) {
 
-            for(var i=0;i<$rootScope.eventDetails.length;i++){
-             if(eventId == $rootScope.eventDetails[i].id)
-             {
-                 callback($rootScope.eventDetails[i]);
-             }
+            for(var i=0;i<$rootScope.eventDetails.length;i++)
+            {
+                 if(eventId == $rootScope.eventDetails[i].id)
+                 {
+                     callback($rootScope.eventDetails[i]);
+                 }
             }
-
         }
 
         /********** POC ************/

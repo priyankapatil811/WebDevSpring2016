@@ -7,7 +7,7 @@
         .module("infoPinStrap")
         .controller("SpaceController", SpaceController);
 
-    function SpaceController($scope, SpaceService, $rootScope, UserService) {
+    function SpaceController(SpaceService, $rootScope) {
 
         var vm = this;
         vm.newsDetails = [];
@@ -23,11 +23,11 @@
 
         function searchSpaceNews(s)
         {
-              SpaceService.findAllNews(s.spacenews, function (data) {
+              SpaceService.findAllNews(s.spacenews).then(function (response) {
 
                 console.log("in space related news search");
                 console.log(s.spacenews);
-                vm.newsData = data;
+                vm.newsData = response.data;
 
                 console.log(vm.newsData);
                 for(var i=0;i<vm.newsData.posts.length;i++)

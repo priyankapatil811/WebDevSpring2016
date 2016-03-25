@@ -4,18 +4,18 @@
    <br><br>
    <h3 style="font-style:italic ;font-size:x-large">{{model.newsData.title}}</h3>
    <img src="{{model.newsData.image}}" style="width:50% ; height: 50%;"/>
-   <h4>{{model.newsData.content}}</h4>
    <a href="{{model.newsData.url}}" target="_blank">
     <h4>Want to read this article?</h4>
    </a>
   </div>
   <br><br>
   <div class="col-md-6">
-   <h2 style="font-style: italic;font-size:x-large">Related Stories</h2>
-   <h4>Want to read these articles? Click on the links below!</h4>
-   <ul ng-if="model.relatedStories" ng-repeat="news in model.relatedStories">
-    <a href="{{model.news.url}}" style="text-decoration: none; color: darkblue"> <li>{{model.news.title}}</li></a>
-  </ul>
+   <h4>{{model.newsData.content}}</h4>
+   <!--<h2 style="font-style: italic;font-size:x-large">Related Stories</h2>-->
+   <!--<h4>Want to read these articles? Click on the links below!</h4>-->
+   <!--<ul ng-if="model.relatedStories" ng-repeat="news in model.relatedStories">-->
+    <!--<a href="{{model.news.url}}" style="text-decoration: none; color: darkblue"> <li>{{model.news.title}}</li></a>-->
+  <!--</ul>-->
   </div>
  </div>
 </div>

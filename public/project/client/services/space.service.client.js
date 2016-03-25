@@ -29,13 +29,13 @@
 
         return api;
 
-        function findAllNews(keyword,callback) {
+        function findAllNews(keyword) {
           /*  url = "https://ajax.googleapis.com/ajax/services/search/news?v=1.0&q="+keyword+
                 "&dataType=json&callback=JSON_CALLBACK"; */
 
             url = "https://webhose.io/search?token=def15a08-b97c-44b7-a238-8bb4bc04360b&format=json&q=(site_type%3Anews)"+keyword;
 
-            $http.get(url).success(callback);
+            return $http.get(url);
         }
 
         function findNewsById(newsId,callback) {
@@ -46,7 +46,6 @@
                     callback($rootScope.newsDetails[i]);
                 }
             }
-
         }
 
         /********** POC ************/
