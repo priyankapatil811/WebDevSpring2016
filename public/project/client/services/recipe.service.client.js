@@ -29,20 +29,22 @@
 
         return api;
 
-        function findAllRecipes(recipe,callback) {
-            url = "http://api.yummly.com/v1/api/recipes?_app_id="+apiId+"&_app_key="+apiKey+"&q="+recipe+"&requirePictures=true" +
+        function findAllRecipes(recipe) {
+
+            url = "http://api.yummly.com/v1/api/recipes?_app_id="+apiId+"&_app_key="
+                +apiKey+"&q="+recipe+"&requirePictures=true" +
                 "&dataType=json";
 
-            $http.get(url).success(callback);
+            return $http.get(url);
         }
 
 
-        function findRecipeById(recipeId,callback)
+        function findRecipeById(recipeId)
         {
             url = "http://api.yummly.com/v1/api/recipe/"+recipeId+"?_app_id="+apiId+"&_app_key="+apiKey+
                 "&dataType=json";
 
-            $http.get(url).success(callback);
+            return $http.get(url);
         }
 
         /********** POC ************/

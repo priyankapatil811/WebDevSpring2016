@@ -23,10 +23,10 @@
         //$scope.searchRecipe = function (r) {
         function searchRecipe(r)
         {
-            RecipeService.findAllRecipes(r.recipe, function (data) {
+            RecipeService.findAllRecipes(r.recipe).then(function (response) {
                 console.log("in recipe search");
                 console.log(r.recipe);
-                vm.recipeData = data;
+                vm.recipeData = response.data;
 
                 console.log(vm.recipeData);
 

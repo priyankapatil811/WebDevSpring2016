@@ -7,14 +7,14 @@
         .module("infoPinStrap")
         .controller("RecipeDetailsController", RecipeDetailsController);
 
-    function RecipeDetailsController($scope, RecipeService, $routeParams, $rootScope, UserService) {
+    function RecipeDetailsController(RecipeService, $routeParams) {
 
         var vm = this;
 
-         RecipeService.findRecipeById($routeParams.recipeId, function (data) {
+         RecipeService.findRecipeById($routeParams.recipeId).then(function (response) {
                 console.log("in recipe Id search");
                 console.log($routeParams.recipeId);
-                vm.recipeData = data;
+                vm.recipeData = response.data;
 
                 console.log(vm.recipeData);
             });
