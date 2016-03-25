@@ -4,7 +4,6 @@
 module.exports = function(app,userModel,recipeModel)
 {
     app.post("/api/project/user/:userId/recipe", function(req,res) {
-        console.log("in create new recipe");
         var userId = req.params.userId;
         var newrecipe = req.body;
         recipeModel.createRecipeForUser(userId,newrecipe);
@@ -39,7 +38,6 @@ module.exports = function(app,userModel,recipeModel)
     app.get("/api/project/user/:userId/recipe", function(req,res)
     {
         var userId = req.params.userId;
-        console.log(userId);
         var recipes = recipeModel.findRecipes(userId);
         res.json(recipes);
     });

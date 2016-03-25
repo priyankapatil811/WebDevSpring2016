@@ -48,7 +48,7 @@ module.exports = function() {
         };
 
         news.push(newnews);
-        console.log(news);
+        //console.log(news);
     }
 
     function findNews(userId) {
@@ -58,7 +58,7 @@ module.exports = function() {
                 newsForUserId.push(news[i]);
             }
         }
-        console.log(newsForUserId);
+        //console.log(newsForUserId);
         return newsForUserId;
     }
 
@@ -74,13 +74,13 @@ module.exports = function() {
         }
 
         var newsId = userNews[newsIndex]._id;
-        console.log(newsId);
+        //console.log(newsId);
 
         news = news.filter(function (sId) {
             return sId._id != newsId;
         });
 
-        console.log(news);
+        //console.log(news);
     }
 
     function updateNewsById(newsId, newnews) {
@@ -105,6 +105,6 @@ module.exports = function() {
             "userId": userId
         };
 
-        console.log(news);
+        //console.log(news);
     }
 };

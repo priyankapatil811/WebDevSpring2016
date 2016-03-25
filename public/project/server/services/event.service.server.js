@@ -4,7 +4,6 @@
 module.exports = function(app,userModel,eventModel)
 {
     app.post("/api/project/user/:userId/event", function(req,res) {
-        console.log("in create new event");
         var userId = req.params.userId;
         var newevent = req.body;
         eventModel.createEventForUser(userId,newevent);
@@ -39,7 +38,6 @@ module.exports = function(app,userModel,eventModel)
     app.get("/api/project/user/:userId/event", function(req,res)
     {
         var userId = req.params.userId;
-        console.log(userId);
         var events = eventModel.findEvents(userId);
         res.json(events);
     });

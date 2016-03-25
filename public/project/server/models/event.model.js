@@ -48,7 +48,7 @@ module.exports = function()
         };
 
         events.push(newEvent);
-        console.log(events);
+        //console.log(events);
     }
 
     function findEvents(userId)
@@ -78,13 +78,13 @@ module.exports = function()
         }
 
         var eventId = userEvents[eventIndex]._id;
-        console.log(eventId);
+        //console.log(eventId);
 
         events = events.filter(function(eId){
             return eId._id != eventId;
         });
 
-        console.log(events);
+        //console.log(events);
     }
 
     function updateEventById(eventId, newEvent)
@@ -111,6 +111,6 @@ module.exports = function()
             "userId":userId
         };
 
-        console.log(events);
+        //console.log(events);
     }
 };

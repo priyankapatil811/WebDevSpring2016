@@ -27,7 +27,7 @@ module.exports = function()
                 return matchedUser;
             }
         }
-        console.log("match not found!");
+        //console.log("match not found!");
         return null;
     }
 
@@ -42,7 +42,7 @@ module.exports = function()
                 return matchedUser;
             }
         }
-        console.log("match not found!");
+        //console.log("match not found!");
         return null;
     }
 

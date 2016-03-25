@@ -12,7 +12,7 @@ module.exports = function(app,userModel)
     app.get("/api/project/user", function (req,res) {
         var uName = req.query.username;
         var uPwd = req.query.password;
-        var user = userModel.findUserByCredentials(uName,uPwd)
+        var user = userModel.findUserByCredentials(uName,uPwd);
         req.session.currentUser = user;
         res.json(user);
     });
@@ -23,8 +23,7 @@ module.exports = function(app,userModel)
 
     app.post("/api/project/user",function(req,res){
         var newUser = req.body;
-        console.log(newUser);
-        var user = userModel.createUser(newUser)
+        var user = userModel.createUser(newUser);
         req.session.currentUser = user;
         res.json(user);
     });

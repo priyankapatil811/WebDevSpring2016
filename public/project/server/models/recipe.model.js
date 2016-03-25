@@ -42,7 +42,7 @@ module.exports = function() {
         };
 
         recipes.push(newRecipe);
-        console.log(recipes);
+        //console.log(recipes);
     }
 
     function findRecipes(userId) {
@@ -68,13 +68,13 @@ module.exports = function() {
         }
 
         var recipeId = userRecipes[recipeIndex]._id;
-        console.log(recipeId);
+        //console.log(recipeId);
 
         recipes = recipes.filter(function (rId) {
             return rId._id != recipeId;
         });
 
-        console.log(recipes);
+        //console.log(recipes);
     }
 
     function updateRecipeById(recipeId, newRecipe) {
@@ -98,6 +98,6 @@ module.exports = function() {
             "userId": userId
         };
 
-        console.log(recipes);
+        //console.log(recipes);
     }
 };
