@@ -24,10 +24,11 @@
         vm.updateEvent = updateEvent;
         vm.deleteEvent = deleteEvent;
 
-        getGeoLoc();
+        if(angular.isUndefined(vm.e))
+            getGeoLoc();
+        else
+            searchLocation(vm.e);
 
-       // $scope.where = "";
-      //  $scope.getGeoLoc = function ()
         function getGeoLoc()
         {
             if (navigator.geolocation) {
@@ -38,58 +39,54 @@
             }
         };
 
-      //   $scope.searchLocation = function (e)
         function searchLocation(e)
          {
-                console.log("in location search");
-                EventService.findEventByLocation(e.city, function (mapData) {
-                    if (mapData.results.length != 0) {
-                        vm.where = mapData.results[0].geometry.location.lat + "," + mapData.results[0].geometry.location.lng;
-                    }
-                    else {
-                        vm.error = "Could not find entered location";
-                        vm.showErr = true;
-                    }
-                    search(vm.where);
-                    console.log(vm.where);
-                });
+             EventService.findEventByLocation(e.city).then(function (mapData) {
+                 console.log(mapData.data);
+                 if (mapData.data.results.length != 0) {
+                     vm.where = mapData.data.results[0].geometry.location.lat + "," + mapData.data.results[0].geometry.location.lng;
+                     vm.eventDetails = [];
+                     search(vm.where,e.radius);
+                 }
+                 else {
+                     vm.error = "Could not find entered location";
+                     vm.showErr = true;
+                 }
+             });
 
          };
 
-        //$scope.showPosition = function (position) {
         function showPosition(position)
         {
             console.log("in show position");
             vm.where = position.coords.latitude + "," + position.coords.longitude;
-            search(vm.where);
+            search(vm.where,2);
             //$scope.$apply();
         };
 
-        //$scope.showError = function (error) {
         function showError()
         {
             switch (error.code) {
                 case error.PERMISSION_DENIED:
-                    error = "User denied the request for Geolocation."
+                    error = "User denied the request for Geolocation.";
                     break;
                 case error.POSITION_UNAVAILABLE:
-                    error = "Location information is unavailable."
+                    error = "Location information is unavailable.";
                     break;
                 case error.TIMEOUT:
-                    error = "The request to get user location timed out."
+                    error = "The request to get user location timed out.";
                     break;
                 case error.UNKNOWN_ERROR:
-                    error = "An unknown error occurred."
+                    error = "An unknown error occurred.";
                     break;
             }
         };
 
-       // $scope.search = function (where) {
-        function search(where)
+        function search(where,radius)
         {
-            EventService.findAllEvents(where, function (data) {
+            EventService.findAllEvents(where,radius).then(function (response) {
                 console.log("in search!");
-                vm.eventData = data;
+                vm.eventData = response.data;
 
                 for (var j = 0; j < vm.eventData.events.event.length; j++) {
                     var eventObj = new Object();
@@ -127,9 +124,7 @@
             });
         }
 
-
         /********** POC ************/
-
         function init()
         {
             EventService.findEvents($rootScope.currentuser._id).then(

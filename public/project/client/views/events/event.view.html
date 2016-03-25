@@ -10,9 +10,9 @@
                         <input type="text" class="form-control" id="location" placeholder="Newark" ng-model="model.e.city">
                         <label class="sr-only" for="radius">Radius</label>
                         <div class="input-group-addon" style="font-size: xx-small">RADIUS (miles)</div>
-                        <input type="text" class="form-control" id="radius" placeholder="2">
+                        <input type="text" class="form-control" id="radius" placeholder="2" ng-model="model.e.radius">
                     </div>
-                    <button type="submit" class="btn btn-info" ng-click="model.searchLocation(e)">Go</button>
+                    <button type="submit" class="btn btn-info" ng-click="model.searchLocation(model.e)">Go</button>
                 </div>
             </form>
         </div>
@@ -50,7 +50,7 @@
         </div>
         <div class="col-md-6">
             <ng-map center="{{model.where}}" zoom="10">
-                <marker position = "{{model.event.latitude}},{{model.event.longitude}}"
+                <marker position = "{{event.latitude}},{{event.longitude}}"
                         ng-repeat="event in model.eventDetails"
                         on-click="clickEventInfo(event,event)">
                 </marker>

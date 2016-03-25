@@ -19,7 +19,8 @@
             updateUser : updateUser,
             deleteUserById : deleteUserById,
             setCurrentUser : setCurrentUser,
-            getCurrentUser : getCurrentUser
+            getCurrentUser : getCurrentUser,
+            logout : logout
         };
 
         return api;

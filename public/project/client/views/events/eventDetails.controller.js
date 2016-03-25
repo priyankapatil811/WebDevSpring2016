@@ -7,10 +7,9 @@
         .module("infoPinStrap")
         .controller("EventDetailsController", EventDetailsController);
 
-    function EventDetailsController($scope, EventService, $routeParams, $rootScope, UserService) {
+    function EventDetailsController(EventService, $routeParams) {
 
         var vm = this;
-
 
         EventService.findEventById($routeParams.eventId, function (data) {
             console.log("in event Id search");
