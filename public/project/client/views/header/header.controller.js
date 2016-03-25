@@ -7,13 +7,21 @@
         .module("infoPinStrap")
         .controller("HeaderController",HeaderController);
 
-    function HeaderController($scope,$location,$rootScope)
+    function HeaderController($location,UserService,$rootScope)
     {
-        $scope.$location = $location;
+        var vm = this;
 
-        $scope.logout = function ()
+        vm.$location = $location;
+        vm.logout = logout;
+        function logout()
         {
-            $rootScope.currentuser = null;
+            console.log("in logout");
+            UserService.logout().then(
+            function (response) {
+                console.log(response);
+                $rootScope.currentuser = null;
+            });
+
         }
     }
 })();
