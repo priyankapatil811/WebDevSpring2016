@@ -24,7 +24,7 @@
         function searchSpaceNews(s)
         {
               SpaceService.findAllNews(s.spacenews).then(function (response) {
-
+                vm.newsDetails = [];
                 console.log("in space related news search");
                 console.log(s.spacenews);
                 vm.newsData = response.data;

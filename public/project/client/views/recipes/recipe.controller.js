@@ -24,6 +24,8 @@
         function searchRecipe(r)
         {
             RecipeService.findAllRecipes(r.recipe).then(function (response) {
+
+                vm.recipeDetails = [];
                 console.log("in recipe search");
                 console.log(r.recipe);
                 vm.recipeData = response.data;
