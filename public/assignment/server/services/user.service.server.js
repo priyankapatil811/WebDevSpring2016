@@ -12,26 +12,54 @@ module.exports = function(app,userModel)
     app.get("/api/assignment/user", function (req,res) {
         var uName = req.query.username;
         var uPwd = req.query.password;
-        var user = userModel.findUserByCredentials(uName,uPwd);
-        res.json(user);
+        var user = userModel.findUserByCredentials(uName,uPwd).then(
+            function(doc)
+            {
+                //req.session.currentUser = doc;
+                res.json(doc);
+            },
+            function(err)
+            {
+                res.status(400).send(err);
+            }
+        );
     });
 
+    /*
     app.get("/api/assignment/user",function(req,res){
         res.json(userModel.findAllUsers);
     });
+    */
 
     app.post("/api/assignment/user",function(req,res){
         var newUser = req.body;
         console.log(newUser);
-        var user = userModel.createUser(newUser);
-        res.json(user);
+        var user = userModel.createUser(newUser).then(
+            function(doc)
+            {
+                //req.session.currentUser = doc;
+                res.json(doc);
+            },
+            function(err)
+            {
+                res.status(400).send(err);
+            }
+        );
     });
 
     app.put("/api/assignment/user/:id",function(req,res){
         var userId = req.params.id;
         var upUser = req.body;
-        var user = userModel.updateUser(userId,upUser);
-        res.json(user);
+        var user = userModel.updateUser(userId,upUser).then(
+            function(doc)
+            {
+                res.json(doc);
+            },
+            function(err)
+            {
+                res.status(400).send(err);
+            }
+        );
     });
 
     app.delete("/api/assignment/user/:id",function(req,res){

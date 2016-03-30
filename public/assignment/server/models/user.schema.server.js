@@ -9,7 +9,7 @@ module.exports = function(mongoose) {
         emails: [String],
         phones: [String]
         // store user documents in this collection
-    }, {collection: 'cs5610.assignment.user'});
+    }, {collection: 'assignment.user'});
 
     return user;
 };

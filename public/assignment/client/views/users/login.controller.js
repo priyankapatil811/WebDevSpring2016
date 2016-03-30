@@ -16,15 +16,15 @@
         {
             UserService.findUserByCredentials(vm.user.username, vm.user.password)
                 .then( function (response) {
-                    console.log("response : " +response.object);
-                    if(response.object == null)
+                    console.log("response : " +response.data);
+                    if(response.data == null)
                     {
                         console.log("Please register!");
                         alert("Please register! User does not exist!");
                     }
                     else
                     {
-                        UserService.setCurrentUser(response.object);
+                        UserService.setCurrentUser(response.data);
                         $location.url('/profile');
                     }
                 });

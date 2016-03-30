@@ -9,7 +9,7 @@ var q = require("q");
 module.exports = function(db,mongoose)
 {
     //load user schema
-    var UserSchema = require("./user.schema.server")(mongoose);
+    var UserSchema = require("./user.schema.server.js")(mongoose);
 
     //create user model from schema
     var UserModel = mongoose.model('User',UserSchema);
@@ -58,8 +58,9 @@ module.exports = function(db,mongoose)
 
         var deferred = q.defer();
 
-        UserModel.findOne(username,password, function(err,doc)
+        UserModel.findOne({username : username,password : password}, function(err,doc)
         {
+            console.log(username + " " + password);
            if(err)
            {
                deferred.reject(err);
@@ -111,6 +112,23 @@ module.exports = function(db,mongoose)
 
         return newUser;
         */
+
+        var deferred = q.defer();
+
+        UserModel.create(user,function(err,doc)
+        {
+            if(err)
+            {
+                deferred.reject(err);
+            }
+            else
+            {
+                deferred.resolve(doc);
+                console.log(doc);
+            }
+        });
+
+        return deferred.promise;
     }
 
     function deleteUserById(userId)
@@ -133,6 +151,7 @@ module.exports = function(db,mongoose)
 
     function updateUser(userId,user)
     {
+        /*
         var index;
         for(var i=0;i<curUsers.length;i++)
         {
@@ -155,6 +174,31 @@ module.exports = function(db,mongoose)
         };
 
         return curUsers[index];
+        */
+
+        var deferred = q.defer();
+
+        UserModel.findById(userId,function(err,curUser)
+        {
+           if(err)
+               deferred.reject(err);
+           else
+           {
+               curUser.firstName = user.firstName;
+               curUser.lastName = user.lastName;
+               curUser.password = user.password;
+               curUser.username = user.username;
+               curUser.emails.push(user.email);
+               curUser.save(function (err,doc) {
+                   if(err)
+                       deferred.reject(err);
+                   else
+                       deferred.resolve(doc);
+               });
+           }
+        });
+
+        return deferred.promise;
     }
 
 };
