@@ -16,7 +16,6 @@
         {
             UserService.findUserByCredentials(vm.user.username, vm.user.password)
                 .then( function (response) {
-                    console.log("response : " +response.data);
                     if(response.data == null)
                     {
                         console.log("Please register!");
