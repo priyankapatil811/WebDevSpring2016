@@ -14,19 +14,20 @@
 
         function login()
         {
-            UserService.findUserByCredentials(vm.user.username,vm.user.password)
+            UserService.findUserByCredentials(vm.user.username, vm.user.password)
                 .then( function (response) {
-                    if(response.data == null)
+                    console.log("response : " +response.object);
+                    if(response.object == null)
                     {
                         console.log("Please register!");
                         alert("Please register! User does not exist!");
                     }
                     else
                     {
-                        UserService.setCurrentUser(response.data);
+                        UserService.setCurrentUser(response.object);
                         $location.url('/profile');
                     }
                 });
-        };
+        }
     }
 })();

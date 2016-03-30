@@ -2,9 +2,11 @@
  * Created by Priyanka on 3/16/16.
  */
 
-module.exports = function (app) {
+"use strict"
 
-  var userModel = require("./models/user.model.js")();
+module.exports = function (app,mongoose,db) {
+
+  var userModel = require("./models/user.model.js")(mongoose,db);
   require("./services/user.service.server.js")(app,userModel);
 
   var formModel = require("./models/form.model.js")();

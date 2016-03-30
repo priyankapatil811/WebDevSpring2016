@@ -3,8 +3,17 @@
  */
 var curUsers = require("./user.mock.json");
 
-module.exports = function()
+//load q promise library
+var q = require("q");
+
+module.exports = function(db,mongoose)
 {
+    //load user schema
+    var UserSchema = require("./user.schema.server")(mongoose);
+
+    //create user model from schema
+    var UserModel = mongoose.model('User',UserSchema);
+
     var api = {
         findUserByUsername : findUserByUsername,
         findUserByCredentials : findUserByCredentials,
@@ -33,6 +42,7 @@ module.exports = function()
 
     function findUserByCredentials(username,password)
     {
+        /*
         var matchedUser = "";
 
         for(var i=0;i<curUsers.length;i++)
@@ -44,6 +54,25 @@ module.exports = function()
         }
         console.log("match not found!");
         return null;
+        */
+
+        var deferred = q.defer();
+
+        UserModel.findOne(username,password, function(err,doc)
+        {
+           if(err)
+           {
+               deferred.reject(err);
+               console.log("err : " +err);
+           }
+           else
+           {
+               deferred.resolve(doc);
+               console.log("doc : " +doc);
+           }
+        });
+
+        return deferred.promise;
     }
 
     function findUserById(userId)
@@ -64,6 +93,7 @@ module.exports = function()
 
     function createUser(user)
     {
+        /*
         var newUser =
         {
             _id : Math.floor((Math.random() * 1000) + 1),
@@ -80,6 +110,7 @@ module.exports = function()
         //   console.log(curUsers);
 
         return newUser;
+        */
     }
 
     function deleteUserById(userId)
