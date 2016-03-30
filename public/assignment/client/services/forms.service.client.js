@@ -44,9 +44,9 @@
         }
 
         //added userId parameter
-        function deleteFormById(formId,userId)
+        function deleteFormById(formId)
         {
-            return $http.delete("/api/assignment/form/"+formId+"/user/"+userId);
+            return $http.delete("/api/assignment/form/"+formId);
         }
 
         function updateFormById(formId, newForm)
