@@ -12,7 +12,7 @@ module.exports = function(mongoose)
         options: [{label: String, value: String}]
 
         // store field documents in this collection
-    }, {collection: 'cs5610.assignment.field'});
+    }, {collection: 'assignment.field'});
 
     return field;
 };
