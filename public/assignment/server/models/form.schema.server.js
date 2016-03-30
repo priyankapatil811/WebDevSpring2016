@@ -12,7 +12,7 @@ module.exports = function(mongoose)
         created: Date, //Default : Current Date
         updated: Date  //Default : Current Date
         // store form documents in this collection
-    }, {collection: 'cs5610.assignment.form'});
+    }, {collection: 'assignment.form'});
 
     return form;
 };

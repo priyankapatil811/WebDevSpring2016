@@ -4,8 +4,16 @@
  var forms = require("./form.mock.json");
  var uuid = require('node-uuid');
 
- module.exports = function()
+ var q = require("q");
+
+ module.exports = function(db,mongoose)
  {
+     //load form schema
+     var FormSchema = require("./form.schema.server.js")(mongoose);
+
+     //create form model from schema
+     var FormModel = mongoose.model('Form',FormSchema);
+
      var api =
      {
           getFormByIndex : getFormByIndex,
@@ -17,7 +25,6 @@
      };
 
      return api;
-
 
      function getFormByIndex(index,userId)
      {
@@ -46,81 +53,82 @@
 
      function createFormForUser(userId, form)
      {
-        var newform =
-        {
-        // "_id" : "0"+ Math.floor((Math.random() * 100) + 1),
-         "_id" : uuid.v1(),
-         "title" : form.title,
-         "userId" : userId
-        };
+        var deferred = q.defer();
 
-        forms.push(newform);
-        console.log(forms);
+        form.userId = userId;
+        form.fields = [];
+        FormModel.create(form,function(err,doc)
+        {
+           if(err)
+           {
+               deferred.reject(err);
+           }
+           else
+           {
+               deferred.resolve(doc);
+           }
+        });
+
+        return deferred.promise;
      }
 
      function findAllFormsForUser(userId)
      {
-        var formsForUserId = [];
+        var deferred = q.defer();
 
-        for(var i=0;i<forms.length;i++)
-        {
-         if(userId==forms[i].userId)
-         {
-          formsForUserId.push(forms[i]);
-         }
-        }
-
-        return formsForUserId;
+        FormModel.find({userId : userId},function(err,doc){
+           if(err)
+           {
+               deferred.reject(err);
+           }
+           else
+           {
+               deferred.resolve(doc);
+           }
+        });
+        return deferred.promise;
      }
 
-     function deleteFormById(formIndex,userId)
+
+     function deleteFormById(formId)
      {
-         var userForms = [];
-         for(var i=0;i<forms.length;i++)
+         var deferred = q.defer();
+
+         FormModel.remove({_id : formId},function(err,doc)
          {
-             if(userId == forms[i].userId)
+             if(err)
              {
-                 userForms.push(forms[i]);
+                 deferred.reject(err);
              }
-         }
+             else
+             {
+                 deferred.resolve(doc);
+             }
+         });
 
-        var formId = userForms[formIndex]._id;
-        console.log(formId);
-
-        forms = forms.filter(function(fId)
-        {
-            return fId._id != formId;
-        });
-
-        console.log(forms);
+         return deferred.promise;
      }
 
      function updateFormById(formId, newForm)
      {
-         console.log(formId);
+         var deferred = q.defer();
 
-         for(var i=0;i<forms.length;i++) {
-             if (formId == forms[i]._id) {
-                 if(forms[i].hasOwnProperty("fields")) {
-                     forms[i] =
-                     {
-                         "_id": forms[i]._id,
-                         "title": newForm.title,
-                         "userId": forms[i].userId,
-                         "fields": forms[i].fields
-                     }
-                 }
-                 else
-                 {
-                     forms[i] =
-                     {
-                         "_id": forms[i]._id,
-                         "title": newForm.title,
-                         "userId": forms[i].userId
-                     }
-                 }
+         FormModel.findById({_id : formId},function(err,upForm)
+         {
+             if(err)
+             {
+                 deferred.reject(err);
              }
-         }
-         console.log(forms);
+             else
+             {
+                upForm.title = newForm.title;
+                upForm.save(function(err,doc)
+                {
+                    deferred.resolve(doc);
+                });
+             }
+         });
+
+         return deferred.promise;
      }
  };
