@@ -12,7 +12,7 @@ module.exports = function (app,mongoose,db) {
   var formModel = require("./models/form.model.js")(mongoose,db);
   require("./services/form.service.server.js")(app,userModel,formModel);
 
-  var fieldModel = require("./models/fields.model.js")();
+  var fieldModel = require("./models/fields.model.js")(mongoose,db);
   require("./services/field.service.server.js")(app,fieldModel);
 
 };
