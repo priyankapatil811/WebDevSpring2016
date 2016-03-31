@@ -18,7 +18,8 @@
             password : $rootScope.currentuser.password,
             firstName : $rootScope.currentuser.firstName,
             lastName : $rootScope.currentuser.lastName,
-            email : $rootScope.currentuser.email,
+            email : $rootScope.currentuser.emails,
+            phone : $rootScope.currentuser.phones,
             roles : $rootScope.currentuser.roles
         };
 

@@ -91,25 +91,6 @@ module.exports = function(db,mongoose)
 
     function createUser(user)
     {
-        /*
-        var newUser =
-        {
-            _id : Math.floor((Math.random() * 1000) + 1),
-            //_id : (new Date).getTime(),
-            username : user.username,
-            password : user.password,
-            email : user.email,
-            firstName : null,
-            lastName: null,
-            roles : null
-        };
-
-        curUsers.push(newUser);
-        //   console.log(curUsers);
-
-        return newUser;
-        */
-
         var deferred = q.defer();
 
         UserModel.create(user,function(err,doc)
@@ -121,7 +102,6 @@ module.exports = function(db,mongoose)
             else
             {
                 deferred.resolve(doc);
-                console.log(doc);
             }
         });
 
@@ -148,31 +128,6 @@ module.exports = function(db,mongoose)
 
     function updateUser(userId,user)
     {
-        /*
-        var index;
-        for(var i=0;i<curUsers.length;i++)
-        {
-            if(curUsers[i]._id == userId)
-            {
-                index = i;
-                break;
-            }
-        }
-
-        curUsers[index] =
-        {
-            _id : userId,
-            firstName : user.firstName,
-            lastName : user.lastName,
-            password : user.password,
-            username : user.username,
-            email : user.email,
-            roles: user.roles
-        };
-
-        return curUsers[index];
-        */
-
         var deferred = q.defer();
 
         UserModel.findById(userId,function(err,curUser)
@@ -186,6 +141,7 @@ module.exports = function(db,mongoose)
                curUser.password = user.password;
                curUser.username = user.username;
                curUser.emails.push(user.email);
+               curUser.phones.push(user.phone);
                curUser.save(function (err,doc) {
                    if(err)
                        deferred.reject(err);

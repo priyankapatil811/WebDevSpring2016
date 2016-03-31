@@ -7,7 +7,8 @@ module.exports = function(mongoose) {
         firstName: String,
         lastName: String,
         emails: [String],
-        phones: [String]
+        phones: [String],
+        roles: [String]
         // store user documents in this collection
     }, {collection: 'assignment.user'});
 
