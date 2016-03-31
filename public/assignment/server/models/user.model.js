@@ -60,16 +60,13 @@ module.exports = function(db,mongoose)
 
         UserModel.findOne({username : username,password : password}, function(err,doc)
         {
-            console.log(username + " " + password);
            if(err)
            {
                deferred.reject(err);
-               console.log("err : " +err);
            }
            else
            {
                deferred.resolve(doc);
-               console.log("doc : " +doc);
            }
         });
 
