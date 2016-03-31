@@ -42,13 +42,17 @@
 
      function getFormById(formId)
      {
-         for(var i=0;i<forms.length;i++)
+         var deferred = q.defer();
+
+         FormModel.findById({_id : formId},function(err,doc)
          {
-            if(formId == forms[i]._id)
-            {
-                return forms[i];
-            }
-         }
+            if(err)
+                deferred.reject(err);
+            else
+                deferred.resolve(doc);
+         });
+
+         return deferred.promise;
      }
 
      function createFormForUser(userId, form)
