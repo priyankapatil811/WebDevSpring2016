@@ -42,20 +42,6 @@ module.exports = function(db,mongoose)
 
     function findUserByCredentials(username,password)
     {
-        /*
-        var matchedUser = "";
-
-        for(var i=0;i<curUsers.length;i++)
-        {
-            if(curUsers[i].username == username && curUsers[i].password == password){
-                matchedUser = curUsers[i];
-                return matchedUser;
-            }
-        }
-        console.log("match not found!");
-        return null;
-        */
-
         var deferred = q.defer();
 
         UserModel.findOne({username : username,password : password}, function(err,doc)
@@ -86,7 +72,22 @@ module.exports = function(db,mongoose)
 
     function findAllUsers()
     {
-        return curUsers;
+     //   return curUsers;
+        var deferred = q.defer();
+
+        UserModel.find({},function(err,doc)
+        {
+            if(err)
+            {
+                deferred.reject(err);
+            }
+            else
+            {
+                deferred.resolve(doc);
+            }
+        });
+
+        return deferred.promise;
     }
 
     function createUser(user)
@@ -110,7 +111,7 @@ module.exports = function(db,mongoose)
 
     function deleteUserById(userId)
     {
-        for(var i=0;i<curUsers.length;i++)
+        /*for(var i=0;i<curUsers.length;i++)
         {
             if(curUsers[i]._id == userId)
             {
@@ -123,7 +124,21 @@ module.exports = function(db,mongoose)
                 break;
             }
         }
-        return remUsers;
+        return remUsers;*/
+
+        var deferred = q.defer();
+
+        UserModel.remove({_id : userId},function(err,doc)
+        {
+            if(err)
+                deferred.reject(err);
+            else
+            {
+                deferred.resolve(doc);
+            }
+        });
+
+        return deferred.promise;
     }
 
     function updateUser(userId,user)

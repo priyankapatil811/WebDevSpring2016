@@ -12,7 +12,7 @@ module.exports = function(app,userModel)
     app.get("/api/assignment/user", function (req,res) {
         var uName = req.query.username;
         var uPwd = req.query.password;
-        var user = userModel.findUserByCredentials(uName,uPwd).then(
+        userModel.findUserByCredentials(uName,uPwd).then(
             function(doc)
             {
                 req.session.currentUser = doc;
@@ -25,11 +25,20 @@ module.exports = function(app,userModel)
         );
     });
 
-    /*
+
     app.get("/api/assignment/user",function(req,res){
-        res.json(userModel.findAllUsers);
+        userModel.findAllUsers.then(
+            function(doc)
+            {
+                res.json(doc);
+            },
+            function(err)
+            {
+                res.status(400).send(err);
+            }
+        );
     });
-    */
+
 
     app.post("/api/assignment/user",function(req,res){
         var newUser = req.body;
@@ -50,7 +59,7 @@ module.exports = function(app,userModel)
     app.put("/api/assignment/user/:id",function(req,res){
         var userId = req.params.id;
         var upUser = req.body;
-        var user = userModel.updateUser(userId,upUser).then(
+        userModel.updateUser(userId,upUser).then(
             function(doc)
             {
                 res.json(doc);
@@ -64,8 +73,16 @@ module.exports = function(app,userModel)
 
     app.delete("/api/assignment/user/:id",function(req,res){
         var delUser = req.param.userId;
-        userModel.deleteUserById(delUser);
-        res.send("ok");
+        userModel.deleteUserById(delUser).then(
+            function(doc)
+            {
+                res.json(doc);
+            },
+            function(err)
+            {
+                res.status(400).send(err);
+            }
+        );
     });
 
     //logged in

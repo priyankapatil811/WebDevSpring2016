@@ -18,8 +18,8 @@
             password : $rootScope.currentuser.password,
             firstName : $rootScope.currentuser.firstName,
             lastName : $rootScope.currentuser.lastName,
-            email : $rootScope.currentuser.emails,
-            phone : $rootScope.currentuser.phones,
+            emails : $rootScope.currentuser.emails,
+            phones : $rootScope.currentuser.phones,
             roles : $rootScope.currentuser.roles
         };
 
@@ -29,7 +29,7 @@
             console.log(user);
             UserService.updateUser(user._id, user)
                 .then(function (response) {
-                    UserService.setCurrentUser(response.data);
+                //    UserService.setCurrentUser(response.data);
                     $location.url("/profile");
                 });
         };
