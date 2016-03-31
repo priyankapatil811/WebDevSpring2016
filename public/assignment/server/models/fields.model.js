@@ -50,9 +50,6 @@ module.exports = function(mongoose)
 
     function createFieldForForm(formId,newField)
     {
-        console.log(formId);
-        console.log(newField);
-
         var deferred = q.defer();
 
         FormModel.findById({_id : formId},function(err,form)
@@ -68,18 +65,14 @@ module.exports = function(mongoose)
                 fieldsList.push(upNewField);
                 form.fields = fieldsList;
 
-                console.log("updated form : " +form);
-
                 form.save(function(err,doc)
                 {
                     if(err)
                     {
-                        console.log(err);
                         deferred.reject(err);
                     }
                     else
                     {
-                        console.log("doc in save :" + doc);
                         deferred.resolve(doc);
                     }
                 });
@@ -125,65 +118,92 @@ module.exports = function(mongoose)
 
     function deleteFieldFromForm(formId, fieldId)
     {
-        var form = "";
-        for(var i=0;i<forms.length;i++)
-        {
-            if(formId == forms[i]._id)
-            {
-                form = forms[i];
-            }
-        }
+        var deferred = q.defer();
 
-        for(var i=0;i<form.fields.length;i++)
+        FormModel.findById({_id : formId}, function(err,form)
         {
-            if(fieldId == form.fields[i]._id)
+            if(err)
             {
-                form.fields.splice(i,1);
+                deferred.reject(err);
             }
-        }
+            else
+            {
+                for(var i=0;i<form.fields.length;i++)
+                {
+                    if(fieldId == form.fields[i]._id)
+                    {
+                        form.fields.splice(i,1);
+                        break;
+                    }
+                }
+
+                form.save(function(err,doc)
+                {
+                    if(err)
+                        deferred.reject(err);
+                    else
+                    {
+                        console.log(doc);
+                        deferred.resolve(doc);
+                    }
+                });
+            }
+        });
+
+        return deferred.promise;
     }
 
     function updateField(formId,fieldId,upField)
     {
-        var form = "";
-        for(var i=0;i<forms.length;i++)
-        {
-            if(formId == forms[i]._id)
-            {
-                form = forms[i];
-            }
-        }
+        var deferred = q.defer();
 
-
-        for(var i=0;i<form.fields.length;i++)
+        FormModel.findById({_id : formId}, function(err,form)
         {
-            if(fieldId == form.fields[i]._id)
+            if(err)
             {
-                updateFieldAsPerType(i,form,fieldId,upField);
+                deferred.reject(err);
             }
-        }
+            else
+            {
+                for(var i=0;i<form.fields.length;i++)
+                {
+                    if(fieldId == form.fields[i]._id)
+                    {
+                        updateFieldAsPerType(form.fields[i],upField);
+                        break;
+                    }
+                }
+
+                console.log(form);
+
+                form.save(function(err,doc)
+                {
+                    if(err)
+                    {
+                        console.log(err);
+                        deferred.reject(err);
+                    }
+                    else
+                    {
+                        deferred.resolve(doc);
+                    }
+                });
+            }
+        });
+
+        return deferred.promise;
     }
 
-    function updateFieldAsPerType(index,form,fieldId,upField)
+    function updateFieldAsPerType(field,upField)
     {
         if(upField.type == "TEXT" || upField.type == "TEXTAREA")
         {
-            form.fields[index] =
-            {
-                _id : fieldId,
-                label : upField.label,
-                type : upField.type,
-                placeholder : upField.placeholder
-            }
+            field.label = upField.label;
+            field.placeholder = upField.placeholder;
         }
         else if(upField.type == "DATE")
         {
-            form.fields[index] =
-            {
-                _id : fieldId,
-                label : upField.label,
-                type : upField.type
-            }
+            field.label = upField.label;
         }
         else
         {
@@ -205,13 +225,8 @@ module.exports = function(mongoose)
 
             //console.log(optionsList);
 
-            form.fields[index] =
-            {
-                _id : fieldId,
-                label : upField.label,
-                type : upField.type,
-                options : optionsList
-            }
+            field.label = upField.label;
+            field.options = optionsList;
         }
     }
 

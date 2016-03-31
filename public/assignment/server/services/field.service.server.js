@@ -36,21 +36,37 @@ module.exports = function (app,fieldModel) {
         console.log("in delete");
         var formId = req.params.formId;
         var fieldId = req.params.fieldId;
-        fieldModel.deleteFieldFromForm(formId,fieldId);
-        res.send("ok");
+        fieldModel.deleteFieldFromForm(formId,fieldId).then(
+              function(doc)
+              {
+                  res.json(doc);
+              },
+              function(err)
+              {
+                  res.status(400).send(err);
+              });
     });
 
     app.put("/api/assignment/form/:formId/field/:fieldId",function(req,res){
         var formId = req.params.formId;
         var fieldId = req.params.fieldId;
         var updatedField = req.body;
-        fieldModel.updateField(formId,fieldId,updatedField);
-        res.send("ok");
+        fieldModel.updateField(formId,fieldId,updatedField).then(
+            function(doc)
+            {
+                res.json(doc);
+            },
+            function(err)
+            {
+                res.status(400).send(err);
+            });
     });
 
+    /*
     app.get("/api/assignment/form/:formId",function(req,res){
         var formId = req.params.formId;
         var form = fieldModel.getFormName(formId);
         res.json(form);
     });
+    */
 };

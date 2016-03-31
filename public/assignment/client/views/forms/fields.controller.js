@@ -27,7 +27,6 @@
                 function(response)
                 {
                     vm.fields = response.data;
-                    console.log(vm.fields);
                 }
             );
 
@@ -142,7 +141,10 @@
             FieldService.deleteFieldFromForm(vm.formId,field._id).then(
                 function(response)
                 {
-                    init();
+                    if(response.data)
+                    {
+                        init();
+                    }
                 }
             )
         }
@@ -159,7 +161,10 @@
             FieldService.updateField(vm.formId,fieldId,field).then(
                 function(response)
                 {
-                    init();
+                    if(response.data)
+                    {
+                        init();
+                    }
                 }
             )
 
