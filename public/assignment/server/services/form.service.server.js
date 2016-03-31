@@ -67,6 +67,21 @@ module.exports = function(app,userModel,formModel)
         );
     });
 
+    app.get("/api/assignment/form",function(req,res)
+    {
+        var formId = req.query.formId;
+        formModel.getFormById(formId).then(
+          function(doc)
+          {
+              res.json(doc);
+          },
+          function(err)
+          {
+              res.status(400).send(err);
+          }
+        );
+    });
+
    /* not required
     //added userId parameter
     app.get("/api/assignment/form/:formId/user/:userId", function(req,res)
@@ -77,11 +92,5 @@ module.exports = function(app,userModel,formModel)
         res.json(form);
     });
 
-    app.get("/api/assignment/form",function(req,res)
-    {
-        var formId = req.query.formId;
-        var form = formModel.getFormById(formId);
-        res.json(form);
-    });
     */
 };

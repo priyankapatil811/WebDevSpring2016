@@ -2,11 +2,21 @@
  * Created by Priyanka on 3/17/16.
  */
 
+"use strict";
+
 var forms = require("./form.mock.json");
 var uuid = require('node-uuid');
 
-module.exports = function()
+var q = require("q");
+
+module.exports = function(mongoose)
 {
+    //load form schema
+    var FormSchema = require("./form.schema.server.js")(mongoose);
+
+    //create form model from schema
+    var FormModel = mongoose.model('FormForFields',FormSchema);
+
     var api =
     {
         getFieldsForForm : getFieldsForForm,
@@ -21,40 +31,66 @@ module.exports = function()
 
     function getFieldsForForm(formId)
     {
-        for(var i=0;i<forms.length;i++)
+        var deferred = q.defer();
+
+        FormModel.findById({_id : formId},function(err,doc)
         {
-            if(formId == forms[i]._id)
+            if(err)
             {
-                return forms[i].fields;
+                deferred.reject(err);
             }
-        }
+            else
+            {
+                deferred.resolve(doc);
+            }
+        });
+
+        return deferred.promise;
     }
 
     function createFieldForForm(formId,newField)
     {
-        var id = Math.floor((Math.random() * 1000) + 1);
+        console.log(formId);
+        console.log(newField);
 
-        for(var i=0;i<forms.length;i++)
+        var deferred = q.defer();
+
+        FormModel.findById({_id : formId},function(err,form)
         {
-            if(formId == forms[i]._id)
+            if(err)
             {
-                var upNewField = createFieldAsPerType(id,newField);
-
-                if(forms[i].hasOwnProperty("fields"))
-                {
-                    return forms[i].fields.push(upNewField);
-                }
-                else
-                {
-                    forms[i].fields = [];
-                    return forms[i].fields.push(upNewField);
-                }
+                deferred.reject(err);
             }
-        }
+            else
+            {
+                var fieldsList = form.fields;
+                var upNewField = createFieldAsPerType(newField);
+                fieldsList.push(upNewField);
+                form.fields = fieldsList;
+
+                console.log("updated form : " +form);
+
+                form.save(function(err,doc)
+                {
+                    if(err)
+                    {
+                        console.log(err);
+                        deferred.reject(err);
+                    }
+                    else
+                    {
+                        console.log("doc in save :" + doc);
+                        deferred.resolve(doc);
+                    }
+                });
+            }
+        });
+
+        return deferred.promise;
     }
 
 
-    function createFieldAsPerType(formId,newField)
+    function createFieldAsPerType(newField)
     {
         var upNewField = "";
         if(newField.type == "TEXT" || newField.type == "TEXTAREA")
@@ -62,7 +98,7 @@ module.exports = function()
             upNewField =
             {
                 //"_id": formId,
-                "_id" : uuid.v1(), "label": newField.label, "type": newField.type, "placeholder" : newField.placeholder
+                "label": newField.label, "type": newField.type, "placeholder" : newField.placeholder
             };
 
         }
@@ -71,7 +107,7 @@ module.exports = function()
             upNewField =
             {
                 //"_id": formId,
-                "_id" : uuid.v1() ,"label": newField.label, "type": newField.type
+                "label": newField.label, "type": newField.type
             };
         }
         else if(newField.type == "OPTIONS" || newField.type == "CHECKBOXES" || newField.type == "RADIOS")
@@ -79,7 +115,7 @@ module.exports = function()
             upNewField =
             {
                 //"_id": formId,
-                "_id" : uuid.v1(),"label": newField.label, "type": newField.type, "options" : newField.options
+                "label": newField.label, "type": newField.type, "options" : newField.options
             };
         }
 

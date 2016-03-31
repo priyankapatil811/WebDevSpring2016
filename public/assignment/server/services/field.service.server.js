@@ -6,14 +6,30 @@ module.exports = function (app,fieldModel) {
     app.get("/api/assignment/form/:formId/field",function(req,res){
 
         var formId = req.params.formId;
-        var fields = fieldModel.getFieldsForForm(formId);
-        res.json(fields);
+        fieldModel.getFieldsForForm(formId).then(
+            function(doc)
+            {
+                res.json(doc.fields);
+            },
+            function(err)
+            {
+                res.status(400).send(err);
+            });
+        //res.json(fields);
     });
 
     app.post("/api/assignment/form/:formId/field",function(req,res){
         var formId = req.params.formId;
         var newField = req.body;
-        res.json(fieldModel.createFieldForForm(formId,newField));
+        fieldModel.createFieldForForm(formId,newField).then(
+          function(doc)
+          {
+              res.json(doc);
+          },
+          function(err)
+          {
+              res.status(400).send(err);
+          });
     });
 
     app.delete("/api/assignment/form/:formId/field/:fieldId",function(req,res){
