@@ -1,6 +1,8 @@
 /**
  * Created by Priyanka on 3/29/16.
  */
+"use strict";
+
 module.exports = function(mongoose)
 {
     // use mongoose to declare a field schema
@@ -11,8 +13,7 @@ module.exports = function(mongoose)
         placeholder: String,
         options: [{label: String, value: String}]
 
-        // store field documents in this collection
-    }, {collection: 'assignment.field'});
+    });
 
     return field;
 };
