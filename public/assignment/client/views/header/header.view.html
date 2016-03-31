@@ -1,4 +1,4 @@
-<nav class="navbar navbar-inverse navbar-fixed-top" ng-controller="HeaderController">
+<nav class="navbar navbar-inverse navbar-fixed-top" ng-controller="HeaderController as model">
     <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -12,15 +12,14 @@
 
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li ng-class="{'active' : $location.url()=='/register'}"><a href="#/register" ng-if="!currentuser.username">Register</a></li>
-                <li ng-class="{'active' : $location.url()=='/login'}"><a href="#/login" ng-if="!currentuser.username">Login</a></li>
+                <li ng-class="{'active' : model.$location.url()=='/register'}"><a href="#/register" ng-if="!currentuser.username">Register</a></li>
+                <li ng-class="{'active' : model.$location.url()=='/login'}"><a href="#/login" ng-if="!currentuser.username">Login</a></li>
                 <!--Add logic for role : admin-->
-                <li ng-class="{'active' : $location.url()=='/profile'}"><a ng-if="currentuser.username" href="#/profile">{{currentuser.username}}</a></li>
-                <li><a ng-if="currentuser.username" href="#/home" ng-click="logout()">Logout</a></li>
+                <li ng-class="{'active' : model.$location.url()=='/profile'}"><a ng-if="currentuser.username" href="#/profile">{{currentuser.username}}</a></li>
+                <li ng-class="{'active' : model.$location.url()=='/forms'}" class="hidden-lg visible-xs"><a href="#/forms" ng-if="currentuser.username">Forms</a></li>
+                <li><a ng-if="currentuser.username" href="#/home" ng-click="model.logout()">Logout</a></li>
             </ul>
-            <!--<form class="navbar-form navbar-right">-->
-                 <!--<input type="text" class="form-control" placeholder="Search...">-->
-            <!--</form>-->
         </div>
+
     </div>
 </nav>
