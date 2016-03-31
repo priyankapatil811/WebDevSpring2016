@@ -9,7 +9,7 @@
 
     function UserService($rootScope, $http)
     {
-        $rootScope.currentuser = {"_id" : null, "firstName":null, "lastName":null, "username":null, "password":null , "roles" : null};
+        $rootScope.currentuser = {"_id" : null, "firstName":null, "lastName":null, "username":null, "password":null , "emails":null, "phones":null};
 
         var api = {
             findUserByUsername : findUserByUsername,
@@ -18,7 +18,9 @@
             createUser : createUser,
             updateUser : updateUser,
             deleteUserById : deleteUserById,
-            setCurrentUser : setCurrentUser
+            setCurrentUser : setCurrentUser,
+            getCurrentUser : getCurrentUser,
+            logout : logout
         };
 
         return api;
@@ -57,6 +59,16 @@
         function setCurrentUser(user)
         {
             $rootScope.currentuser = user;
+        }
+
+        function getCurrentUser()
+        {
+            return $http.get("/api/project/loggedin");
+        }
+
+        function logout()
+        {
+            return $http.post("/api/project/logout");
         }
     }
 })();

@@ -15,7 +15,7 @@ module.exports = function(app,userModel)
         var user = userModel.findUserByCredentials(uName,uPwd).then(
             function(doc)
             {
-                //req.session.currentUser = doc;
+                req.session.currentUser = doc;
                 res.json(doc);
             },
             function(err)
@@ -37,7 +37,7 @@ module.exports = function(app,userModel)
         var user = userModel.createUser(newUser).then(
             function(doc)
             {
-                //req.session.currentUser = doc;
+                req.session.currentUser = doc;
                 res.json(doc);
             },
             function(err)
@@ -67,4 +67,15 @@ module.exports = function(app,userModel)
         userModel.deleteUserById(delUser);
         res.send("ok");
     });
+
+    //logged in
+    app.get("/api/project/loggedin", function (req, res) {
+        res.json(req.session.currentUser);
+    });
+
+    app.post("/api/project/logout", function (req, res) {
+        req.session.destroy();
+        res.send(200);
+    });
+
 };
