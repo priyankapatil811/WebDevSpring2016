@@ -27,16 +27,21 @@ module.exports = function(db,mongoose)
 
     function findUserByUsername(username)
     {
-        var matchedUser = "";
-        for(var i=0;i<curUsers.length;i++)
+        var deferred = q.defer();
+
+        UserModel.findOne({username : username}, function(err,doc)
         {
-            if(curUsers[i].username == username){
-                matchedUser = curUsers[i];
-                return matchedUser;
+            if(err)
+            {
+                deferred.reject(err);
             }
-        }
-        console.log("match not found!");
-        return null;
+            else
+            {
+                deferred.resolve(doc);
+            }
+        });
+
+        return deferred.promise;
     }
 
     function findUserByCredentials(username,password)

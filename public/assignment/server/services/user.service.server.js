@@ -3,47 +3,53 @@
  */
 module.exports = function(app,userModel)
 {
-    app.get("/api/assignment/user?username=username",function(req,res)
+
+    app.get("/api/assignment/user", function(req,res)
     {
         var uName = req.query.username;
-        res.json(userModel.findUserByUsername(uName));
-    });
-
-    app.get("/api/assignment/user", function (req,res) {
-        var uName = req.query.username;
         var uPwd = req.query.password;
-        userModel.findUserByCredentials(uName,uPwd).then(
-            function(doc)
-            {
-                req.session.currentUser = doc;
-                res.json(doc);
-            },
-            function(err)
-            {
-                res.status(400).send(err);
-            }
-        );
+
+        if(typeof uName == 'undefined' && typeof uPwd == 'undefined') {
+            userModel.findAllUsers.then(
+                function (doc) {
+                    res.json(doc);
+                },
+                function (err) {
+                    res.status(400).send(err);
+                }
+            );
+        }
+        else if(uName != null && uPwd != null)
+        {
+            userModel.findUserByCredentials(uName, uPwd).then(
+                function (doc) {
+                    req.session.currentUser = doc;
+                    res.json(doc);
+                },
+                function (err) {
+                    res.status(400).send(err);
+                }
+            );
+        }
+        else
+        {
+            userModel.findUserByUsername(uName).then(
+                function(doc)
+                {
+                    res.json(doc);
+                },
+                function(err)
+                {
+                    res.status(400).send(err);
+                }
+            );
+        }
     });
-
-
-    app.get("/api/assignment/user",function(req,res){
-        userModel.findAllUsers.then(
-            function(doc)
-            {
-                res.json(doc);
-            },
-            function(err)
-            {
-                res.status(400).send(err);
-            }
-        );
-    });
-
 
     app.post("/api/assignment/user",function(req,res){
         var newUser = req.body;
         console.log(newUser);
-        var user = userModel.createUser(newUser).then(
+        userModel.createUser(newUser).then(
             function(doc)
             {
                 req.session.currentUser = doc;
