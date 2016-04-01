@@ -20,9 +20,10 @@ body {
   line-height:24px;
   background-image: url("../img/rainbowbk.jpeg");
   background-color: white;
-  background-repeat: no-repeat;
-  background-position: 0 0;
-  background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    background-size: cover;
 }
 h1, .h1, h2, .h2, h3, .h3 {
 margin-top: 0px;
