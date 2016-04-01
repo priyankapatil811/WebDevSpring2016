@@ -12,6 +12,7 @@
         var vm = this;
         vm.update = update;
 
+       console.log($rootScope.currentuser);
         vm.user = {
             _id: $rootScope.currentuser._id,
             username : $rootScope.currentuser.username,
@@ -23,16 +24,20 @@
             roles : $rootScope.currentuser.roles
         };
 
+
         function update(user)
         {
             console.log("in update");
             console.log(user);
             UserService.updateUser(user._id, user)
                 .then(function (response) {
-                //    UserService.setCurrentUser(response.data);
-                    $location.url("/profile");
+                    if(response.data) {
+                        console.log("response : " + response.data);
+                        UserService.setCurrentUser(response.data);
+                        $location.url("/profile");
+                    }
                 });
-        };
-    };
+        }
+    }
 
 })();

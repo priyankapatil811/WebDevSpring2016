@@ -9,7 +9,7 @@
 
     function UserService($rootScope, $http)
     {
-        $rootScope.currentuser = {"_id" : null, "firstName":null, "lastName":null, "username":null, "password":null , "emails":null, "phones":null};
+        $rootScope.currentuser = {"_id" : null, "firstName":null, "lastName":null, "username":null, "password":null , "emails":[], "phones":[]};
 
         var api = {
             findUserByUsername : findUserByUsername,

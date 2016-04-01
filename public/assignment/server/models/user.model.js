@@ -18,7 +18,6 @@ module.exports = function(db,mongoose)
         findUserByUsername : findUserByUsername,
         findUserByCredentials : findUserByCredentials,
         findAllUsers : findAllUsers,
-        findUserById : findUserById,
         createUser : createUser,
         deleteUserById : deleteUserById,
         updateUser : updateUser
@@ -57,17 +56,6 @@ module.exports = function(db,mongoose)
         });
 
         return deferred.promise;
-    }
-
-    function findUserById(userId)
-    {
-        for(var i=0;i<curUsers.length;i++)
-        {
-            if(curUsers[i]._id == userId)
-            {
-                return curUsers[i];
-            }
-        }
     }
 
     function findAllUsers()
@@ -111,21 +99,6 @@ module.exports = function(db,mongoose)
 
     function deleteUserById(userId)
     {
-        /*for(var i=0;i<curUsers.length;i++)
-        {
-            if(curUsers[i]._id == userId)
-            {
-                var remId = userId;
-
-                var remUsers = curUsers.filter(function(uId){
-                    return uId._id != remId;
-                });
-
-                break;
-            }
-        }
-        return remUsers;*/
-
         var deferred = q.defer();
 
         UserModel.remove({_id : userId},function(err,doc)
@@ -145,23 +118,24 @@ module.exports = function(db,mongoose)
     {
         var deferred = q.defer();
 
-        UserModel.findById(userId,function(err,curUser)
+        UserModel.findById(userId,function(err,loggedInUser)
         {
            if(err)
                deferred.reject(err);
            else
            {
-               curUser.firstName = user.firstName;
-               curUser.lastName = user.lastName;
-               curUser.password = user.password;
-               curUser.username = user.username;
-               curUser.emails.push(user.email);
-               curUser.phones.push(user.phone);
-               curUser.save(function (err,doc) {
+               loggedInUser.firstName = user.firstName;
+               loggedInUser.lastName = user.lastName;
+               loggedInUser.password = user.password;
+               loggedInUser.username = user.username;
+               loggedInUser.emails = user.emails;
+               loggedInUser.phones = user.phones;
+               loggedInUser.save(function (err,doc) {
                    if(err)
                        deferred.reject(err);
-                   else
+                   else {
                        deferred.resolve(doc);
+                   }
                });
            }
         });
