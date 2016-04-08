@@ -6,8 +6,44 @@ module.exports = function(app,userModel,newsModel)
     app.post("/api/project/user/:userId/news", function(req,res) {
         var userId = req.params.userId;
         var newnews = req.body;
-        newsModel.createNewsForUser(userId,newnews);
-        res.json("ok");
+
+        newsModel.likesNewsArticle(userId,newnews).then(
+            function(doc)
+            {
+                console.log("news " + doc);
+                return userModel.userLikesArticle(userId,doc);
+            } ,
+            function(err)
+            {
+                console.log(err);
+                res.status(600).send(err);
+            }
+        ).then(
+            function(doc)
+            {
+                res.json(doc);
+            },
+            function(err)
+            {
+                res.status(400).send(err);
+            }
+        );
+        //res.json("ok");
+    });
+
+    app.get("/api/project/news/:newsId",function(req,res)
+    {
+        var newsId = req.params.newsId;
+
+        newsModel.findNewsByIdForUser(newsId).then(
+            function(doc)
+            {
+                res.json(doc);
+            },
+            function(err)
+            {
+                res.status(600).send(err);
+            });
     });
 
     app.put("/api/project/news/:newsId", function(req,res)

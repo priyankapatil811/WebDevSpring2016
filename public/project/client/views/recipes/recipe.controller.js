@@ -7,7 +7,7 @@
         .module("infoPinStrap")
         .controller("RecipeController", RecipeController);
 
-    function RecipeController(RecipeService, $rootScope) {
+    function RecipeController(RecipeService, UserService, $rootScope) {
 
         var vm = this;
         vm.recipeList = [];
@@ -19,6 +19,12 @@
         vm.updateRecipe = updateRecipe;
         vm.deleteRecipe = deleteRecipe;
 
+        var user = "";
+        UserService
+            .getCurrentUser()
+            .then(function(response) {
+                user = response.data;
+            });
 
         //$scope.searchRecipe = function (r) {
         function searchRecipe(r)
@@ -38,6 +44,7 @@
                     recipeObj.id = vm.recipeData.matches[i].id;
                     recipeObj.title = vm.recipeData.matches[i].recipeName;
                     recipeObj.image = vm.recipeData.matches[i].smallImageUrls[0];
+                    recipeObj.source = vm.recipeData.matches[i].sourceDisplayName;
                     vm.recipeDetails.push(recipeObj);
                 }
                 console.log(vm.recipeDetails);
@@ -45,6 +52,7 @@
         };
 
         /********** POC ************/
+
 
         function init()
         {
@@ -60,12 +68,20 @@
             init();
         }
 
-        function addRecipe()
+        function addRecipe(recipe)
         {
+            console.log(user._id);
+            RecipeService.createRecipe(user._id,recipe).then(
+                function(response){
+                    console.log(response.data);
+                });
+
+            /*
             RecipeService.createRecipe($rootScope.currentuser._id,vm.recipe).then(
                 function(response){
                     init();
-                });
+                 });
+            */
         }
 
         function selectRecipe(index)

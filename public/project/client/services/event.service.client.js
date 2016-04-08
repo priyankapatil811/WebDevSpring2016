@@ -20,6 +20,7 @@
         var sortOrder = "Popularity";
         var range = 2;
         var url = "";
+        var searchKeyWord = "";
 
         var api =
         {
@@ -28,6 +29,8 @@
             findEventById : findEventById,
 
             /********** POC ************/
+            setSearchKeyword : setSearchKeyword,
+            getSearchKeyword : getSearchKeyword,
             createEvent : createEvent,
             findEvents : findEvents,
             deleteEventById : deleteEventById,
@@ -38,6 +41,15 @@
 
         return api;
 
+        function setSearchKeyword(query)
+        {
+            searchKeyWord = query;
+        }
+
+        function getSearchKeyword()
+        {
+            return searchKeyWord;
+        }
 
         function findEventByLocation(location) {
 

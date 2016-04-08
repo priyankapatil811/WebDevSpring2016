@@ -3,127 +3,284 @@
  */
 var curUsers = require("./user.mock.json");
 
-module.exports = function()
+//load q promise library
+var q = require("q");
+
+module.exports = function(db,mongoose)
 {
+    //load user schema
+    var UserSchema = require("./user.schema.server.js")(mongoose);
+
+    //create user model from schema
+    var UserModel = mongoose.model('ProjUser',UserSchema);
+
     var api = {
+        getUserById : getUserById,
         findUserByUsername : findUserByUsername,
         findUserByCredentials : findUserByCredentials,
         findAllUsers : findAllUsers,
-        findUserById : findUserById,
         createUser : createUser,
         deleteUserById : deleteUserById,
-        updateUser : updateUser
+        updateUser : updateUser,
+        userLikesRecipe : userLikesRecipe,
+        userLikesEvent : userLikesEvent,
+        userLikesArticle : userLikesArticle
     };
 
     return api;
 
+    function getUserById(userId)
+    {
+        var deferred = q.defer();
+
+        UserModel.findById(userId,function(err,doc)
+        {
+            if(err)
+            {
+                deferred.reject(err);
+            }
+            else
+            {
+                deferred.resolve(doc);
+            }
+        });
+
+        return deferred.promise;
+    }
+
+
     function findUserByUsername(username)
     {
-        var matchedUser = "";
-        for(var i=0;i<curUsers.length;i++)
+        var deferred = q.defer();
+
+        UserModel.findOne({username : username}, function(err,doc)
         {
-            if(curUsers[i].username == username){
-                matchedUser = curUsers[i];
-                return matchedUser;
+            if(err)
+            {
+                deferred.reject(err);
             }
-        }
-        //console.log("match not found!");
-        return null;
+            else
+            {
+                deferred.resolve(doc);
+            }
+        });
+
+        return deferred.promise;
     }
 
     function findUserByCredentials(username,password)
     {
-        var matchedUser = "";
+        var deferred = q.defer();
 
-        for(var i=0;i<curUsers.length;i++)
+        UserModel.findOne({username : username,password : password}, function(err,doc)
         {
-            if(curUsers[i].username == username && curUsers[i].password == password){
-                matchedUser = curUsers[i];
-                return matchedUser;
-            }
-        }
-        //console.log("match not found!");
-        return null;
-    }
-
-    function findUserById(userId)
-    {
-        for(var i=0;i<curUsers.length;i++)
-        {
-            if(curUsers[i]._id == userId)
+            if(err)
             {
-                return curUsers[i];
+                deferred.reject(err);
             }
-        }
+            else
+            {
+                deferred.resolve(doc);
+            }
+        });
+
+        return deferred.promise;
     }
 
     function findAllUsers()
     {
-        return curUsers;
+        //   return curUsers;
+        var deferred = q.defer();
+
+        UserModel.find({},function(err,doc)
+        {
+            if(err)
+            {
+                deferred.reject(err);
+            }
+            else
+            {
+                deferred.resolve(doc);
+            }
+        });
+
+        return deferred.promise;
     }
 
     function createUser(user)
     {
-        var newUser =
+        var deferred = q.defer();
+
+        var categories = [];
+
+        if(typeof user.category.event != 'undefined')
+            categories.push(user.category.event);
+        if(typeof user.category.recipe != 'undefined')
+            categories.push(user.category.recipe);
+        if(typeof user.category.news != 'undefined')
+            categories.push(user.category.news);
+
+        newUser = new UserModel(
+            {
+                username: user.username,
+                password: user.password,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email : user.email,
+                interests : categories,
+                likesRecipe : [],
+                likesEvent : [],
+                likesArticle : []
+            });
+
+        newUser.save(function(err,doc)
         {
-            _id : Math.floor((Math.random() * 1000) + 1),
-            //_id : (new Date).getTime(),
-            username : user.username,
-            password : user.password,
-            email : user.email,
-            firstName : null,
-            lastName: null,
-            roles : null
-        };
+            if(err)
+            {
+                deferred.reject(err);
+            }
+            else
+            {
+                deferred.resolve(doc);
+            }
+        });
 
-        curUsers.push(newUser);
-        //   console.log(curUsers);
-
-        return newUser;
+        /*
+        UserModel.create(user,function(err,doc)
+        {
+            if(err)
+            {
+                deferred.reject(err);
+            }
+            else
+            {
+                deferred.resolve(doc);
+            }
+        });
+        */
+        return deferred.promise;
     }
 
     function deleteUserById(userId)
     {
-        for(var i=0;i<curUsers.length;i++)
+        var deferred = q.defer();
+
+        UserModel.remove({_id : userId},function(err,doc)
         {
-            if(curUsers[i]._id == userId)
+            if(err)
+                deferred.reject(err);
+            else
             {
-                var remId = userId;
-
-                var remUsers = curUsers.filter(function(uId){
-                    return uId._id != remId;
-                });
-
-                break;
+                deferred.resolve(doc);
             }
-        }
-        return remUsers;
+        });
+
+        return deferred.promise;
     }
 
     function updateUser(userId,user)
     {
-        var index;
-        for(var i=0;i<curUsers.length;i++)
+        var deferred = q.defer();
+
+        UserModel.findById(userId,function(err,loggedInUser)
         {
-            if(curUsers[i]._id == userId)
+            if(err)
+                deferred.reject(err);
+            else
             {
-                index = i;
-                break;
+                loggedInUser.firstName = user.firstName;
+                loggedInUser.lastName = user.lastName;
+                loggedInUser.password = user.password;
+                loggedInUser.username = user.username;
+                loggedInUser.emails = user.emails;
+                loggedInUser.phones = user.phones;
+                loggedInUser.save(function (err,doc) {
+                    if(err)
+                        deferred.reject(err);
+                    else {
+                        deferred.resolve(doc);
+                    }
+                });
             }
-        }
+        });
 
-        curUsers[index] =
+        return deferred.promise;
+    }
+
+
+    function userLikesRecipe(userId,recipe)
+    {
+        var deferred = q.defer();
+
+        UserModel.findById(userId,function(err,loggedInUser)
         {
-            _id : userId,
-            firstName : user.firstName,
-            lastName : user.lastName,
-            password : user.password,
-            username : user.username,
-            email : user.email,
-            roles: user.roles
-        };
+            if (err)
+                deferred.reject(err);
+            else {
 
-        return curUsers[index];
+                loggedInUser.likesRecipe.push(recipe._id);
+
+                loggedInUser.save(function (err,doc) {
+                    if(err)
+                        deferred.reject(err);
+                    else {
+                        deferred.resolve(doc);
+                    }
+                });
+            }
+        });
+
+        return deferred.promise;
+    }
+
+    function userLikesEvent(userId,event)
+    {
+        var deferred = q.defer();
+
+        UserModel.findById(userId,function(err,loggedInUser)
+        {
+            if (err)
+                deferred.reject(err);
+            else {
+
+                loggedInUser.likesEvent.push(event.eventId);
+
+                loggedInUser.save(function (err,doc) {
+                    if(err)
+                        deferred.reject(err);
+                    else {
+                        deferred.resolve(doc);
+                    }
+                });
+            }
+        });
+
+        return deferred.promise;
+    }
+
+    function userLikesArticle(userId,news)
+    {
+        var deferred = q.defer();
+
+        UserModel.findById(userId,function(err,loggedInUser)
+        {
+            if (err)
+                deferred.reject(err);
+            else {
+
+                loggedInUser.likesArticle.push(news.newsId);
+
+                loggedInUser.save(function (err,doc) {
+                    if(err)
+                        deferred.reject(err);
+                    else {
+                        deferred.resolve(doc);
+                    }
+                });
+            }
+        });
+
+        return deferred.promise;
     }
 
 };

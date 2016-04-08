@@ -1,6 +1,3 @@
-<div ng-include="'views/events/event.view.html'" ng-controller="EventController as model"></div>
-<br>
-<div class="row">
-        <div ng-include="'views/recipes/recipe.view.html'" ng-controller="RecipeController as model"></div>
-        <div ng-include="'views/news/space.view.html'" ng-controller="SpaceController as model"></div>
-</div>
+<div ng-show="selectedCategory == 'event'" ng-include="'views/events/event.view.html'" ng-controller="EventController as model"></div>
+<div ng-show="selectedCategory == 'recipe'" ng-include="'views/recipes/recipe.view.html'" ng-controller="RecipeController as model"></div>
+<div ng-show="selectedCategory == 'news'" ng-include="'views/news/space.view.html'" ng-controller="SpaceController as model"></div>

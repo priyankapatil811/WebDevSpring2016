@@ -7,17 +7,19 @@
         .module("infoPinStrap")
         .controller("SpaceController", SpaceController);
 
-    function SpaceController(SpaceService, $rootScope) {
+    function SpaceController(SpaceService, $rootScope, UserService) {
 
         var vm = this;
         vm.newsDetails = [];
         vm.spaceDetails = [];
         vm.searchSpaceNews = searchSpaceNews;
+        vm.addNews = addNews;
+        /*
         vm.init = init;
         vm.addContent = addContent;
         vm.selectContent = selectContent;
         vm.updateContent = updateContent;
-        vm.deleteContent = deleteContent;
+        vm.deleteContent = deleteContent;*/
 
         //$scope.searchSpaceNews = function (s) {
 
@@ -70,6 +72,23 @@
         }
 
         /********** POC ************/
+
+        var user = "";
+        UserService
+            .getCurrentUser()
+            .then(function(response) {
+                user = response.data;
+            });
+
+        function addNews(news)
+        {
+            SpaceService.createNews(user._id, news).then(
+                function(response){
+                    console.log(response.data);
+                });
+        }
+
+        /*
         function init()
         {
             SpaceService.findNews($rootScope.currentuser._id).then(
@@ -148,6 +167,7 @@
 
             //console.log($scope.spaceDetails);
         }
+        */
         /***************************/
     }
 })();

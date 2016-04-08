@@ -12,6 +12,7 @@
         var apiId = "5b171984";
         var apiKey = "9f46fd1c44408240f0b10f3fbc39dca3";
         var url = "";
+        var searchKeyWord = "";
 
         var api =
         {
@@ -19,6 +20,9 @@
             findRecipeById : findRecipeById,
 
             /********** POC ************/
+            setSearchKeyword : setSearchKeyword,
+            getSearchKeyword : getSearchKeyword,
+            findRecipeByIdForUser : findRecipeByIdForUser,
             createRecipe : createRecipe,
             findRecipes : findRecipes,
             deleteRecipeById : deleteRecipeById,
@@ -48,6 +52,22 @@
         }
 
         /********** POC ************/
+
+        function setSearchKeyword(query)
+        {
+            searchKeyWord = query;
+        }
+
+        function getSearchKeyword()
+        {
+            return searchKeyWord;
+        }
+
+        function findRecipeByIdForUser(recipeId)
+        {
+            return $http.get("/api/project/recipe/"+recipeId);
+        }
+
       /*  function getRecipeIdByIndex(index,callback)
         {
             callback(recipes[index]._id);

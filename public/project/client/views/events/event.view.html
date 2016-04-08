@@ -42,6 +42,10 @@
                                 {{event.start_time}}
                                 <br>
                                 {{event.city}}
+                                <br>
+                                <a ng-if = "currentuser.username" href="" class="btn" ng-click="model.addEvent(event)">
+                                    <i class="fa fa-thumbs-up fa-2x" style="color: crimson"></i>
+                                </a>
                             </td>
                         </tr>
                     </table>

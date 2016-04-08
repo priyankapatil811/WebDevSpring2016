@@ -93,11 +93,11 @@ module.exports = function(app,userModel)
     });
 
     //logged in
-    app.get("/api/project/loggedin", function (req, res) {
+    app.get("/api/assignment/loggedin", function (req, res) {
         res.json(req.session.currentUser);
     });
 
-    app.post("/api/project/logout", function (req, res) {
+    app.post("/api/assignment/logout", function (req, res) {
         req.session.destroy();
         res.send(200);
     });

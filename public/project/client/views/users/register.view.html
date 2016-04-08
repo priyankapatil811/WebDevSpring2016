@@ -1,37 +1,57 @@
-<div class="container-fluid">
+<div class="container" ng-controller="RegisterController as model">
+    <h3>Hello, what interests you?</h3>
+    <p id="signFont" style="text-align: center">Select one or more categories</p>
     <div class="row">
+        <div class="col-md-4">
+            <a href="" ng-click="model.user.category.event='Events'">
+                <img ng-src="images/ConcertsEvents.jpg" style="width: 300px;height: 200px;" >
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a href="" ng-click="model.user.category.recipe='Cooking Recipes'">
+                <img ng-src="images/recipes.jpg" style="width: 300px;height: 200px" >
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a href="" ng-click="model.user.category.news='Space Exploration'">
+                <img ng-src="images/news.jpg" style="width: 300px;height: 200px" >
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <p id="signFont" style="text-align: center">Join InfoPinStrap to bookmark your interests</p>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <h2 class="page-header">Register</h2>
             <form class="form-horizontal">
                 <div class="form-group">
-                    <label for="uName" class="col-sm-2 control-label">Username</label>
-                    <div class="col-sm-10">
+                    <label for="uName" class="col-sm-2 control-label" id="myFont">Username</label>
+                    <div class="col-sm-6 input-list style-4 clearfix">
                         <!--<input type="text" class="form-control" id="uName" placeholder="Username">-->
                         <input type="text" class="form-control" id="uName" ng-model="model.user.username" placeholder="Username">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="passwd" class="col-sm-2 control-label">Password</label>
-                    <div class="col-sm-10">
+                    <label for="passwd" class="col-sm-2 control-label" id="myFont">Password</label>
+                    <div class="col-sm-6 input-list style-4 clearfix">
                         <input type="password" class="form-control" id="passwd" ng-model="model.user.password" placeholder="Password">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="verpasswd" class="col-sm-2 control-label">Verify Password</label>
-                    <div class="col-sm-10">
+                    <label for="verpasswd" class="col-sm-2 control-label" id="myFont">Verify Password</label>
+                    <div class="col-sm-6 input-list style-4 clearfix">
                         <input type="password" class="form-control" id="verpasswd" ng-model="model.user.verpwd" placeholder="Verify Password">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="email" class="col-sm-2 control-label">Email</label>
-                    <div class="col-sm-10">
+                    <label for="email" class="col-sm-2 control-label" id="myFont">Email</label>
+                    <div class="col-sm-6 input-list style-4 clearfix">
                         <input type="email" class="form-control" id="email" ng-model="model.user.email" placeholder="Email">
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
+                    <div class="col-sm-offset-2 col-sm-6">
                         <!-- navigates to profile page -->
-                        <button type="button" ng-click="model.register()" class="btn btn-primary btn-block">Register</button>
+                        <button id="signInBtn" type="button" ng-click="model.register()" class="btn btn-default btn-block" id="myFont">Sign Up</button>
                     </div>
                 </div>
             </form>

@@ -12,6 +12,7 @@
         $rootScope.newsDetails = [];
 
         var url = "";
+        var searchKeyWord = "";
 
         var api =
         {
@@ -19,6 +20,9 @@
             findNewsById : findNewsById,
 
             /********** POC ************/
+            setSearchKeyword : setSearchKeyword,
+            getSearchKeyword : getSearchKeyword,
+            findNewsByIdForUser : findNewsByIdForUser,
             createNews : createNews,
             findNews : findNews,
             deleteNewsById : deleteNewsById,
@@ -49,6 +53,21 @@
         }
 
         /********** POC ************/
+
+        function setSearchKeyword(query)
+        {
+            searchKeyWord = query;
+        }
+
+        function getSearchKeyword()
+        {
+            return searchKeyWord;
+        }
+
+        function findNewsByIdForUser(newsId)
+        {
+            return $http.get("/api/project/news/"+newsId);
+        }
 
         function getNewsByIndex(index,userId)
         {

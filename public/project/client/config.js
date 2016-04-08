@@ -34,6 +34,7 @@
             })
             .when("/myAccount", {
                 templateUrl: "views/users/myAccount.view.html",
+                controller : "AccountController",
                 controllerAs : "model",
                 resolve: {
                     getLoggedIn: getLoggedIn

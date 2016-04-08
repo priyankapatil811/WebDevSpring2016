@@ -4,18 +4,96 @@
 var recipes = require("./recipe.mock.json");
 var uuid = require('node-uuid');
 
-module.exports = function() {
+var q = require("q");
+
+module.exports = function(mongoose) {
+
+    //load recipe schema
+    var RecipeSchema = require("./recipe.schema.server.js")(mongoose);
+
+    //create recipe model from schema
+    var RecipeModel = mongoose.model('ProjRecipe', RecipeSchema);
+
     var api =
     {
-        getRecipeByIndex : getRecipeByIndex,
-        createRecipeForUser : createRecipeForUser,
-        findRecipes : findRecipes,
-        deleteRecipeById : deleteRecipeById,
-        updateRecipeById : updateRecipeById
+        likesRecipe: likesRecipe,
+        findRecipeByIdForUser : findRecipeByIdForUser,
+        /*
+        getRecipeByIndex: getRecipeByIndex,
+        createRecipeForUser: createRecipeForUser,*/
+        findRecipes: findRecipes
+     /*   deleteRecipeById: deleteRecipeById,
+        updateRecipeById: updateRecipeById*/
     };
 
     return api;
 
+    function likesRecipe(userId,recipe)
+    {
+        var deferred = q.defer();
+
+        RecipeModel.findOne({recipeId : recipe.id}, function(err,doc)
+        {
+            if(err)
+                deferred.reject(err);
+
+            //if recipe exists
+            if(doc)
+            {
+                doc.users.push(userId);
+
+                doc.save(function(err,doc)
+                {
+                    if(err)
+                        deferred.reject(err);
+                    else
+                        deferred.resolve(doc);
+                });
+            }
+            else {
+                //create recipe as it does not exist
+                newRecipe = new RecipeModel(
+                    {
+                        recipeId: recipe.id,
+                        title: recipe.title,
+                        image: recipe.image,
+                        source: recipe.source,
+                        users: []
+                    });
+
+                newRecipe.users.push(userId);
+
+                newRecipe.save(function (err, doc) {
+                    if (err)
+                        deferred.reject(err);
+                    else
+                        deferred.resolve(doc);
+                });
+            }
+        });
+
+        return deferred.promise;
+    }
+
+    function findRecipeByIdForUser(recipeId)
+    {
+        var deferred = q.defer();
+
+        RecipeModel.findById(recipeId,function (err, doc) {
+            if (err)
+            {
+                deferred.reject(err);
+            }
+            else
+            {
+                deferred.resolve(doc);
+            }
+        });
+
+        return deferred.promise;
+    }
+
+    /*
     function getRecipeByIndex(index,userId) {
         var userRecipes = [];
 
@@ -43,7 +121,7 @@ module.exports = function() {
 
         recipes.push(newRecipe);
         //console.log(recipes);
-    }
+    }*/
 
     function findRecipes(userId) {
         var recipesForUserId = [];
@@ -55,7 +133,7 @@ module.exports = function() {
 
         return recipesForUserId;
     }
-
+/*
     function deleteRecipeById(recipeIndex, userId) {
         var userRecipes = [];
 
@@ -100,4 +178,5 @@ module.exports = function() {
 
         //console.log(recipes);
     }
+    */
 };

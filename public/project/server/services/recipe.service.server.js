@@ -6,8 +6,45 @@ module.exports = function(app,userModel,recipeModel)
     app.post("/api/project/user/:userId/recipe", function(req,res) {
         var userId = req.params.userId;
         var newrecipe = req.body;
-        recipeModel.createRecipeForUser(userId,newrecipe);
-        res.json("ok");
+
+        recipeModel.likesRecipe(userId,newrecipe).then(
+            function(doc)
+            {
+                console.log("recipe " + doc);
+                return userModel.userLikesRecipe(userId,doc);
+            },
+            function(err)
+            {
+                console.log(err);
+                res.status(600).send(err);
+            }
+        ).then(
+            function(doc)
+            {
+                res.json(doc);
+            },
+            function(err)
+            {
+                res.status(400).send(err);
+            }
+        );
+        //res.json("ok");
+    });
+
+    app.get("/api/project/recipe/:recipeId",function(req,res)
+    {
+        var recipeId = req.params.recipeId;
+
+        recipeModel.findRecipeByIdForUser(recipeId).then(
+          function(doc)
+          {
+              res.json(doc);
+          },
+          function(err)
+          {
+              res.status(500).send(err);
+          }
+        );
     });
 
     app.put("/api/project/recipe/:recipeId", function(req,res)

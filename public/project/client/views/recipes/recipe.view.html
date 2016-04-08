@@ -1,37 +1,42 @@
-<div class="col-md-6">
-    <div class="container">
-        <form class="form-inline" role="form">
-            <div class="form-group">
-                <label class="sr-only" for="topic">RECIPE</label>
-                <div class="input-group">
-                    <div class="input-group-addon" style="font-size: xx-small">RECIPE</div>
-                    <input type="text" class="form-control" id="topic" placeholder="Cake" ng-model="model.r.recipe">
-                </div>
-            </div>
-            <button type="submit" class="btn btn-info" ng-click="model.searchRecipe(model.r)">GO</button>
-            <!--<button type="submit" class="btn btn-info" ng-click="#/recipeSearch/:r.recipe">GO</button>-->
-        </form>
-        <br>
-        <div class="row masonry-container border" ng-repeat="recipe in model.recipeDetails">
-            <div class="col-xs-6 col-sm-3 col-md-3 item">
-                <div class="thumbnail">
-                    <img src="{{recipe.image}}" style="width: 100%">
-                    <div class="caption">
-                        <a href="#/recipe/{{recipe.id}}">
-                            <h4 style="text-decoration: blink ; color:palevioletred" >{{recipe.title}}</h4>
-                        </a>
+<div class="container">
+    <!--<form class="form-inline" role="form">-->
+        <!--<div class="form-group">-->
+            <!--<label class="sr-only" for="topic">RECIPE</label>-->
+            <!--<div class="input-group">-->
+                <!--<div class="input-group-addon" style="font-size: xx-small">RECIPE</div>-->
+                <!--<input type="text" class="form-control" id="topic" placeholder="Cake" ng-model="model.r.recipe">-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<button type="submit" class="btn btn-info" ng-click="model.searchRecipe(model.r)">GO</button>-->
+    <!--</form>-->
+    <br>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="input-group">
+                <input type="text" class="form-control" style="height: 41px" placeholder="Cake" ng-model="model.r.recipe">
+                  <span class="input-group-btn">
+                   <button type="submit" class="btn btn-default" ng-click="model.searchRecipe(model.r)">GO</button>
+                  </span>
+            </div><!-- /input-group -->
+        </div><!-- /.col-lg-6 -->
+    </div><!-- /.row -->
+
+    <br>
+    <div class="masonry">
+        <div class="item col-xs-12 col-sm-3 col-md-3" ng-repeat="recipe in model.recipeDetails">
+            <div class="thumbnail" style="border: groove ; border-color:crimson">
+                <img src="{{recipe.image}}" style="width: 100%; border: groove ; border-color: white">
+                <div class="caption">
+                    <a href="#/recipe/{{recipe.id}}" style="text-align: center">
+                        <p style="text-decoration: blink ; color:palevioletred ; font-size: smaller">{{recipe.title}}</p>
+                    </a>
+                    <hr>
+                    <div style="text-align: center">
+                        <p>{{recipe.source}}</p>
+                        <a ng-if = "currentuser.username" href="" class="btn" ng-click="model.addRecipe(recipe)"> <i class="fa fa-heart fa-2x" style="color: crimson"></i> </a>
                     </div>
                 </div>
-            </div><!--/.item  -->
-            <!--<div class="col-xs-6 col-sm-3 col-md-3 item">-->
-                <!--<div class="thumbnail">-->
-                    <!--<img src="{{recipe.image}}" style="width: 100%">-->
-                    <!--<div class="caption">-->
-                        <!--<h4>{{recipe.title}}</h4>-->
-                        <!--<p></p>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>&lt;!&ndash;/.item  &ndash;&gt;-->
-        </div>
+            </div>
+        </div><!--/.item  -->
     </div>
 </div>

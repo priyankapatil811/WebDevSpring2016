@@ -4,12 +4,20 @@
 var news = require("./news.mock.json");
 var uuid = require('node-uuid');
 
-module.exports = function() {
+var q = require("q");
+
+module.exports = function(mongoose) {
+
+    //load news schema
+    var NewsSchema = require("./news.schema.server.js")(mongoose);
+
+    //create news model from schema
+    var NewsModel = mongoose.model('ProjNews', NewsSchema);
+
     var api =
     {
-        //findAllNews : findAllNews,
-        //findNewsById : findNewsById,
-
+        likesNewsArticle : likesNewsArticle,
+        findNewsByIdForUser : findNewsByIdForUser,
         /********** POC ************/
         getNewsByIndex : getNewsByIndex,
         createNewsForUser : createNewsForUser,
@@ -20,6 +28,70 @@ module.exports = function() {
     };
 
     return api;
+
+    function likesNewsArticle(userId,news)
+    {
+
+        var deferred = q.defer();
+
+        NewsModel.findOne({newsId : news.id},function(err,doc)
+        {
+            if(err)
+                deferred.reject(err);
+
+            if(doc)
+            {
+                doc.users.push(userId);
+
+                doc.save(function(err,doc)
+                {
+                    if(err)
+                        deferred.reject(err);
+                    else
+                        deferred.resolve(doc);
+                });
+            }
+            else
+            {
+                newArticle = new NewsModel(
+                    {
+                        newsId : news.id,
+                        image: news.image,
+                        title: news.title,
+                        publishedDate : news.publishedDate,
+                        users : []
+                    });
+
+                newArticle.users.push(userId);
+
+                newArticle.save(function (err, doc) {
+                    if (err)
+                        deferred.reject(err);
+                    else
+                        deferred.resolve(doc);
+                });
+            }
+
+        });
+
+        return deferred.promise;
+    }
+
+    function findNewsByIdForUser(newsId)
+    {
+        var deferred = q.defer();
+
+        NewsModel.findOne({newsId : newsId},function(err,doc) {
+            if (err)
+                deferred.reject(err);
+            else
+                console.log(doc);
+        });
+
+        return deferred.promise;
+
+    }
+
 
     function getNewsByIndex(index, userId) {
         var userNews = [];

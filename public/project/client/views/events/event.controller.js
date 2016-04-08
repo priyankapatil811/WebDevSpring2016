@@ -7,7 +7,7 @@
         .module("infoPinStrap")
         .controller("EventController", EventController);
 
-    function EventController(EventService, $rootScope) {
+    function EventController(EventService, $rootScope, UserService) {
 
         var vm = this;
         vm.eventDetails = [];
@@ -18,11 +18,11 @@
         vm.showError = showError;
         vm.showPosition = showPosition;
         vm.search = search;
-        vm.init = init;
+        /*vm.init = init;*/
         vm.addEvent = addEvent;
-        vm.selectEvent = selectEvent;
+        /*vm.selectEvent = selectEvent;
         vm.updateEvent = updateEvent;
-        vm.deleteEvent = deleteEvent;
+        vm.deleteEvent = deleteEvent;*/
 
         if(angular.isUndefined(vm.e))
             getGeoLoc();
@@ -37,7 +37,7 @@
             else {
                 vm.error = "Geolocation is not supported by this browser";
             }
-        };
+        }
 
         function searchLocation(e)
          {
@@ -46,7 +46,7 @@
                  if (mapData.data.results.length != 0) {
                      vm.where = mapData.data.results[0].geometry.location.lat + "," + mapData.data.results[0].geometry.location.lng;
                      vm.eventDetails = [];
-                     search(vm.where,e.radius);
+                     search(vm.where,2);
                  }
                  else {
                      vm.error = "Could not find entered location";
@@ -54,7 +54,7 @@
                  }
              });
 
-         };
+         }
 
         function showPosition(position)
         {
@@ -62,7 +62,7 @@
             vm.where = position.coords.latitude + "," + position.coords.longitude;
             search(vm.where,2);
             //$scope.$apply();
-        };
+        }
 
         function showError()
         {
@@ -80,7 +80,7 @@
                     error = "An unknown error occurred.";
                     break;
             }
-        };
+        }
 
         function search(where,radius)
         {
@@ -125,6 +125,15 @@
         }
 
         /********** POC ************/
+
+        var user = "";
+        UserService
+            .getCurrentUser()
+            .then(function(response) {
+                user = response.data;
+            });
+
+        /*
         function init()
         {
             EventService.findEvents($rootScope.currentuser._id).then(
@@ -137,15 +146,18 @@
         if($rootScope.currentuser != null) {
             init();
         }
+        */
 
-        function addEvent()
+        function addEvent(event)
         {
-            EventService.createEvent($rootScope.currentuser._id,vm.event).then(
+
+            EventService.createEvent(user._id,event).then(
                 function(response){
-                    init();
+                    console.log(response.data);
                 });
         }
 
+        /*
         function selectEvent(index)
         {
             vm.eventIndex = index;
@@ -200,6 +212,7 @@
                     init();
                 });
         }
+        */
 
         /***************************/
     }

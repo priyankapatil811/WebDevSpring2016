@@ -3,42 +3,107 @@
  */
 module.exports = function(app,userModel)
 {
-    app.get("/api/project/user?username=username",function(req,res)
+    app.get("/api/project/user", function(req,res)
     {
         var uName = req.query.username;
-        res.json(userModel.findUserByUsername(uName));
-    });
-
-    app.get("/api/project/user", function (req,res) {
-        var uName = req.query.username;
         var uPwd = req.query.password;
-        var user = userModel.findUserByCredentials(uName,uPwd);
-        req.session.currentUser = user;
-        res.json(user);
+
+        if(typeof uName == 'undefined' && typeof uPwd == 'undefined') {
+            userModel.findAllUsers.then(
+                function (doc) {
+                    res.json(doc);
+                },
+                function (err) {
+                    res.status(400).send(err);
+                }
+            );
+        }
+        else if(uName != null && uPwd != null)
+        {
+            userModel.findUserByCredentials(uName, uPwd).then(
+                function (doc) {
+                    req.session.currentUser = doc;
+                    res.json(doc);
+                },
+                function (err) {
+                    res.status(400).send(err);
+                }
+            );
+        }
+        else
+        {
+            userModel.findUserByUsername(uName).then(
+                function(doc)
+                {
+                    res.json(doc);
+                },
+                function(err)
+                {
+                    res.status(400).send(err);
+                }
+            );
+        }
     });
 
-    app.get("/api/project/user",function(req,res){
-        res.json(userModel.findAllUsers);
+    app.get("/api/project/user/:id",function(req,res)
+    {
+        var userId = req.params.id;
+
+        userModel.getUserById(userId).then(
+            function(doc)
+            {
+                res.json(doc);
+            },
+            function(err)
+            {
+                res.status(400).send(err);
+            }
+        );
     });
 
     app.post("/api/project/user",function(req,res){
         var newUser = req.body;
-        var user = userModel.createUser(newUser);
-        req.session.currentUser = user;
-        res.json(user);
+        userModel.createUser(newUser).then(
+            function(doc)
+            {
+                req.session.currentUser = doc;
+                res.json(doc);
+            },
+            function(err)
+            {
+                res.status(400).send(err);
+            }
+        );
     });
 
     app.put("/api/project/user/:id",function(req,res){
         var userId = req.params.id;
         var upUser = req.body;
-        var user = userModel.updateUser(userId,upUser);
-        res.json(user);
+        userModel.updateUser(userId,upUser).then(
+            function(doc)
+            {
+                req.session.currentUser = doc;
+                res.json(doc);
+            },
+            function(err)
+            {
+                res.status(400).send(err);
+            }
+        );
     });
 
     app.delete("/api/project/user/:id",function(req,res){
         var delUser = req.param.userId;
-        userModel.deleteUserById(delUser);
-        res.send("ok");
+        userModel.deleteUserById(delUser).then(
+            function(doc)
+            {
+                res.json(doc);
+            },
+            function(err)
+            {
+                res.status(400).send(err);
+            }
+        );
     });
 
     //logged in

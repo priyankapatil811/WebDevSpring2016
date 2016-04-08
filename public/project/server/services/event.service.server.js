@@ -6,8 +6,29 @@ module.exports = function(app,userModel,eventModel)
     app.post("/api/project/user/:userId/event", function(req,res) {
         var userId = req.params.userId;
         var newevent = req.body;
-        eventModel.createEventForUser(userId,newevent);
-        res.json("ok");
+
+        eventModel.likesEvent(userId,newevent).then(
+            function(doc)
+            {
+                console.log("event " + doc);
+                return userModel.userLikesEvent(userId,doc);
+            },
+            function(err)
+            {
+                console.log(err);
+                res.status(600).send(err);
+            }
+        ).then(
+            function(doc)
+            {
+                res.json(doc);
+            },
+            function(err)
+            {
+                res.status(400).send(err);
+            }
+        );
+       // res.json("ok");
     });
 
     app.put("/api/project/event/:eventId", function(req,res)

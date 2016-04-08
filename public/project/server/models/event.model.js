@@ -4,10 +4,19 @@
 var events = require("./event.mock.json");
 var uuid = require('node-uuid');
 
-module.exports = function()
+var q = require("q");
+
+module.exports = function(mongoose)
 {
+    //load event schema
+    var EventSchema = require("./event.schema.server.js")(mongoose);
+
+    //create event model from schema
+    var EventModel = mongoose.model('ProjEvent',EventSchema);
+
     var api =
     {
+        likesEvent : likesEvent,
         getEventByIndex : getEventByIndex,
         createEventForUser : createEventForUser,
         findEvents : findEvents,
@@ -16,6 +25,55 @@ module.exports = function()
     };
 
     return api;
+
+    function likesEvent(userId,event)
+    {
+        var deferred = q.defer();
+
+        EventModel.findOne({eventId : event.id}, function(err,doc)
+        {
+            if(err)
+                deferred.reject(err);
+
+            if(doc)
+            {
+                doc.users.push(userId);
+
+                doc.save(function(err,doc)
+                {
+                    if(err)
+                        deferred.reject(err);
+                    else
+                        deferred.resolve(doc);
+                });
+            }
+            else
+            {
+                newEvent = new EventModel(
+                    {
+                        eventId : event.id,
+                        image: event.image,
+                        title: event.title,
+                        venueName : event.venue_name,
+                        startTime : event.start_time,
+                        city : event.city,
+                        users : []
+                    });
+
+                newEvent.users.push(userId);
+
+                newEvent.save(function(err,doc)
+                {
+                    if(err)
+                        deferred.reject(err);
+                    else
+                        deferred.resolve(doc);
+                });
+            }
+        });
+
+        return deferred.promise;
+    }
 
 
     function getEventByIndex(index,userId)

@@ -9,9 +9,11 @@
 
     function UserService($rootScope, $http)
     {
-        $rootScope.currentuser = {"_id" : null, "firstName":null, "lastName":null, "username":null, "password":null , "roles" : null};
+        $rootScope.selectedCategory = 'event';
+        $rootScope.currentuser = {"_id" : null, "firstName":null, "lastName":null, "username":null, "password":null , "interests" : null, "selectedCategory" : null};
 
         var api = {
+            findUserById : findUserById,
             findUserByUsername : findUserByUsername,
             findUserByCredentials : findUserByCredentials,
             findAllUsers : findAllUsers,
@@ -24,6 +26,11 @@
         };
 
         return api;
+
+        function findUserById(userId)
+        {
+            return $http.get("/api/project/user/"+userId);
+        }
 
         function findUserByUsername(username)
         {

@@ -51,8 +51,7 @@ lightboxPhoto();
 winHeight();
 barScroll();
   //============================ nav container sticky =========================================
-
-  $(".navbar").sticky({ topSpacing: 0 });
+$(".navbar").sticky({ topSpacing: 0 });
 $('ul.nav li a').click(function(){
 $('.navbar-inverse .navbar-collapse').removeClass('in')
 });

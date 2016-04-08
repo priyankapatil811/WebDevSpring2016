@@ -63,12 +63,12 @@
 
         function getCurrentUser()
         {
-            return $http.get("/api/project/loggedin");
+            return $http.get("/api/assignment/loggedin");
         }
 
         function logout()
         {
-            return $http.post("/api/project/logout");
+            return $http.post("/api/assignment/logout");
         }
     }
 })();
