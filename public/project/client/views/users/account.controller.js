@@ -14,7 +14,13 @@
         vm.myNews = [];
 
         vm.init = init;
-        vm.getSavedRecipes = getSavedRecipes;
+
+        vm.getSavedRecipeBoards = getSavedRecipeBoards;
+        vm.removeRecipe = removeRecipe;
+
+        vm.getSavedNewsBoards = getSavedNewsBoards;
+        vm.removeNews = removeNews;
+
         var user = "";
 
         init();
@@ -31,26 +37,53 @@
                 .then(function (response) {
                     if (response.data) {
                         vm.userProfile = response.data;
-                        getSavedRecipes(vm.userProfile);
+                        getSavedRecipeBoards(vm.userProfile);
+                        getSavedNewsBoards(vm.userProfile);
                     }
                 });
         }
 
-        function getSavedRecipes(user)
+        function removeRecipe(recipe)
         {
-            if(user.likesRecipe.length > 0) {
+            RecipeService.deleteRecipeById(recipe._id,user._id).then(
+                function(response)
+                {
+                    if(response.data)
+                    {
+                        getSavedRecipeBoards(user);
+                    }
+                });
+        }
+
+        function removeNews(news)
+        {
+            SpaceService.deleteNewsById(news._id,user._id).then(
+                function(response)
+                {
+                    if(response.data)
+                    {
+                        getSavedNewsBoards(user);
+                    }
+                });
+        }
+
+
+        function getSavedRecipeBoards(user) {
+
+            if (user.likesRecipe.length > 0) {
                 for (var i = 0; i < user.likesRecipe.length; i++) {
                     RecipeService.findRecipeByIdForUser(user.likesRecipe[i]).then(
                         function (response) {
                             if (response.data) {
                                 vm.myRecipes.push(response.data);
-
                             }
-
                         });
                 }
             }
+        }
 
+        function getSavedNewsBoards(user)
+        {
             if(user.likesArticle.length > 0)
             {
                 for(var i = 0;i < user.likesArticle.length; i++)
@@ -60,12 +93,14 @@
                       {
                           if (response.data)
                           {
+                              console.log("myNews :"+response.data);
                               vm.myNews.push(response.data);
                               console.log(vm.myNews);
                           }
                       });
                 }
             }
+
         }
 
     }

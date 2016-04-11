@@ -18,12 +18,12 @@ module.exports = function(mongoose) {
     {
         likesNewsArticle : likesNewsArticle,
         findNewsByIdForUser : findNewsByIdForUser,
+        deleteNewsById : deleteNewsById
         /********** POC ************/
-        getNewsByIndex : getNewsByIndex,
+       /* getNewsByIndex : getNewsByIndex,
         createNewsForUser : createNewsForUser,
         findNews : findNews,
-        deleteNewsById : deleteNewsById,
-        updateNewsById : updateNewsById
+        updateNewsById : updateNewsById*/
         /***************************/
     };
 
@@ -81,18 +81,55 @@ module.exports = function(mongoose) {
     {
         var deferred = q.defer();
 
-        NewsModel.findOne({newsId : newsId},function(err,doc) {
+        NewsModel.findOne({_id : newsId},function(err,doc) {
             if (err)
                 deferred.reject(err);
             else
-                console.log(doc);
+                deferred.resolve(doc);
         });
 
         return deferred.promise;
 
     }
 
+    function deleteNewsById(newsId,userId)
+    {
+        var deferred = q.defer();
 
+        NewsModel.findById(newsId,function (err, news) {
+            if (err)
+            {
+                deferred.reject(err);
+            }
+            else
+            {
+                for(var i=0;i<news.users.length;i++)
+                {
+                    if(userId == news.users[i])
+                    {
+                        news.users.splice(i,1);
+                        break;
+                    }
+                }
+
+                news.save(function(err,doc)
+                {
+                    if(err)
+                    {
+                        deferred.reject(err);
+                    }
+                    else
+                    {
+                        deferred.resolve(doc);
+                    }
+                });
+            }
+        });
+
+        return deferred.promise;
+    }
+
+    /*
     function getNewsByIndex(index, userId) {
         var userNews = [];
 
@@ -179,4 +216,5 @@ module.exports = function(mongoose) {
 
         //console.log(news);
     }
+    */
 };

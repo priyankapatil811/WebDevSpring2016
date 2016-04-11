@@ -103,7 +103,7 @@
                     eventObj.city = vm.eventData.events.event[j].city_name;
                     eventObj.latitude = vm.eventData.events.event[j].latitude;
                     eventObj.longitude = vm.eventData.events.event[j].longitude;
-                    eventObj.image = "images/default_image.png";
+                    eventObj.image = "images/NoImage.png";
                     eventObj.price = "Free";
                     if (vm.eventData.events.event[j].links != null)
                         eventObj.ticketLink = vm.eventData.events.event[j].links.link[0].url;

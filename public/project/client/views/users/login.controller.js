@@ -7,7 +7,7 @@
         .module("infoPinStrap")
         .controller("LoginController",LoginController);
 
-    function LoginController(UserService, $location)
+    function LoginController(UserService, $location, $rootScope)
     {
         console.log("in login controller");
 
@@ -28,6 +28,7 @@
                     else
                     {
                         UserService.setCurrentUser(response.data);
+                        UserService.setSelectedCategory(response.data.interests[0]);
                         $location.url('/profile');
                     }
                 });

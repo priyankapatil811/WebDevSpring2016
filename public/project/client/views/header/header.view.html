@@ -7,33 +7,25 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <!--<a class="navbar-brand" href="#">Project name</a>-->
-            <form class="navbar-form navbar-left">
-                <div class="input-group">
-                    <div class="input-group-btn">
-                        <button class="btn btn-default" style="background-color: white" type="button" ng-click="model.home()">
-                            <img src="images/favicon.ico" style="width: 20px ; height: 20px"/>
-                        </button>
-                    </div>
-
-                    <div class="input-group-btn">
-                        <button type="button" class="btn btn-default dropdown-toggle glyphicon glyphicon-align-justify" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
-                        <ul class="dropdown-menu dropdown-menu-right" ng-if="!currentuser.username">
-                            <li><a href="" ng-click="model.categoryClicked('event')">Events</a></li>
-                            <li><a href="" ng-click="model.categoryClicked('recipe')">Cooking Recipes</a></li>
-                            <li><a href="" ng-click="model.categoryClicked('news')">Space Exploration</a></li>
-                        </ul>
-                        <ul class="dropdown-menu dropdown-menu-right" ng-if="currentuser.username">
-                            <li ng-repeat="cat in currentuser.interests">
-                                <a href="" ng-click="model.categoryClicked(cat)">{{cat}}</a>
-                            </li>
-                        </ul>
-                    </div>
+            <a class="navbar-brand" href="#/home">InfoPinStrap</a>
+                <div class="input-group-btn navbar-right navbar-form">
+                    <button type="button" class="btn btn-default dropdown-toggle glyphicon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Interests
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right" ng-if="!currentuser.username">
+                        <li><a href="" ng-click="model.categoryClicked('event')">Events</a></li>
+                        <li><a href="" ng-click="model.categoryClicked('recipe')">Cooking Recipes</a></li>
+                        <li><a href="" ng-click="model.categoryClicked('news')">Space Exploration</a></li>
+                    </ul>
+                    <ul class="dropdown-menu dropdown-menu-right" ng-if="currentuser.username">
+                        <li ng-repeat="cat in currentuser.interests">
+                            <a href="" ng-click="model.categoryClicked(cat)">{{cat}}</a>
+                        </li>
+                    </ul>
                 </div>
-            </form>
         </div>
-
         <div id="navbar" class="navbar-collapse collapse">
+
             <ul class="nav navbar-nav navbar-right">
                 <li ng-class="{'active' : model.$location.url()=='/register'}"><a href="#/register" ng-if="!currentuser.username" id="myReg" >Register</a></li>
                 <li ng-class="{'active' : model.$location.url()=='/login'}"><a href="#/login" ng-if="!currentuser.username">Login</a></li>

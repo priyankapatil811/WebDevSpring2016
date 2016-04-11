@@ -30,8 +30,8 @@
                 console.log("in space related news search");
                 console.log(s.spacenews);
                 vm.newsData = response.data;
+                console.log("News Data : " +vm.newsData);
 
-                console.log(vm.newsData);
                 for(var i=0;i<vm.newsData.posts.length;i++)
                 {
                     var newsObj = new Object();
@@ -39,6 +39,8 @@
                     newsObj.title = vm.newsData.posts[i].thread.title;
                     newsObj.url = vm.newsData.posts[i].url;
                     newsObj.publishedDate = vm.newsData.posts[i].thread.published;
+                    if(vm.newsData.posts[i].thread.main_image == "")
+                        newsObj.image = "images/NoImage.png";
                     newsObj.image = vm.newsData.posts[i].thread.main_image;
                     newsObj.content = vm.newsData.posts[i].text;
                     newsObj.relatedStories = [];
@@ -48,25 +50,6 @@
                 }
                   console.log(vm.newsDetails);
                   console.log($rootScope.newsDetails);
-/*
-                for(var i=0;i<vm.newsData.responseData.results.length;i++)
-                {
-                    var newsObj = new Object();
-                    newsObj.relatedStories = [];
-                    newsObj.id = parseInt(Math.random() * 100);
-                    newsObj.title = vm.newsData.responseData.results[i].titleNoFormatting;
-                    newsObj.url = vm.newsData.responseData.results[i].unescapedUrl;
-                    newsObj.content = vm.newsData.responseData.results[i].content;
-                    newsObj.image = vm.newsData.responseData.results[i].image.url;
-                    newsObj.relatedStories = vm.newsData.responseData.results[i].relatedStories;
-                    newsObj.publishedDate = vm.newsData.responseData.results[i].publishedDate;
-                    newsObj.publisher = vm.newsData.responseData.results[i].publisher;
-                    vm.newsDetails.push(newsObj);
-                    $rootScope.newsDetails.push(newsObj);
-                }
-                console.log(vm.newsDetails);
-                console.log($rootScope.newsDetails);
-                */
             });
 
         }

@@ -18,6 +18,7 @@ module.exports = function(mongoose) {
     {
         likesRecipe: likesRecipe,
         findRecipeByIdForUser : findRecipeByIdForUser,
+        deleteRecipeById : deleteRecipeById,
         /*
         getRecipeByIndex: getRecipeByIndex,
         createRecipeForUser: createRecipeForUser,*/
@@ -93,6 +94,43 @@ module.exports = function(mongoose) {
         return deferred.promise;
     }
 
+    function deleteRecipeById(recipeId, userId) {
+
+        var deferred = q.defer();
+
+        RecipeModel.findById(recipeId,function (err, recipe) {
+            if (err)
+            {
+                deferred.reject(err);
+            }
+            else
+            {
+                for(var i=0;i<recipe.users.length;i++)
+                {
+                    if(userId == recipe.users[i])
+                    {
+                        recipe.users.splice(i,1);
+                        break;
+                    }
+                }
+
+                recipe.save(function(err,doc)
+                {
+                    if(err)
+                    {
+                        deferred.reject(err);
+                    }
+                    else
+                    {
+                        deferred.resolve(doc);
+                    }
+                });
+            }
+        });
+
+        return deferred.promise;
+    }
+
     /*
     function getRecipeByIndex(index,userId) {
         var userRecipes = [];
@@ -133,6 +171,7 @@ module.exports = function(mongoose) {
 
         return recipesForUserId;
     }
+
 /*
     function deleteRecipeById(recipeIndex, userId) {
         var userRecipes = [];

@@ -28,23 +28,22 @@
                 SpaceService.setSearchKeyword(vm.query);
         }
 
-
         function categoryClicked(category)
         {
-            if(category == 'event')
+            if(category == 'event' || category == 'Events')
             {
                 vm.placeholder = 'city for events';
-                $rootScope.selectedCategory = category;
+                $rootScope.selectedCategory = 'event';
             }
-            else if(category == 'recipe')
+            else if(category == 'recipe' || category == 'Cooking Recipes')
             {
                 vm.placeholder = 'cooking recipes';
-                $rootScope.selectedCategory = category;
+                $rootScope.selectedCategory = 'recipe';
             }
             else
             {
                 vm.placeholder = 'news in space science';
-                $rootScope.selectedCategory = category;
+                $rootScope.selectedCategory = 'news';
             }
 
             console.log($rootScope.selectedCategory);

@@ -59,8 +59,28 @@ module.exports = function(app,userModel,recipeModel)
     app.delete("/api/project/recipe/:recipeId/user/:userId", function(req,res) {
         var delrecipeId = req.params.recipeId;
         var userId = req.params.userId;
-        recipeModel.deleteRecipeById(delrecipeId,userId);
-        res.json("ok");
+        //removes user from list of users saved in each recipe
+        recipeModel.deleteRecipeById(delrecipeId,userId).then(
+            function(doc)
+            {
+                console.log("in delete recipe "+doc);
+                return userModel.removeRecipeLikes(doc,userId);
+            },
+            function(err)
+            {
+                console.log(err);
+                res.status(600).send(err);
+            }
+        ).then(
+            function(doc)
+            {
+                res.json(doc);
+            },
+            function(err)
+            {
+                res.status(400).send(err);
+            }
+        );
     });
 
     //added userId parameter

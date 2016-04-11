@@ -36,7 +36,7 @@
         function findAllRecipes(recipe) {
 
             url = "http://api.yummly.com/v1/api/recipes?_app_id="+apiId+"&_app_key="
-                +apiKey+"&q="+recipe+"&requirePictures=true" +
+                +apiKey+"&q="+recipe+"&requirePictures=true&maxResult=1000" +
                 "&dataType=json";
 
             return $http.get(url);

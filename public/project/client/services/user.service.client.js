@@ -21,6 +21,7 @@
             updateUser : updateUser,
             deleteUserById : deleteUserById,
             setCurrentUser : setCurrentUser,
+            setSelectedCategory : setSelectedCategory,
             getCurrentUser : getCurrentUser,
             logout : logout
         };
@@ -66,6 +67,16 @@
         function setCurrentUser(user)
         {
             $rootScope.currentuser = user;
+        }
+
+        function setSelectedCategory(category)
+        {
+            if(category == "Cooking Recipes")
+                $rootScope.selectedCategory = 'recipe';
+            else if(category == "Events")
+                $rootScope.selectedCategory = 'event';
+            else
+                $rootScope.selectedCategory = 'news';
         }
 
         function getCurrentUser()

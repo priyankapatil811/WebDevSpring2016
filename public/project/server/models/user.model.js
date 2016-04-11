@@ -24,7 +24,9 @@ module.exports = function(db,mongoose)
         updateUser : updateUser,
         userLikesRecipe : userLikesRecipe,
         userLikesEvent : userLikesEvent,
-        userLikesArticle : userLikesArticle
+        userLikesArticle : userLikesArticle,
+        removeRecipeLikes : removeRecipeLikes,
+        removeNewsLikes : removeNewsLikes
     };
 
     return api;
@@ -243,7 +245,7 @@ module.exports = function(db,mongoose)
                 deferred.reject(err);
             else {
 
-                loggedInUser.likesEvent.push(event.eventId);
+                loggedInUser.likesEvent.push(event._id);
 
                 loggedInUser.save(function (err,doc) {
                     if(err)
@@ -268,7 +270,7 @@ module.exports = function(db,mongoose)
                 deferred.reject(err);
             else {
 
-                loggedInUser.likesArticle.push(news.newsId);
+                loggedInUser.likesArticle.push(news._id);
 
                 loggedInUser.save(function (err,doc) {
                     if(err)
@@ -283,4 +285,71 @@ module.exports = function(db,mongoose)
         return deferred.promise;
     }
 
+    function removeRecipeLikes(recipe,userId)
+    {
+        var deferred = q.defer();
+
+        UserModel.findById(userId,function(err,loggedInUser)
+        {
+            if (err)
+                deferred.reject(err);
+            else
+            {
+                for(var i=0;i<loggedInUser.likesRecipe.length;i++)
+                {
+                    if(recipe._id == loggedInUser.likesRecipe[i])
+                    {
+                        loggedInUser.likesRecipe.splice(i,1);
+                        break;
+                    }
+                }
+
+                loggedInUser.save(function(err,doc)
+                {
+                    if(err)
+                    {
+                        deferred.reject(err);
+                    }
+                    else
+                    {
+                        deferred.resolve(doc);
+                    }
+                });
+            }
+        });
+    }
+
+    function removeNewsLikes(news,userId)
+    {
+        var deferred = q.defer();
+
+        UserModel.findById(userId,function(err,loggedInUser)
+        {
+            if (err)
+                deferred.reject(err);
+            else
+            {
+                for(var i=0;i<loggedInUser.likesArticle.length;i++)
+                {
+                    if(news._id == loggedInUser.likesArticle[i])
+                    {
+                        loggedInUser.likesArticle.splice(i,1);
+                        break;
+                    }
+                }
+
+                loggedInUser.save(function(err,doc)
+                {
+                    if(err)
+                    {
+                        deferred.reject(err);
+                    }
+                    else
+                    {
+                        deferred.resolve(doc);
+                    }
+                });
+            }
+        });
+    }
 };

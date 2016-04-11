@@ -23,9 +23,9 @@
 
     <br>
     <div class="masonry">
-        <div class="item col-xs-12 col-sm-3 col-md-3" ng-repeat="recipe in model.recipeDetails">
-            <div class="thumbnail" style="border: groove ; border-color:crimson">
-                <img src="{{recipe.image}}" style="width: 100%; border: groove ; border-color: white">
+        <div class="item col-xs-12 col-md-3" ng-repeat="recipe in model.recipeDetails">
+            <div class="thumbnail" style="border: inset ; border-color:white ; height: 350px; max-height: 350px">
+                <img src="{{recipe.image}}" style="width: 100%; border: inset ; border-color: crimson">
                 <div class="caption">
                     <a href="#/recipe/{{recipe.id}}" style="text-align: center">
                         <p style="text-decoration: blink ; color:palevioletred ; font-size: smaller">{{recipe.title}}</p>

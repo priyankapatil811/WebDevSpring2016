@@ -58,8 +58,26 @@ module.exports = function(app,userModel,newsModel)
     app.delete("/api/project/news/:newsId/user/:userId", function(req,res) {
         var delnewsId = req.params.newsId;
         var userId = req.params.userId;
-        newsModel.deleteNewsById(delnewsId,userId);
-        res.json("ok");
+        newsModel.deleteNewsById(delnewsId,userId).then(
+            function(doc)
+            {
+                return userModel.removeNewsLikes(doc,userId);
+            },
+            function(err)
+            {
+                console.log(err);
+                res.status(600).send(err);
+            }).
+            then(
+                function(doc)
+                {
+                    res.json(doc);
+                },
+                function(err)
+                {
+                    res.status(400).send(err);
+                }
+            );
     });
 
     //added userId parameter
