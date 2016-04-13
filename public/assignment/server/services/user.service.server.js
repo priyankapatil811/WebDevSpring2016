@@ -54,7 +54,7 @@ module.exports = function(app,userModel)
         userModel.findUserByCredentials(username,password).then(
             function(user)
             {
-                console.log(user);
+             //   console.log(user);
                 if(!user)
                 {
                     return done(null,false);
@@ -193,9 +193,9 @@ module.exports = function(app,userModel)
         );
     }
 
-    function isAdmin(user)
+    function isAdmin(req,res,next)
     {
-        if(user.roles.indexOf("admin")>=0)
+        if(req.user.roles.indexOf("admin")>=0)
         {
             next();
         }
