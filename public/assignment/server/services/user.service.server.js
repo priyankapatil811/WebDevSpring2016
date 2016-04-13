@@ -19,8 +19,8 @@ module.exports = function(app,userModel)
     app.post("/api/assignment/logout", logout);
     app.get("/api/assignment/user", auth,findUser);
     app.post("/api/assignment/user", auth,createUser);
-    app.put("/api/assignment/user/:id", auth,updateUser);
-    app.delete("/api/assignment/user/:id", auth,deleteUser);
+    app.put("/api/assignment/user/:userId", auth,updateUser);
+    app.delete("/api/assignment/user/:userId", auth,deleteUser);
 
     /******************ADMIN******************/
 
@@ -144,9 +144,9 @@ module.exports = function(app,userModel)
     }
 
     function updateUser(req,res){
-        var userId = req.params.id;
+        var userId = req.params.userId;
         var upUser = req.body;
-
+        
         userModel.updateUser(userId,upUser).then(
             function(doc)
             {
