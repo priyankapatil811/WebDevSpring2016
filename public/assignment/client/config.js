@@ -35,7 +35,10 @@
             })
             .when("/admin", {
                 templateUrl: "views/admin/admin.view.html",
-                controller: ""
+                controller: "",
+                resolve: {
+                    checkLoggedIn: checkLoggedIn
+                }
             })
             .when("/forms", {
                 templateUrl: "views/forms/forms.view.html",
