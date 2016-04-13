@@ -8,19 +8,29 @@ var LocalStrategy = require('passport-local').Strategy;
 module.exports = function(app,userModel)
 {
     var auth = authorized;
+    var isAdmin = isAdmin;
 
     passport.use(new LocalStrategy(localStrategy));
     passport.serializeUser(serializeUser);
     passport.deserializeUser(deserializeUser);
 
     app.post('/api/assignment/login', passport.authenticate('local'), login);
-    app.get("/api/assignment/user", findUser);
+    app.get("/api/assignment/loggedin", loggedIn);
+    app.post("/api/assignment/logout", logout);
+    app.get("/api/assignment/user", auth,findUser);
     app.post("/api/assignment/user", auth,createUser);
     app.put("/api/assignment/user/:id", auth,updateUser);
     app.delete("/api/assignment/user/:id", auth,deleteUser);
-    app.get("/api/assignment/loggedin", loggedIn);
-    app.post("/api/assignment/logout", logout);
 
+    /******************ADMIN******************/
+
+    app.post("/api/assignment/admin/user",auth,isAdmin,createUser);
+    app.get("/api/assignment/admin/user",auth,isAdmin,findAllUsers);
+    app.get("/api/assignment/admin/user/:userId",auth,isAdmin,findUser);
+    app.delete("/api/assignment/admin/user/:userId",auth,isAdmin,deleteUser);
+    app.put("/api/assignment/admin/user/:userId",auth,isAdmin,updateUser);
+
+    /*****************************************/
 
     function login(req,res)
     {
@@ -64,6 +74,17 @@ module.exports = function(app,userModel)
         );
     }
 
+    function findAllUsers(req,res)
+    {
+        userModel.findAllUsers().then(
+            function (doc) {
+                res.json(doc);
+            },
+            function (err) {
+                res.status(400).send(err);
+            }
+        );
+    }
 
     function findUser(req,res)
     {
@@ -71,7 +92,7 @@ module.exports = function(app,userModel)
         var uPwd = req.query.password;
 
         if(typeof uName == 'undefined' && typeof uPwd == 'undefined') {
-            userModel.findAllUsers.then(
+            userModel.findAllUsers().then(
                 function (doc) {
                     res.json(doc);
                 },
@@ -170,6 +191,18 @@ module.exports = function(app,userModel)
                 done(err,null);
             }
         );
+    }
+
+    function isAdmin(user)
+    {
+        if(user.roles.indexOf("admin")>=0)
+        {
+            next();
+        }
+        else
+        {
+            res.send(403);
+        }
     }
 
     function authorized(req,res,next)
