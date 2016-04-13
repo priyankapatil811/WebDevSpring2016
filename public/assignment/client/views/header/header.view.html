@@ -17,6 +17,7 @@
                 <!--Add logic for role : admin-->
                 <li ng-class="{'active' : model.$location.url()=='/profile'}"><a ng-if="currentuser.username" href="#/profile">{{currentuser.username}}</a></li>
                 <li ng-class="{'active' : model.$location.url()=='/forms'}" class="hidden-lg visible-xs"><a href="#/forms" ng-if="currentuser.username">Forms</a></li>
+                <li ng-class="{'active' : model.$location.url()=='/admin'}" class="hidden-lg visible-xs"><a href="#/admin" ng-if="currentuser.username && currentuser.roles.indexOf('admin')>=0">Admin</a></li>
                 <li><a ng-if="currentuser.username" href="#/home" ng-click="model.logout()">Logout</a></li>
             </ul>
         </div>
