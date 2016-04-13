@@ -12,6 +12,14 @@
         $rootScope.currentuser = {"_id" : null, "firstName":null, "lastName":null, "username":null, "password":null , "emails":[], "phones":[], "roles":[]};
 
         var api = {
+            /*********ADMIN************/
+            createUserByAdmin : createUserByAdmin,
+            findUsersByAdmin : findUsersByAdmin,
+            findUserByIdByAdmin : findUserByIdByAdmin,
+            deleteUserByIdByAdmin : deleteUserByIdByAdmin,
+            updateUserByAdmin : updateUserByAdmin,
+
+            /*********USER************/
             findUserByUsername : findUserByUsername,
             findUserByCredentials : findUserByCredentials,
             findAllUsers : findAllUsers,
@@ -24,6 +32,34 @@
         };
 
         return api;
+
+        /************* Services for ADMIN ***********************/
+        function createUserByAdmin()
+        {
+            return $http.post("/api/assignment/admin/user",user);
+        }
+
+        function findUsersByAdmin()
+        {
+            return $http.get("/api/assignment/admin/user");
+        }
+
+        function findUserByIdByAdmin(userId)
+        {
+            return $http.get("/api/assignment/admin/user/"+userId);
+        }
+
+        function deleteUserByIdByAdmin(userId)
+        {
+            return $http.delete("/api/assignment/admin/user/"+userId);
+        }
+
+        function updateUserByAdmin(userId)
+        {
+            return $http.put("/api/assignment/admin/user/"+userId);
+        }
+
+        /************* Services for USER ***********************/
 
         function findUserByUsername(username)
         {

@@ -22,7 +22,6 @@
                     console.log(response);
                     UserService.setCurrentUser(null);
                 });
-
         }
     }
 })();
