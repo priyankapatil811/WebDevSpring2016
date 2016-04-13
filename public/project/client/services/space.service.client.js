@@ -20,9 +20,7 @@
             findNewsById : findNewsById,
 
             /********** POC ************/
-            setSearchKeyword : setSearchKeyword,
-            getSearchKeyword : getSearchKeyword,
-            findNewsByIdForUser : findNewsByIdForUser,
+            findNewsForUser : findNewsForUser,
             createNews : createNews,
             findNews : findNews,
             deleteNewsById : deleteNewsById,
@@ -54,19 +52,9 @@
 
         /********** POC ************/
 
-        function setSearchKeyword(query)
+        function findNewsForUser(userId)
         {
-            searchKeyWord = query;
-        }
-
-        function getSearchKeyword()
-        {
-            return searchKeyWord;
-        }
-
-        function findNewsByIdForUser(newsId)
-        {
-            return $http.get("/api/project/news/"+newsId);
+            return $http.get("/api/project/user/"+userId+"/news");
         }
 
         function getNewsByIndex(index,userId)

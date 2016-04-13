@@ -7,11 +7,15 @@
         .module("infoPinStrap")
         .controller("AccountController",AccountController);
 
-    function AccountController(UserService,$rootScope,RecipeService,SpaceService)
+    function AccountController(UserService,RecipeService,SpaceService,EventService)
     {
         var vm = this;
         vm.myRecipes = [];
         vm.myNews = [];
+        vm.myEvents = [];
+        vm.user = "";
+        vm.users = [];
+        vm.usersList = [];
 
         vm.init = init;
 
@@ -21,87 +25,118 @@
         vm.getSavedNewsBoards = getSavedNewsBoards;
         vm.removeNews = removeNews;
 
-        var user = "";
+        vm.getSavedEventBoards = getSavedEventBoards;
+        vm.removeEvent = removeEvent;
+
+        vm.complete = complete;
+
+        function complete(){
+            $("#users").autocomplete({
+                source: vm.usersList
+            });
+        }
 
         init();
 
         function init() {
+
+            UserService.findAllUsers().then(
+                function(response)
+                {
+                    vm.users = response.data;
+
+                    for(var i=0;i<vm.users.length;i++)
+                    {
+                        vm.usersList.push(vm.users[i].username);
+                    }
+                }
+            );
+
             UserService.getCurrentUser()
                 .then(function (response) {
-                    user = response.data;
-                });
-
-            console.log(user._id);
-
-            UserService.findUserById($rootScope.currentuser._id)
-                .then(function (response) {
-                    if (response.data) {
-                        vm.userProfile = response.data;
-                        getSavedRecipeBoards(vm.userProfile);
-                        getSavedNewsBoards(vm.userProfile);
-                    }
-                });
-        }
-
-        function removeRecipe(recipe)
-        {
-            RecipeService.deleteRecipeById(recipe._id,user._id).then(
-                function(response)
-                {
-                    if(response.data)
-                    {
-                        getSavedRecipeBoards(user);
-                    }
-                });
-        }
-
-        function removeNews(news)
-        {
-            SpaceService.deleteNewsById(news._id,user._id).then(
-                function(response)
-                {
-                    if(response.data)
-                    {
-                        getSavedNewsBoards(user);
-                    }
-                });
-        }
-
-
-        function getSavedRecipeBoards(user) {
-
-            if (user.likesRecipe.length > 0) {
-                for (var i = 0; i < user.likesRecipe.length; i++) {
-                    RecipeService.findRecipeByIdForUser(user.likesRecipe[i]).then(
-                        function (response) {
+                    UserService.findUserById(response.data._id)
+                        .then(function (response) {
                             if (response.data) {
-                                vm.myRecipes.push(response.data);
+                                vm.user = response.data;
+                                vm.userProfile = response.data;
+                                getSavedRecipeBoards(vm.userProfile);
+                                getSavedNewsBoards(vm.userProfile);
+                                getSavedEventBoards(vm.userProfile);
                             }
                         });
+                });
+        }
+
+        /******************************************************************************************/
+        function removeRecipe(recipe)
+        {
+            RecipeService.deleteRecipeById(recipe._id,vm.user._id).then(
+                function(response)
+                {
+                    if(response.data)
+                    {
+                        getSavedRecipeBoards(response.data);
+                    }
+                });
+        }
+
+        function getSavedRecipeBoards(user)
+        {
+            RecipeService.findRecipesForUser(user._id).then(
+                function(response)
+                {
+                    vm.myRecipes = response.data;
                 }
-            }
+            );
+        }
+        /******************************************************************************************/
+
+        /******************************************************************************************/
+        function removeNews(news)
+        {
+            SpaceService.deleteNewsById(news._id,vm.user._id).then(
+                function(response)
+                {
+                    if(response.data)
+                    {
+                        getSavedNewsBoards(response.data);
+                    }
+                });
         }
 
         function getSavedNewsBoards(user)
         {
-            if(user.likesArticle.length > 0)
-            {
-                for(var i = 0;i < user.likesArticle.length; i++)
-                {
-                    SpaceService.findNewsByIdForUser(user.likesArticle[i]).then(
-                      function (response)
-                      {
-                          if (response.data)
-                          {
-                              console.log("myNews :"+response.data);
-                              vm.myNews.push(response.data);
-                              console.log(vm.myNews);
-                          }
-                      });
-                }
-            }
+            SpaceService.findNewsForUser(user._id).then(
+              function(response)
+              {
+                  vm.myNews = response.data;
+              }
+            );
+        }
+        /******************************************************************************************/
 
+        /******************************************************************************************/
+        function removeEvent(event)
+        {
+            EventService.deleteEventById(event._id,vm.user._id).then(
+                function(response)
+                {
+                    if(response.data)
+                    {
+                        getSavedEventBoards(response.data);
+                    }
+                });
         }
 
+        function getSavedEventBoards(user)
+        {
+            EventService.findEventsForUser(user._id).then(
+                function(response)
+                {
+                   vm.myEvents = response.data;
+                }
+            );
+
+        }
     }
 })();

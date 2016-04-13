@@ -13,6 +13,9 @@
         $rootScope.currentuser = {"_id" : null, "firstName":null, "lastName":null, "username":null, "password":null , "interests" : null, "selectedCategory" : null};
 
         var api = {
+            followUser : followUser,
+            findUserFollowers : findUserFollowers,
+            findUserFollowing : findUserFollowing,
             findUserById : findUserById,
             findUserByUsername : findUserByUsername,
             findUserByCredentials : findUserByCredentials,
@@ -27,6 +30,21 @@
         };
 
         return api;
+
+        function followUser(friendId,currentUserId)
+        {
+            return $http.put("/api/project/otherUser/"+friendId+"/user/"+currentUserId);
+        }
+
+        function findUserFollowers(userId)
+        {
+            return $http.get("/api/project/user/followers/"+userId);
+        }
+
+        function findUserFollowing(userId)
+        {
+            return $http.get("/api/project/user/following/"+userId);
+        }
 
         function findUserById(userId)
         {

@@ -17,8 +17,9 @@ module.exports = function(mongoose) {
     var api =
     {
         likesNewsArticle : likesNewsArticle,
-        findNewsByIdForUser : findNewsByIdForUser,
+        findAllNewsForUser : findAllNewsForUser,
         deleteNewsById : deleteNewsById
+
         /********** POC ************/
        /* getNewsByIndex : getNewsByIndex,
         createNewsForUser : createNewsForUser,
@@ -77,19 +78,26 @@ module.exports = function(mongoose) {
         return deferred.promise;
     }
 
-    function findNewsByIdForUser(newsId)
+    function findAllNewsForUser(newsIds)
     {
         var deferred = q.defer();
 
-        NewsModel.findOne({_id : newsId},function(err,doc) {
-            if (err)
-                deferred.reject(err);
-            else
-                deferred.resolve(doc);
-        });
+        NewsModel.find({
+                _id: {$in: newsIds}
+            },
+            function (err, users)
+            {
+                if (err)
+                {
+                    deferred.reject(err);
+                }
+                else
+                {
+                    deferred.resolve(users);
+                }
+            });
 
         return deferred.promise;
-
     }
 
     function deleteNewsById(newsId,userId)

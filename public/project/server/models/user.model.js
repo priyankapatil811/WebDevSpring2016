@@ -26,7 +26,12 @@ module.exports = function(db,mongoose)
         userLikesEvent : userLikesEvent,
         userLikesArticle : userLikesArticle,
         removeRecipeLikes : removeRecipeLikes,
-        removeNewsLikes : removeNewsLikes
+        removeNewsLikes : removeNewsLikes,
+        removeEventLikes : removeEventLikes,
+        updateFollowerInfo : updateFollowerInfo,
+        updateFollowingInfo : updateFollowingInfo,
+        getUserFollowers : getUserFollowers,
+        getUserFollowing : getUserFollowing
     };
 
     return api;
@@ -147,19 +152,6 @@ module.exports = function(db,mongoose)
             }
         });
 
-        /*
-        UserModel.create(user,function(err,doc)
-        {
-            if(err)
-            {
-                deferred.reject(err);
-            }
-            else
-            {
-                deferred.resolve(doc);
-            }
-        });
-        */
         return deferred.promise;
     }
 
@@ -317,6 +309,8 @@ module.exports = function(db,mongoose)
                 });
             }
         });
+
+        return deferred.promise;
     }
 
     function removeNewsLikes(news,userId)
@@ -351,5 +345,132 @@ module.exports = function(db,mongoose)
                 });
             }
         });
+
+        return deferred.promise;
     }
+
+
+    function removeEventLikes(event,userId)
+    {
+        var deferred = q.defer();
+
+        UserModel.findById(userId,function(err,loggedInUser) {
+            if (err)
+                deferred.reject(err);
+            else {
+                for (var i = 0; i < loggedInUser.likesEvent.length; i++) {
+                    if (event._id == loggedInUser.likesEvent[i]) {
+                        loggedInUser.likesEvent.splice(i, 1);
+                        break;
+                    }
+                }
+
+                loggedInUser.save(function (err, doc) {
+                    if (err) {
+                        deferred.reject(err);
+                    }
+                    else {
+                        deferred.resolve(doc);
+                    }
+                });
+            }
+        });
+
+        return deferred.promise;
+    }
+
+    function updateFollowerInfo(friendId,currentUserId)
+    {
+        var deferred = q.defer();
+
+        UserModel.findById(friendId,function(err,loggedInUser){
+            if(err)
+                deferred.reject(err);
+            else
+            {
+                loggedInUser.follower.push(currentUserId);
+
+                loggedInUser.save(function (err,doc) {
+                    if(err)
+                        deferred.reject(err);
+                    else {
+                        deferred.resolve(doc);
+                    }
+                });
+            }
+        });
+
+        return deferred.promise;
+    }
+
+    function updateFollowingInfo(currentUserId,friend)
+    {
+        var deferred = q.defer();
+
+        UserModel.findById(currentUserId,function(err,loggedInUser){
+            if(err)
+                deferred.reject(err);
+            else
+            {
+                loggedInUser.following.push(friend._id);
+
+                loggedInUser.save(function (err,doc) {
+                    if(err)
+                        deferred.reject(err);
+                    else {
+                        deferred.resolve(doc);
+                    }
+                });
+            }
+        });
+
+        return deferred.promise;
+    }
+
+    function getUserFollowers(userIds)
+    {
+        console.log("inside get user followers");
+        var deferred = q.defer();
+
+        UserModel.find({
+                _id: {$in: userIds}
+            },
+            function (err, users)
+            {
+                if (err)
+                {
+                    deferred.reject(err);
+                }
+                else
+                {
+                    console.log("followers :"+users);
+                    deferred.resolve(users);
+                }
+            });
+
+        return deferred.promise;
+    }
+
+    function getUserFollowing(userIds)
+    {
+        var deferred = q.defer();
+
+        UserModel.find({
+                _id: {$in: userIds}
+            },
+            function (err, users)
+            {
+                if (err)
+                {
+                    deferred.reject(err);
+                }
+                else
+                {
+                    deferred.resolve(users);
+                }
+            });
+
+        return deferred.promise;
+    }
+
 };

@@ -17,11 +17,13 @@ module.exports = function(mongoose)
     var api =
     {
         likesEvent : likesEvent,
-        getEventByIndex : getEventByIndex,
+        findAllEventsForUser : findAllEventsForUser,
+        deleteEventById : deleteEventById
+     /*   getEventByIndex : getEventByIndex,
         createEventForUser : createEventForUser,
         findEvents : findEvents,
         deleteEventById : deleteEventById,
-        updateEventById : updateEventById
+        updateEventById : updateEventById */
     };
 
     return api;
@@ -75,6 +77,66 @@ module.exports = function(mongoose)
         return deferred.promise;
     }
 
+    function findAllEventsForUser(eventIds)
+    {
+        var deferred = q.defer();
+
+        EventModel.find({
+                _id: {$in: eventIds}
+            },
+            function (err, users) {
+                if (err)
+                {
+                    deferred.reject(err);
+                }
+                else {
+                    deferred.resolve(users);
+                }
+            });
+
+        return deferred.promise;
+    }
+
+
+    function deleteEventById(eventId,userId)
+    {
+        var deferred = q.defer();
+
+        EventModel.findById(eventId,function(err,event)
+        {
+           if(err)
+           {
+               deferred.reject(err);
+           }
+           else
+           {
+               for(var i=0;i<event.users.length;i++)
+               {
+                    if(userId == event.users[i])
+                    {
+                        event.users.splice(i,1);
+                        break;
+                    }
+               }
+
+               event.save(function(err,doc)
+               {
+                   if(err)
+                   {
+                       deferred.reject(err);
+                   }
+                   else
+                   {
+                       deferred.resolve(doc);
+                   }
+               });
+           }
+        });
+
+        return deferred.promise;
+    }
+
+    /*
 
     function getEventByIndex(index,userId)
     {
@@ -170,5 +232,6 @@ module.exports = function(mongoose)
         };
 
         //console.log(events);
-    }
+
+    }*/
 };

@@ -12,22 +12,25 @@
         var apiId = "5b171984";
         var apiKey = "9f46fd1c44408240f0b10f3fbc39dca3";
         var url = "";
-        var searchKeyWord = "";
 
         var api =
         {
             findAllRecipes : findAllRecipes,
             findRecipeById : findRecipeById,
+            findRecipesForUser : findRecipesForUser,
+            createRecipe : createRecipe,
+            deleteRecipeById : deleteRecipeById
 
             /********** POC ************/
+            /*
             setSearchKeyword : setSearchKeyword,
             getSearchKeyword : getSearchKeyword,
-            findRecipeByIdForUser : findRecipeByIdForUser,
-            createRecipe : createRecipe,
+
+
             findRecipes : findRecipes,
-            deleteRecipeById : deleteRecipeById,
+
             updateRecipeById : updateRecipeById,
-            getRecipeByIndex : getRecipeByIndex
+            getRecipeByIndex : getRecipeByIndex*/
             /***************************/
         };
 
@@ -42,7 +45,6 @@
             return $http.get(url);
         }
 
-
         function findRecipeById(recipeId)
         {
             url = "http://api.yummly.com/v1/api/recipe/"+recipeId+"?_app_id="+apiId+"&_app_key="+apiKey+
@@ -51,40 +53,12 @@
             return $http.get(url);
         }
 
-        /********** POC ************/
-
-        function setSearchKeyword(query)
-        {
-            searchKeyWord = query;
-        }
-
-        function getSearchKeyword()
-        {
-            return searchKeyWord;
-        }
-
-        function findRecipeByIdForUser(recipeId)
-        {
-            return $http.get("/api/project/recipe/"+recipeId);
-        }
-
-      /*  function getRecipeIdByIndex(index,callback)
-        {
-            callback(recipes[index]._id);
-        }
-       */
-
-        function getRecipeByIndex(index,userId)
-        {
-            return $http.get("/api/project/recipe/"+index+"/user/"+userId);
-        }
-
         function createRecipe(userId,recipe)
         {
-           return $http.post("/api/project/user/"+userId+"/recipe",recipe);
+            return $http.post("/api/project/user/"+userId+"/recipe",recipe);
         }
 
-        function findRecipes(userId)
+        function findRecipesForUser(userId)
         {
             return $http.get("/api/project/user/"+userId+"/recipe");
         }
@@ -94,10 +68,28 @@
             return $http.delete("/api/project/recipe/"+recipeId+"/user/"+userId);
         }
 
+        /********** POC ************/
+
+
+
+/*
+        function getRecipeByIndex(index,userId)
+        {
+            return $http.get("/api/project/recipe/"+index+"/user/"+userId);
+        }
+
+
+        function findRecipes(userId)
+        {
+            return $http.get("/api/project/user/"+userId+"/recipe");
+        }
+
+
         function updateRecipeById(recipeId, newRecipe)
         {
             return $http.put("/api/project/recipe/"+recipeId,newRecipe);
         }
+        */
         /***************************/
 
     }

@@ -10,7 +10,9 @@ module.exports = function(mongoose) {
         interests : [String],
         likesRecipe : [String],
         likesEvent : [String],
-        likesArticle : [String]
+        likesArticle : [String],
+        following : [String],
+        follower : [String]
 
         // store user documents in this collection
     }, {collection: 'project.user'});

@@ -7,17 +7,19 @@
         .module("infoPinStrap")
         .controller("RecipeController", RecipeController);
 
-    function RecipeController(RecipeService, UserService, $rootScope) {
+    function RecipeController(RecipeService, UserService) {
 
         var vm = this;
         vm.recipeList = [];
         vm.recipeDetails = [];
         vm.searchRecipe = searchRecipe;
-        vm.init = init;
         vm.addRecipe = addRecipe;
+        /*
+        vm.init = init;
         vm.selectRecipe = selectRecipe;
         vm.updateRecipe = updateRecipe;
         vm.deleteRecipe = deleteRecipe;
+        */
 
         var user = "";
         UserService
@@ -26,7 +28,6 @@
                 user = response.data;
             });
 
-        //$scope.searchRecipe = function (r) {
         function searchRecipe(r)
         {
             RecipeService.findAllRecipes(r.recipe).then(function (response) {
@@ -49,11 +50,19 @@
                 }
                 console.log(vm.recipeDetails);
             });
-        };
+        }
+
+        function addRecipe(recipe) {
+            console.log(user._id);
+            RecipeService.createRecipe(user._id, recipe).then(
+                function (response) {
+                    console.log(response.data);
+                });
+        }
 
         /********** POC ************/
 
-
+/*
         function init()
         {
             RecipeService.findRecipes($rootScope.currentuser._id).then(
@@ -68,20 +77,11 @@
             init();
         }
 
-        function addRecipe(recipe)
-        {
-            console.log(user._id);
-            RecipeService.createRecipe(user._id,recipe).then(
-                function(response){
-                    console.log(response.data);
-                });
-
-            /*
             RecipeService.createRecipe($rootScope.currentuser._id,vm.recipe).then(
                 function(response){
                     init();
                  });
-            */
+
         }
 
         function selectRecipe(index)
@@ -99,14 +99,14 @@
                         "userId": response.data.userId
                     };
                 });
-/*
+
             RecipeService.getRecipeIdByIndex(recipeIndex).then(
                 function(response)
                 {
                     vm.recipeId = response;
                 });
 
-            console.log($scope.recipeId); */
+            console.log($scope.recipeId);
         }
 
 
@@ -126,12 +126,12 @@
             var recipeIndex = index;
 
             //function call return formId
-         /*   RecipeService.getRecipeIdByIndex(recipeIndex).then(
+            RecipeService.getRecipeIdByIndex(recipeIndex).then(
                 function(response)
                 {
                     $scope.recipeId = response;
                 });
-                */
+
 
         //    RecipeService.deleteRecipeById($scope.recipeId).then(
             RecipeService.deleteRecipeById(recipeIndex,$rootScope.currentuser._id).then(
@@ -141,7 +141,7 @@
 
           //  console.log($scope.recipeList);
         }
-
+*/
         /***************************/
     }
 })();

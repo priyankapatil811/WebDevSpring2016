@@ -96,6 +96,15 @@
                     getLoggedIn: getLoggedIn
                 }
             })
+            .when("/user/:username",
+            {
+                templateUrl: "views/users/userProfile.view.html",
+                controller: "UserProfileController",
+                controllerAs : "model",
+                resolve: {
+                    getLoggedIn: getLoggedIn
+                }
+            })
             .otherwise({
                 redirectTo: "/home"
             });

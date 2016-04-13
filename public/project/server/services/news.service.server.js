@@ -31,19 +31,36 @@ module.exports = function(app,userModel,newsModel)
         //res.json("ok");
     });
 
-    app.get("/api/project/news/:newsId",function(req,res)
+    app.get("/api/project/user/:userId/news",function(req,res)
     {
-        var newsId = req.params.newsId;
+        var userId = req.params.userId;
 
-        newsModel.findNewsByIdForUser(newsId).then(
+        userModel.getUserById(userId).then(
+            function(doc)
+            {
+                if(doc)
+                {
+                    return newsModel.findAllNewsForUser(doc.likesArticle);
+                }
+                else
+                {
+                    res.json({});
+                }
+            },
+            function(err)
+            {
+                res.status(400).send(err);
+            }).
+        then(
             function(doc)
             {
                 res.json(doc);
             },
             function(err)
             {
-                res.status(600).send(err);
-            });
+                res.status(500).send(err);
+            }
+        );
     });
 
     app.put("/api/project/news/:newsId", function(req,res)
@@ -58,6 +75,7 @@ module.exports = function(app,userModel,newsModel)
     app.delete("/api/project/news/:newsId/user/:userId", function(req,res) {
         var delnewsId = req.params.newsId;
         var userId = req.params.userId;
+
         newsModel.deleteNewsById(delnewsId,userId).then(
             function(doc)
             {
@@ -65,7 +83,6 @@ module.exports = function(app,userModel,newsModel)
             },
             function(err)
             {
-                console.log(err);
                 res.status(600).send(err);
             }).
             then(

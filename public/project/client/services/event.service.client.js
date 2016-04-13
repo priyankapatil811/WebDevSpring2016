@@ -27,37 +27,28 @@
             findEventByLocation : findEventByLocation,
             findAllEvents : findAllEvents,
             findEventById : findEventById,
+            createEvent : createEvent,
+            findEventsForUser : findEventsForUser,
+            deleteEventById : deleteEventById
 
             /********** POC ************/
-            setSearchKeyword : setSearchKeyword,
+          /*  setSearchKeyword : setSearchKeyword,
             getSearchKeyword : getSearchKeyword,
-            createEvent : createEvent,
+
             findEvents : findEvents,
             deleteEventById : deleteEventById,
             updateEventById : updateEventById,
-            getEventByIndex : getEventByIndex
+            getEventByIndex : getEventByIndex */
             /***************************/
         };
 
         return api;
 
-        function setSearchKeyword(query)
-        {
-            searchKeyWord = query;
-        }
-
-        function getSearchKeyword()
-        {
-            return searchKeyWord;
-        }
-
         function findEventByLocation(location) {
 
-           // $http.get('http://maps.google.com/maps/api/geocode/json?address=' + location).success(callback);
             url = 'http://maps.google.com/maps/api/geocode/json?address=' + location;
             return $http.get(url);
         }
-
 
         function findAllEvents(whereCo,range) {
 
@@ -79,15 +70,26 @@
             }
         }
 
-        /********** POC ************/
-        function getEventByIndex(index,userId)
-        {
-            return $http.get("/api/project/event/"+index+"/user/"+userId);
-        }
-
         function createEvent(userId,event)
         {
             return $http.post("/api/project/user/"+userId+"/event",event);
+        }
+
+        function findEventsForUser(userId)
+        {
+            return $http.get("/api/project/user/"+userId+"/event");
+        }
+
+        function deleteEventById(eventId,userId)
+        {
+            return $http.delete("/api/project/event/"+eventId+"/user/"+userId);
+        }
+
+        /********** POC ************/
+        /*
+        function getEventByIndex(index,userId)
+        {
+            return $http.get("/api/project/event/"+index+"/user/"+userId);
         }
 
         function findEvents(userId)
@@ -103,8 +105,7 @@
         function updateEventById(eventId, newEvent)
         {
             return $http.put("/api/project/event/"+eventId,newEvent);
-        }
+        }*/
         /***************************/
-
     }
 })();

@@ -9,7 +9,7 @@ module.exports = function(app,userModel)
         var uPwd = req.query.password;
 
         if(typeof uName == 'undefined' && typeof uPwd == 'undefined') {
-            userModel.findAllUsers.then(
+            userModel.findAllUsers().then(
                 function (doc) {
                     res.json(doc);
                 },
@@ -61,6 +61,77 @@ module.exports = function(app,userModel)
         );
     });
 
+    app.get("/api/project/user/followers/:userId",function(req,res){
+
+        var userId = req.params.userId;
+
+        userModel.getUserById(userId).then(
+           function(doc)
+           {
+               if(doc)
+               {
+                   return userModel.getUserFollowers(doc.follower);
+               }
+               else
+               {
+                   res.json({});
+               }
+
+           },
+            function(err)
+            {
+                res.status(400).send(err);
+            }).
+            then(
+                function(doc)
+                {
+                    res.json(doc);
+                },
+                function(err)
+                {
+                    res.status(600).send(err);
+                }
+            );
+    });
+
+
+    app.get("/api/project/user/following/:userId",function(req,res){
+
+        var userId = req.params.userId;
+
+        userModel.getUserById(userId).then(
+
+            function(doc)
+            {
+                if(doc)
+                {
+                    console.log(doc);
+                    return userModel.getUserFollowing(doc.following);
+                }
+                else
+                {
+                    res.json({});
+                }
+            },
+            function(err)
+            {
+                res.status(400).send(err);
+            }).
+        then(
+            function(doc)
+            {
+                res.json(doc);
+            },
+            function(err)
+            {
+                res.status(600).send(err);
+            }
+        );
+    });
+
+
+
+
     app.post("/api/project/user",function(req,res){
         var newUser = req.body;
         userModel.createUser(newUser).then(
@@ -74,6 +145,34 @@ module.exports = function(app,userModel)
                 res.status(400).send(err);
             }
         );
+    });
+
+
+    app.put("/api/project/otherUser/:friendId/user/:currentUserId",function(req,res)
+    {
+        var friendId = req.params.friendId;
+        var currentUserId = req.params.currentUserId;
+
+        userModel.updateFollowerInfo(friendId,currentUserId).then(
+            function(doc)
+            {
+                console.log(doc);
+                return userModel.updateFollowingInfo(currentUserId,doc);
+            },
+            function(err)
+            {
+                res.status(400).send(err);
+            }).
+            then(
+                function(doc)
+                {
+                    res.json(doc);
+                },
+                function(err)
+                {
+                    res.status(600).send(err);
+                }
+            );
     });
 
     app.put("/api/project/user/:id",function(req,res){

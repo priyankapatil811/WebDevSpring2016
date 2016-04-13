@@ -15,19 +15,49 @@
         <br>
         <div class="col-md-3 leftPaneDiv">
             <br>
+            <div align="right">
+                <a ng-if = "currentuser.username" href="" class="btn" ng-click="model.followUser()">
+                    <i class="fa fa-user-plus fa-2x" style="color: green"></i>
+                </a>
+            </div>
             <div class="avatar">
                 <img ng-src="images/avatar.jpeg"/>
             </div>
-            <p id="signFont" align="center"> Hi! I am {{model.userProfile.username}} </p>
+            <p id="signFont" align="center"> Hi! I am {{model.user.username}} </p>
             <hr>
             <h4 id="signFont"> My Interests </h4>
-            <div ng-repeat="interest in model.userProfile.interests">
+            <div ng-repeat="interest in model.user.interests">
                 <h5> {{interest}} </h5>
             </div>
             <hr>
             <h4> Followers </h4>
+            <div ng-if="model.followers.length == 0">
+                None Yet
+            </div>
+            <ul ng-repeat="follower in model.followers">
+                <div ng-if="follower.username == currentuser.username">
+                    <ul><img class="memberImage img-circle" ng-src="images/avatar.jpeg">    <a href="#/myAccount" >{{follower.username}}</a></ul>
+                </div>
+                <div ng-if="follower.username != currentuser.username">
+                    <ul><img class="memberImage img-circle" ng-src="images/avatar.jpeg">    <a href="#/user/{{follower.username}}" >{{follower.username}}</a></ul>
+                </div>
+            </ul>
 
             <h4> Following </h4>
+            <div ng-if="model.following.length == 0">
+                None Yet
+            </div>
+            <ul ng-repeat="following in model.following">
+                <div>
+                    <img class="memberImage img-circle" ng-src="images/avatar.jpeg">
+                    <div ng-if="follower.username == currentuser.username">
+                        <a href="#/myAccount" >{{following.username}}</a>
+                    </div>
+                    <div ng-if="follower.username != currentuser.username">
+                        <a href="#/user/{{following.username}}" >{{following.username}}</a>
+                    </div>
+                </div>
+            </ul>
         </div>
 
         <div class="col-md-9">
@@ -44,8 +74,8 @@
                                 <p>{{event.city}}</p>
                                 <i class="fa fa-calendar"> {{event.start_time | date:"MM/dd/yyyy"}} </i>
                                 <p>{{event.venue_name}}</p>
-                                <a ng-if = "currentuser.username" href="" class="btn" ng-click="model.removeEvent(event)">
-                                    <i class="fa fa-times fa-2x" style="color: blue"></i> </a>
+                                <a ng-if = "currentuser.username" href="" class="btn" disabled="true">
+                                    <i class="fa fa-thumbs-up fa-2x" style="color: blue"></i> </a>
                             </div>
                         </div>
                     </div>
@@ -63,8 +93,8 @@
                             <hr>
                             <div style="text-align: center">
                                 <p>{{recipe.source}}</p>
-                                <a ng-if = "currentuser.username" href="" class="btn" ng-click="model.removeRecipe(recipe)">
-                                    <i class="fa fa-times fa-2x" style="color: crimson"></i> </a>
+                                <a ng-if = "currentuser.username" href="" class="btn" disabled="true">
+                                    <i class="fa fa-heart fa-2x" style="color: crimson"></i> </a>
                             </div>
                         </div>
                     </div>
@@ -82,8 +112,8 @@
                             </a>
                             <hr>
                             <div style="text-align: center">
-                                <a ng-if = "currentuser.username" href="" class="btn" ng-click="model.removeNews(news)">
-                                    <i class="fa fa-times fa-2x" style="color: blueviolet"></i> </a>
+                                <a ng-if = "currentuser.username" href="" class="btn" disabled="true">
+                                    <i class="fa fa-bookmark fa-2x" style="color: blueviolet"></i> </a>
                             </div>
                         </div>
                     </div>
