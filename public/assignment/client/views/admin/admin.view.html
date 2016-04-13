@@ -45,7 +45,7 @@
                             <input type="text" class="form-control" id="role" placeholder="Role1, Role2" ng-model="model.user.roles" ng-list required>
                         </td>
                         <td align="center">
-                            <button type="button" class="glyphicon glyphicon-plus btn btn-primary" ng-click="model.addUser()"></button>
+                            <button type="button" class="glyphicon glyphicon-plus btn btn-primary" ng-click="model.addUser(model.user)"></button>
                             <button type="button" class="glyphicon glyphicon-ok btn btn-primary btn-success" ng-click="model.updateUser(model.user)"></button>
                         </td>
                     </tr>
@@ -64,7 +64,7 @@
                             {{user.roles}}
                         </td>
                         <td align="center">
-                            <button type="button" class="glyphicon glyphicon-remove btn btn-danger" ng-click="model.deleteUser($index)"></button>&nbsp;
+                            <button type="button" class="glyphicon glyphicon-remove btn btn-danger" ng-click="model.deleteUser(user)"></button>
                             <button type="button" class="glyphicon glyphicon-cog btn btn-warning" ng-click="model.selectUser($index)"></button>
                         </td>
                     </tr>
