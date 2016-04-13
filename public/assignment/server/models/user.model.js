@@ -135,6 +135,7 @@ module.exports = function(db,mongoose)
                loggedInUser.username = user.username;
                loggedInUser.emails = user.emails;
                loggedInUser.phones = user.phones;
+               loggedInUser.roles = user.roles;
                loggedInUser.save(function (err,doc) {
                    if(err)
                        deferred.reject(err);
