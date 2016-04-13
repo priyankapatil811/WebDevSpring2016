@@ -54,7 +54,6 @@ module.exports = function(app,userModel)
         userModel.findUserByCredentials(username,password).then(
             function(user)
             {
-             //   console.log(user);
                 if(!user)
                 {
                     return done(null,false);
@@ -147,6 +146,7 @@ module.exports = function(app,userModel)
     function updateUser(req,res){
         var userId = req.params.id;
         var upUser = req.body;
+
         userModel.updateUser(userId,upUser).then(
             function(doc)
             {
@@ -161,7 +161,8 @@ module.exports = function(app,userModel)
     }
 
     function deleteUser(req,res){
-        var delUser = req.param.userId;
+        var delUser = req.params.userId;
+
         userModel.deleteUserById(delUser).then(
             function(doc)
             {
