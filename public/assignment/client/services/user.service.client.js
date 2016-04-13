@@ -54,9 +54,9 @@
             return $http.delete("/api/assignment/admin/user/"+userId);
         }
 
-        function updateUserByAdmin(userId)
+        function updateUserByAdmin(userId,user)
         {
-            return $http.put("/api/assignment/admin/user/"+userId);
+            return $http.put("/api/assignment/admin/user/"+userId,user);
         }
 
         /************* Services for USER ***********************/
