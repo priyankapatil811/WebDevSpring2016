@@ -51,7 +51,7 @@ module.exports = function(app,userModel)
 
     function localStrategy(username,password,done)
     {
-        userModel.findUserByCredentials(username,password).then(
+        userModel.findUserByUsername(username).then(
             function(user)
             {
                 if(!user)
@@ -60,7 +60,8 @@ module.exports = function(app,userModel)
                 }
                 else
                 {
-                    return done(null,user);
+                    if(user && bcrypt.compareSync(password,user.password))
+                        return done(null,user);
                 }
             },
             function(err)
@@ -249,5 +250,4 @@ module.exports = function(app,userModel)
             next();
         }
     }
-
 };
