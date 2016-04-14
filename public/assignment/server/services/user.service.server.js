@@ -4,6 +4,7 @@
 
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+var bcrypt = require('bcrypt-nodejs');
 
 module.exports = function(app,userModel)
 {
@@ -130,6 +131,7 @@ module.exports = function(app,userModel)
     {
         var newUser = req.body;
         newUser.roles = ["student"];
+        newUser.password = bcrypt.hashSync(req.body.password);
 
         userModel.findUserByUsername(newUser.username).then(
             function(doc)
@@ -173,6 +175,8 @@ module.exports = function(app,userModel)
     {
         var userId = req.params.userId;
         var upUser = req.body;
+
+        upUser.password = bcrypt.hashSync(req.body.password);
 
         userModel.updateUser(userId,upUser).then(
             function(doc)
