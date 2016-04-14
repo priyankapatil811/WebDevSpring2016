@@ -17,8 +17,8 @@ var port = process.env.OPENSHIFT_NODEJS_PORT || 3000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(multer());
-app.use(session({ secret: 'priyanka'}));
-app.use(cookieParser('priyanka'));
+app.use(session({ secret: process.env.PASSPORT_SECRET}));
+app.use(cookieParser());
 app.use(passport.initialize());
 app.use(passport.session());
 
