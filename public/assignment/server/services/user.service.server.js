@@ -127,7 +127,8 @@ module.exports = function(app,userModel)
         }
     }
 
-    function createUser(req,res){
+    function createUser(req,res)
+    {
         var newUser = req.body;
         console.log(newUser);
         userModel.createUser(newUser).then(
@@ -143,10 +144,11 @@ module.exports = function(app,userModel)
         );
     }
 
-    function updateUser(req,res){
+    function updateUser(req,res)
+    {
         var userId = req.params.userId;
         var upUser = req.body;
-        
+
         userModel.updateUser(userId,upUser).then(
             function(doc)
             {
@@ -160,7 +162,8 @@ module.exports = function(app,userModel)
         );
     }
 
-    function deleteUser(req,res){
+    function deleteUser(req,res)
+    {
         var delUser = req.params.userId;
 
         userModel.deleteUserById(delUser).then(

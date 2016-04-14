@@ -34,7 +34,7 @@
         return api;
 
         /************* Services for ADMIN ***********************/
-        function createUserByAdmin()
+        function createUserByAdmin(user)
         {
             return $http.post("/api/assignment/admin/user",user);
         }

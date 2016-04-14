@@ -13,12 +13,16 @@
 
         vm.user = {};
         vm.users = [];
+        vm.sortReverse = 'false';
+        vm.sortType = 'username';
 
         vm.init = init;
+        vm.addUser = addUser;
         vm.deleteUser = deleteUser;
         vm.updateUser = updateUser;
         vm.selectUser = selectUser;
 
+        console.log(vm.sortReverse);
         init();
 
         function init()
@@ -32,6 +36,20 @@
                         console.log(response.data);
                     }
                 }
+            );
+        }
+
+
+        function addUser(user)
+        {
+            UserService.createUser(user).then(
+                  function(response)
+                  {
+                      if(response.data)
+                      {
+                          init();
+                      }
+                  }
             );
         }
 
