@@ -13,6 +13,7 @@
 
         var url = "";
         var searchKeyWord = "";
+        var token = "";
 
         var api =
         {
@@ -37,7 +38,7 @@
           /*  url = "https://ajax.googleapis.com/ajax/services/search/news?v=1.0&q="+keyword+
                 "&dataType=json&callback=JSON_CALLBACK"; */
 
-            url = "https://webhose.io/search?token=def15a08-b97c-44b7-a238-8bb4bc04360b&format=json&q=(site_type%3Anews)"+keyword;
+            url = "https://webhose.io/search?token="+token+"&format=json&q=(site_type%3Anews)"+keyword;
 
             return $http.get(url);
         }
