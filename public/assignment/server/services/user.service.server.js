@@ -18,7 +18,7 @@ module.exports = function(app,userModel)
     app.get("/api/assignment/loggedin", loggedIn);
     app.post("/api/assignment/logout", logout);
     app.get("/api/assignment/user", auth,findUser);
-    app.post("/api/assignment/user", auth,createUser);
+    app.post("/api/assignment/user", createUser);
     app.put("/api/assignment/user/:userId", auth,updateUser);
     app.delete("/api/assignment/user/:userId", auth,deleteUser);
 
@@ -40,7 +40,6 @@ module.exports = function(app,userModel)
 
     function loggedIn(req, res) {
         res.send(req.isAuthenticated() ? req.user : '0');
-        //res.json(req.session.currentUser);
     }
 
     function logout(req,res)
@@ -130,18 +129,44 @@ module.exports = function(app,userModel)
     function createUser(req,res)
     {
         var newUser = req.body;
-        console.log(newUser);
-        userModel.createUser(newUser).then(
+        newUser.roles = ["student"];
+
+        userModel.findUserByUsername(newUser.username).then(
             function(doc)
             {
-                req.session.currentUser = doc;
-                res.json(doc);
+                if(doc)
+                {
+                    res.json(null);
+                }
+                else
+                {
+                    return userModel.createUser(newUser);
+                }
             },
             function(err)
             {
                 res.status(400).send(err);
-            }
-        );
+            })
+            .then(
+                function(user)
+                {
+                    if(user)
+                    {
+                        req.login(user,function(err)
+                        {
+                            if(err) {
+                                res.status(500).send(err);
+                            } else {
+                                res.json(user);
+                            }
+                        });
+                    }
+                },
+                function(err)
+                {
+                    res.status(600).send(err);
+                }
+            );
     }
 
     function updateUser(req,res)
