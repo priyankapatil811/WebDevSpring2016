@@ -53,7 +53,7 @@
         function findAllEvents(whereCo,range) {
 
             url = "http://api.eventful.com/json/events/search?app_key=" + apiKey + "&where=" + whereCo + "&within=" +
-                range + "&units=mi&date=Future&page_size=1000&page_number=" + pageNo + "&include=categories,price,links&sort_order=" +
+                range + "&units=mi&date=Future&page_size=100&page_number=" + pageNo + "&include=categories,price,links&sort_order=" +
                 sortOrder + "&dataType=json&callback=JSON_CALLBACK";
 
             return $http.jsonp(url);

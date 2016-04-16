@@ -7,7 +7,7 @@
         .module("infoPinStrap")
         .controller("RecipeController", RecipeController);
 
-    function RecipeController(RecipeService, UserService) {
+    function RecipeController(RecipeService, UserService, $http) {
 
         var vm = this;
         vm.recipeList = [];
@@ -22,11 +22,31 @@
         */
 
         var user = "";
+        var apiId = "5b171984";
+        var apiKey = "9f46fd1c44408240f0b10f3fbc39dca3";
+
         UserService
             .getCurrentUser()
             .then(function(response) {
                 user = response.data;
             });
+
+        //$http.get("http://api.yummly.com/v1/api/recipes?_app_id=" + apiId + "&_app_key=" + apiKey + "&requirePictures=true&maxResult=100&dataType=json").then(
+        //    function (response) {
+        //        vm.recipeData = response.data;
+        //        console.log(vm.recipeData);
+        //
+        //        for (var i = 0; i < vm.recipeData.matches.length; i++) {
+        //            var recipeObj = new Object();
+        //            recipeObj.id = vm.recipeData.matches[i].id;
+        //            recipeObj.title = vm.recipeData.matches[i].recipeName;
+        //            recipeObj.image = vm.recipeData.matches[i].smallImageUrls[0];
+        //            recipeObj.source = vm.recipeData.matches[i].sourceDisplayName;
+        //            vm.recipeDetails.push(recipeObj);
+        //        }
+        //        console.log(vm.recipeDetails);
+        //    }
+        //);
 
         function searchRecipe(r)
         {

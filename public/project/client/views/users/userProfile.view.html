@@ -2,17 +2,6 @@
 <div class="container">
     <div class="row">
         <br>
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="input-group">
-                    <input type="text" class="form-control" style="height: 41px" id="users" ng-model="model.selectedUser" ng-keyup="model.complete()" placeholder="Start typing the username"/>
-                      <span class="input-group-btn">
-                          <a class="btn btn-default" href="#/user/{{model.selectedUser}}" style="text-align: center">Search Profile</a>
-                      </span>
-                </div><!-- /input-group -->
-            </div>
-        </div><!-- /.row -->
-        <br>
         <div class="col-md-3 leftPaneDiv">
             <br>
             <div align="right">
@@ -27,33 +16,36 @@
             <hr>
             <h4 id="signFont"> My Interests </h4>
             <div ng-repeat="interest in model.user.interests">
-                <h5> {{interest}} </h5>
+                <h5 align="center"> {{interest}} </h5>
             </div>
             <hr>
-            <h4> Followers </h4>
+            <h4> Followers ({{model.followers.length}})</h4>
             <div ng-if="model.followers.length == 0">
-                None Yet
+                <div align="center"> None Yet </div>
             </div>
             <ul ng-repeat="follower in model.followers">
                 <div ng-if="follower.username == currentuser.username">
-                    <ul><img class="memberImage img-circle" ng-src="images/avatar.jpeg">    <a href="#/myAccount" >{{follower.username}}</a></ul>
+                    <img class="memberImage img-circle" ng-src="images/avatar.jpeg">
+                    <a href="#/myAccount" >{{follower.username}}</a>
                 </div>
                 <div ng-if="follower.username != currentuser.username">
-                    <ul><img class="memberImage img-circle" ng-src="images/avatar.jpeg">    <a href="#/user/{{follower.username}}" >{{follower.username}}</a></ul>
+                    <img class="memberImage img-circle" ng-src="images/avatar.jpeg">
+                    <a href="#/user/{{follower.username}}" >{{follower.username}}</a>
                 </div>
             </ul>
 
-            <h4> Following </h4>
+            <h4> Following ({{model.following.length}})</h4>
             <div ng-if="model.following.length == 0">
-                None Yet
+                <div align="center"> None Yet </div>
+                <br>
             </div>
             <ul ng-repeat="following in model.following">
                 <div>
                     <img class="memberImage img-circle" ng-src="images/avatar.jpeg">
-                    <div ng-if="follower.username == currentuser.username">
+                    <div ng-if="following.username == currentuser.username">
                         <a href="#/myAccount" >{{following.username}}</a>
                     </div>
-                    <div ng-if="follower.username != currentuser.username">
+                    <div ng-if="following.username != currentuser.username">
                         <a href="#/user/{{following.username}}" >{{following.username}}</a>
                     </div>
                 </div>
@@ -61,64 +53,77 @@
         </div>
 
         <div class="col-md-9">
-            <div class="masonry">
-                <div class="item col-xs-12 col-md-3" ng-repeat="event in model.myEvents">
-                    <div class="thumbnail" style="border: inset ; border-color:white ; height: 400px; max-height: 500px">
-                        <img src="{{event.image}}"  width="245px" height="150px" style="border: inset ; border-color:blue">
-                        <div class="caption">
-                            <a href="#/event/{{event.eventId}}" style="text-align: center">
-                                <p style="text-decoration: blink ; color:palevioletred ; font-size: smaller">{{event.title}}</p>
-                            </a>
-                            <hr>
-                            <div style="text-align: center">
-                                <p>{{event.city}}</p>
-                                <i class="fa fa-calendar"> {{event.start_time | date:"MM/dd/yyyy"}} </i>
-                                <p>{{event.venue_name}}</p>
-                                <a ng-if = "currentuser.username" href="" class="btn" disabled="true">
-                                    <i class="fa fa-thumbs-up fa-2x" style="color: blue"></i> </a>
+            <div class="panel panel-default" style="border-radius : 25px" id="Cooking Recipes">
+                <div id="panel-heading" class="panel-heading" style="border-top-left-radius : 25px ;border-top-right-radius : 25px"><center>Cooking Recipes Board</center></div>
+                <div class="panel-body">
+                    <div class="masonry">
+                        <div class="item col-xs-12 col-md-3" ng-repeat="recipe in model.myRecipes">
+                            <div class="thumbnail" style="border: solid ; border-color:darkgray ; height: 350px; max-height: 400px ; border-radius: 25px;">
+                                <img src="{{recipe.image}}" style="width: 100%; border: groove ; border-color: crimson ; border-radius: 25px;">
+                                <div class="caption">
+                                    <a href="#/recipe/{{recipe.recipeId}}" style="text-align: center">
+                                        <p style="text-decoration: blink ; color:palevioletred ; font-size: smaller">{{recipe.title}}</p>
+                                    </a>
+                                    <hr>
+                                    <div style="text-align: center">
+                                        <p>{{recipe.source}}</p>
+                                        <a ng-if = "currentuser.username" href="" class="btn" ng-click="model.removeRecipe(recipe)">
+                                            <i class="fa fa-times fa-2x" style="color: crimson"></i> </a>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                        </div><!--/.item  -->
                     </div>
-                </div><!--/.item  -->
+                </div>
             </div>
-
-            <div class="masonry">
-                <div class="item col-xs-12 col-sm-3 col-md-3" ng-repeat="recipe in model.myRecipes">
-                    <div class="thumbnail" style="border: groove ; border-color:white ; height: 350px; max-height: 400px">
-                        <img src="{{recipe.image}}" style="width: 100%; border: groove ; border-color: crimson">
-                        <div class="caption">
-                            <a href="#/recipe/{{recipe.recipeId}}" style="text-align: center">
-                                <p style="text-decoration: blink ; color:palevioletred ; font-size: smaller">{{recipe.title}}</p>
-                            </a>
-                            <hr>
-                            <div style="text-align: center">
-                                <p>{{recipe.source}}</p>
-                                <a ng-if = "currentuser.username" href="" class="btn" disabled="true">
-                                    <i class="fa fa-heart fa-2x" style="color: crimson"></i> </a>
+            <div class="panel panel-default" style="border-radius : 25px" id="Events">
+                <div id="panel-heading" class="panel-heading" style="border-top-left-radius : 25px ;border-top-right-radius : 25px"><center>Events Board</center></div>
+                <div class="panel-body">
+                    <div class="masonry">
+                        <div class="item col-xs-12 col-md-3" ng-repeat="event in model.myEvents">
+                            <div class="thumbnail" style="border-color:white ; height: 400px; max-height: 500px; border-radius: 25px;">
+                                <img ng-src="{{event.image}}"  width="245px" height="150px" style="border: inset ; border-color:blue; border-radius: 25px;">
+                                <div class="caption">
+                                    <a href="#/event/{{event.eventId}}" style="text-align: center">
+                                        <p style="text-decoration: blink ; color:palevioletred ; font-size: smaller">{{event.title}}</p>
+                                    </a>
+                                    <hr>
+                                    <div style="text-align: center">
+                                        <p>{{event.city}}</p>
+                                        <i class="fa fa-calendar"> {{event.start_time | date:"MM/dd/yyyy"}} </i>
+                                        <p>{{event.venue_name}}</p>
+                                        <a ng-if = "currentuser.username" href="" class="btn" ng-click="model.removeEvent(event)">
+                                            <i class="fa fa-times fa-2x" style="color: blue"></i> </a>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                        </div><!--/.item  -->
                     </div>
-                </div><!--/.item  -->
+                </div>
             </div>
-
-            <div class="masonry">
-                <div class="col-xs-12 col-sm-3 col-md-3 item" ng-repeat="news in model.myNews">
-                    <div class="thumbnail" style="border: groove ; border-color:white ; height: 400px; max-height: 500px">
-                        <img src="{{news.image}}" style="width: 100%; border: groove ; border-color: blueviolet">
-                        <div class="caption">
-                            <a href="#/news/{{news.newsId}}" style="text-decoration: blink ; color:purple">
-                                <p>{{news.title}}</p>
-                                <p>Published : {{news.publishedDate | date}}</p>
-                            </a>
-                            <hr>
-                            <div style="text-align: center">
-                                <a ng-if = "currentuser.username" href="" class="btn" disabled="true">
-                                    <i class="fa fa-bookmark fa-2x" style="color: blueviolet"></i> </a>
+            <div class="panel panel-default" style="border-radius : 25px" id="Space Exploration">
+                <div id="panel-heading" class="panel-heading" style="border-top-left-radius : 25px ;border-top-right-radius : 25px"><center>Space Exploration Board</center></div>
+                <div class="panel-body">
+                    <div class="masonry">
+                        <div class="col-xs-12 col-md-3 item" ng-repeat="news in model.myNews">
+                            <div class="thumbnail" style="border-color:white ; height: 400px; max-height: 500px ; border-radius: 25px;">
+                                <img src="{{news.image}}" width="245px" height="150px" style="width: 100%; border: groove ; border-color: blueviolet; border-radius: 25px;">
+                                <div class="caption">
+                                    <a href="#/news/{{news.newsId}}" style="text-decoration: blink ; color:purple">
+                                        <p>{{news.title}}</p>
+                                        <p>Published : {{news.publishedDate | date}}</p>
+                                    </a>
+                                    <hr>
+                                    <div style="text-align: center">
+                                        <a ng-if = "currentuser.username" href="" class="btn" ng-click="model.removeNews(news)">
+                                            <i class="fa fa-times fa-2x" style="color: blueviolet"></i> </a>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                </div><!--/.item  -->
-            </div> <!--/.masonry-container  -->
+                        </div><!--/.item  -->
+                    </div> <!--/.masonry-container  -->
+                </div>
+            </div>
         </div>
     </div>
 </div>

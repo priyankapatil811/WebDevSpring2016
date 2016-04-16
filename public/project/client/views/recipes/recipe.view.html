@@ -1,19 +1,9 @@
 <div class="container">
-    <!--<form class="form-inline" role="form">-->
-        <!--<div class="form-group">-->
-            <!--<label class="sr-only" for="topic">RECIPE</label>-->
-            <!--<div class="input-group">-->
-                <!--<div class="input-group-addon" style="font-size: xx-small">RECIPE</div>-->
-                <!--<input type="text" class="form-control" id="topic" placeholder="Cake" ng-model="model.r.recipe">-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<button type="submit" class="btn btn-info" ng-click="model.searchRecipe(model.r)">GO</button>-->
-    <!--</form>-->
     <br>
     <div class="row">
         <div class="col-xs-12">
             <div class="input-group">
-                <input type="text" class="form-control" style="height: 41px" placeholder="Cake" ng-model="model.r.recipe">
+                <input style="color: white" type="text" class="form-control" style="height: 41px" placeholder="Cake" ng-model="model.r.recipe">
                   <span class="input-group-btn">
                    <button type="submit" class="btn btn-default" ng-click="model.searchRecipe(model.r)">GO</button>
                   </span>
@@ -24,8 +14,8 @@
     <br>
     <div class="masonry">
         <div class="item col-xs-12 col-md-3 col-sm-3" ng-repeat="recipe in model.recipeDetails">
-            <div class="thumbnail" style="border: inset ; border-color:white ; height: 350px; max-height: 350px">
-                <img src="{{recipe.image}}" style="width: 100%; border: inset ; border-color: crimson">
+            <div class="thumbnail" style="border-color:white ; height: 350px; max-height: 350px ;border-radius: 25px;">
+                <img src="{{recipe.image}}" style="width: 100%; border: groove; border-color: crimson ;border-radius: 25px;">
                 <div class="caption">
                     <a href="#/recipe/{{recipe.id}}" style="text-align: center">
                         <p style="text-decoration: blink ; color:palevioletred ; font-size: smaller">{{recipe.title}}</p>

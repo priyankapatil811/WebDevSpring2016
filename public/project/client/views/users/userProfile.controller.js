@@ -20,7 +20,6 @@
         vm.user = "";
         vm.loggedInUser = "";
         vm.users = [];
-        vm.usersList = [];
         vm.followers = [];
         vm.following = [];
 
@@ -30,31 +29,11 @@
         vm.getSavedRecipeBoards = getSavedRecipeBoards;
         vm.getSavedNewsBoards = getSavedNewsBoards;
         vm.getSavedEventBoards = getSavedEventBoards;
-        vm.complete = complete;
         vm.followUser = followUser;
-
-        function complete()
-        {
-            $("#users").autocomplete({
-                source: vm.usersList
-            });
-        }
 
         init();
 
         function init() {
-
-            UserService.findAllUsers().then(
-                function(response)
-                {
-                    vm.users = response.data;
-
-                    for(var i=0;i<vm.users.length;i++)
-                    {
-                        vm.usersList.push(vm.users[i].username);
-                    }
-                }
-            );
 
             UserService.getCurrentUser()
                 .then(function (response) {
@@ -88,7 +67,9 @@
                 function(response){
                     if(response.data)
                     {
-                        console.log(response.data)
+                        console.log(response.data);
+                        findFollowers(vm.user);
+                        findFollowing(vm.user);
                     }
                 }
             );

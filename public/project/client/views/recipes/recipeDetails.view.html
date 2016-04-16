@@ -1,24 +1,48 @@
 <div class="container">
     <div class="row">
-    <div class="col-md-6">
-        <br> <br> <br>
-        <h3 style="font-size: x-large">{{model.recipeData.name}}</h3>
-        <h4 style="font-size: x-large" ng-if="model.recipeData.totalTime">Total Preparation Time : {{model.recipeData.totalTime}}</h4>
-        <br ng-if="!model.recipeData.totalTime">
-        <br ng-if="!model.recipeData.totalTime">
-        <img src="{{model.recipeData.images[0].hostedLargeUrl}}" style="width: 100% ; height: 100%;"/>
-    </div>
+        <div class="col-md-6">
+            <br> <br> <br>
+            <p style="font-size: x-large; color: white" align="center">{{model.recipeData.name}}</p>
+            <p style="font-size: x-large; color: white" ng-if="model.recipeData.totalTime">Total Preparation Time : {{model.recipeData.totalTime}}</p>
+            <br ng-if="!model.recipeData.totalTime">
+            <br ng-if="!model.recipeData.totalTime">
+            <img ng-src="{{model.recipeData.images[0].hostedLargeUrl}}" style="width: 100% ; height: 100%;"/>
+            <br> <br>
+            <div class="panel panel-default" ng-if="currentuser.username">
+                <div class="panel-heading">
+                    <div class="input-group">
+                        <textarea class="form-control" placeholder="Start typing your comment" ng-model="model.comment"/>
+                  <span class="input-group-btn">
+                  <button type="button" class="btn btn-default" ng-click="model.addComment(model.comment,model.recipeData)"> Add Comment </button>
+                  </span>
+                    </div><!-- /input-group -->
+                </div>
+                <div class="panel-body">
+                    <ul ng-repeat="c in model.comments" class="commentList">
+                        <li>
+                            <div class="commentText">
+                                <h5 style="font-weight: bold;">{{c.user}} said</h5>
+                                <p>&nbsp;&nbsp;&nbsp;{{c.comment}} <span class="date sub-text">on {{c.timePosted | date}}</span></p>
+                                <button type="button" class="btn btn-default" style="height: 10px; width: 10px;"
+                                        data-toggle="tooltip" data-placement="right" title="delete this comment"
+                                        ng-click="model.deleteComment(c)"></button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
         <div class="col-md-6">
             <br> <br> <br> <br> <br>
-            <!--<div id="stars-as-hearts">-->
-                <!--{{recipeData.rating}}-->
-            <!--</div>-->
-            <div scrollend style="max-height: 430px; overflow: auto; overflow-y: scroll; padding-right: 0px;" id="recipeList">
-            <h3 style="font-size: x-large">INGREDIENTS  (No. of Servings : {{model.recipeData.numberOfServings}})</h3>
+            <!--<div scrollend style="max-height: 430px; overflow: auto; overflow-y: scroll; padding-right: 0px;" id="recipeList">-->
+            <div>
+            <p style="font-size: x-large; color: white;">INGREDIENTS  (No. of Servings : {{model.recipeData.numberOfServings}})</p>
             <ul ng-repeat="ingredient in model.recipeData.ingredientLines track by $index">
-                <li>{{ingredient}}</li>
+                <li style="color: white">{{ingredient}}</li>
             </ul>
             </div>
         </div>
+        <br> <br>
     </div>
 </div>

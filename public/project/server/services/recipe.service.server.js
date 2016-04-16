@@ -64,13 +64,20 @@ module.exports = function(app,userModel,recipeModel)
             );
     });
 
-
-    app.put("/api/project/recipe/:recipeId", function(req,res)
+    app.get("/api/project/recipe/:recipeId",function(req,res)
     {
         var recipeId = req.params.recipeId;
-        var uprecipe = req.body;
-        recipeModel.updateRecipeById(recipeId,uprecipe);
-        res.json("ok");
+
+        recipeModel.findRecipeById(recipeId).then(
+            function(doc)
+            {
+                res.json(doc);
+            },
+            function(err)
+            {
+                res.status(500).send(err);
+            }
+        )
     });
 
     //added userId parameter
@@ -98,6 +105,53 @@ module.exports = function(app,userModel,recipeModel)
                 res.status(400).send(err);
             }
         );
+    });
+
+    app.post("/api/project/user/:user",function(req,res)
+    {
+        var user = req.params.user;
+        var comment = req.query.comment;
+        var recipe = req.body;
+
+        recipeModel.addComment(recipe,user,comment).then(
+            function(doc)
+            {
+                console.log(doc);
+                res.json(doc);
+            },
+            function(err)
+            {
+                console.log(err);
+                res.status(400).send(err);
+            }
+        );
+    });
+
+    app.delete("/api/project/recipe/:recipeId/user/:user/comment/:comment",function(req,res)
+    {
+        var recipeId = req.params.recipeId;
+        var user = req.params.user;
+        var comment = req.params.comment;
+
+        recipeModel.deleteComment(recipeId,user,comment).then(
+              function(doc)
+              {
+                  console.log(doc);
+                  res.json(doc);
+              },
+              function(err)
+              {
+                  res.status(400).send(err);
+              }
+        );
+    });
+
+    app.put("/api/project/recipe/:recipeId", function(req,res)
+    {
+        var recipeId = req.params.recipeId;
+        var uprecipe = req.body;
+        recipeModel.updateRecipeById(recipeId,uprecipe);
+        res.json("ok");
     });
 
     //added userId parameter

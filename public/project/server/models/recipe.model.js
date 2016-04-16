@@ -20,6 +20,9 @@ module.exports = function(mongoose) {
         findAllRecipesForUser : findAllRecipesForUser,
         findRecipeByIdForUser : findRecipeByIdForUser,
         deleteRecipeById : deleteRecipeById,
+        addComment : addComment,
+        deleteComment : deleteComment,
+        findRecipeById : findRecipeById
         /*
         getRecipeByIndex: getRecipeByIndex,
         createRecipeForUser: createRecipeForUser,
@@ -60,7 +63,8 @@ module.exports = function(mongoose) {
                         title: recipe.title,
                         image: recipe.image,
                         source: recipe.source,
-                        users: []
+                        users: [],
+                        comments : []
                     });
 
                 newRecipe.users.push(userId);
@@ -152,6 +156,109 @@ module.exports = function(mongoose) {
             }
         });
 
+        return deferred.promise;
+    }
+
+    function addComment(recipe,user,comment)
+    {
+        var deferred = q.defer();
+
+        RecipeModel.findOne({recipeId : recipe.id},function(err,doc)
+        {
+            if(err)
+               deferred.reject(err);
+
+            if(doc)
+            {
+                console.log(comment);
+                console.log(user);
+
+                doc.comments.push({user : user, comment: comment, timePosted: new Date()});
+
+                doc.save(function(err,doc)
+                {
+                   if(err)
+                        deferred.reject(err);
+                   else
+                        deferred.resolve(doc);
+                });
+            }
+            else
+            {
+                //create recipe as it does not exist
+                newRecipe = new RecipeModel(
+                    {
+                        recipeId: recipe.id,
+                        title: recipe.name,
+                        image: recipe.images[0].hostedLargeUrl,
+                        source: recipe.sourceDisplayName,
+                        users: [],
+                        comments : []
+                    });
+
+                newRecipe.comments.push({user : user, comment:comment, timePosted: new Date()});
+
+                newRecipe.save(function (err, doc) {
+                    if (err)
+                        deferred.reject(err);
+                    else
+                        deferred.resolve(doc);
+                });
+            }
+        });
+
+        return deferred.promise;
+    }
+
+    function findRecipeById(recipeId)
+    {
+        var deferred = q.defer();
+
+        RecipeModel.findOne({recipeId : recipeId},function(err,doc)
+        {
+            if(err)
+            {
+                deferred.reject(err);
+            }
+            else
+            {
+                deferred.resolve(doc);
+            }
+        });
+
+        return deferred.promise;
+    }
+
+    function deleteComment(recipeId,user,comment)
+    {
+        var deferred = q.defer();
+
+        RecipeModel.findOne({recipeId : recipeId},function(err,recipe)
+        {
+            if(err)
+            {
+                deferred.reject(err);
+            }
+            else {
+                console.log(recipe.comments);
+
+                for (var i = 0; i < recipe.comments.length; i++) {
+                    if ((user == recipe.comments[i].user) && (comment == recipe.comments[i].comment)) {
+                        recipe.comments.splice(i, 1);
+                        break;
+                    }
+                }
+
+                recipe.save(function (err, doc) {
+                    if (err) {
+                        deferred.reject(err);
+                    }
+                    else {
+                        deferred.resolve(doc);
+                    }
+                });
+            }
+        });
         return deferred.promise;
     }
 

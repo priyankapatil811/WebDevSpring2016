@@ -24,10 +24,11 @@
         vm.updateEvent = updateEvent;
         vm.deleteEvent = deleteEvent;*/
 
+        /*
         if(angular.isUndefined(vm.e))
             getGeoLoc();
         else
-            searchLocation(vm.e);
+            searchLocation(vm.e); */
 
         function getGeoLoc()
         {
@@ -61,7 +62,6 @@
             console.log("in show position");
             vm.where = position.coords.latitude + "," + position.coords.longitude;
             search(vm.where,2);
-            //$scope.$apply();
         }
 
         function showError()
@@ -124,8 +124,6 @@
             });
         }
 
-        /********** POC ************/
-
         var user = "";
         UserService
             .getCurrentUser()
@@ -133,20 +131,6 @@
                 user = response.data;
             });
 
-        /*
-        function init()
-        {
-            EventService.findEvents($rootScope.currentuser._id).then(
-                function (response) {
-                    vm.eventList = response.data;
-                    console.log(vm.eventList);
-                });
-        }
-
-        if($rootScope.currentuser != null) {
-            init();
-        }
-        */
 
         function addEvent(event)
         {
@@ -157,64 +141,6 @@
                 });
         }
 
-        /*
-        function selectEvent(index)
-        {
-            vm.eventIndex = index;
-
-            EventService.getEventByIndex(vm.eventIndex,$rootScope.currentuser._id).then(
-                function(response)
-                {
-                    vm.event = {
-                        "_id" : response.data._id,
-                        "title":response.data.title,
-                        "stime" :response.data.stime,
-                        "etime":response.data.etime,
-                        "location":response.data.location,
-                        "venue": response.data.venue,
-                        "userId" : response.data.userId
-                    };
-                });
-
-            //EventService.getEventIdByIndex(eventIndex,
-            //    function(response)
-            //    {
-            //        $scope.eventId = response;
-            //    });
-            //
-            //console.log($scope.eventId);
-        }
-
-
-        function updateEvent()
-        {
-            console.log("in update Event" + vm.event._id);
-
-            EventService.updateEventById(vm.event._id,vm.event).then(
-                function(response){
-                    init();
-                });
-        }
-
-        function deleteEvent(index)
-        {
-            var eventIndex = index;
-
-            //function call return formId
-            //EventService.getEventIdByIndex(eventIndex,
-            //    function(response)
-            //    {
-            //        $scope.eventId = response;
-            //    });
-
-            EventService.deleteEventById(eventIndex,$rootScope.currentuser._id).then(
-                function(response){
-                    init();
-                });
-        }
-        */
-
-        /***************************/
     }
 
 })();

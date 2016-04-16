@@ -10,6 +10,7 @@
     function HeaderController($location,UserService,$rootScope,EventService,RecipeService,SpaceService)
     {
         var vm = this;
+        vm.usersList = [];
 
         vm.$location = $location;
         vm.placeholder = 'city for events';
@@ -17,6 +18,29 @@
         vm.home = home;
         vm.categoryClicked = categoryClicked;
         vm.search = search;
+
+        vm.complete = complete;
+        vm.init = init;
+
+        function complete(){
+            $("#users").autocomplete({
+                source: vm.usersList
+            });
+        }
+
+        init();
+
+        function init() {
+            UserService.findAllUsers().then(
+                function (response) {
+                    vm.users = response.data;
+
+                    for (var i = 0; i < vm.users.length; i++) {
+                        vm.usersList.push(vm.users[i].username);
+                    }
+                }
+            );
+        }
 
         function search(category)
         {

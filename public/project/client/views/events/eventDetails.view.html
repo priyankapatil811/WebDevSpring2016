@@ -1,24 +1,52 @@
 <div class="container">
     <div class="row">
         <div class="col-md-6">
-            <img src="{{model.eventData.image}}" style="width: 50%;height: 50%"/>
+            <br> <br> <br>
+            <a href="{{model.eventData.url}}" target="_blank">
+                <p style="font-size: x-large; color: white">
+                    {{model.eventData.title}}
+                </p>
+            </a>
+            <img src="{{model.eventData.image}}" width="252px"/>
+            <br> <br>
+            <div class="panel panel-default" ng-if="currentuser.username">
+                <div class="panel-heading">
+                    <div class="input-group">
+                        <textarea class="form-control" placeholder="Start typing your comment" ng-model="model.comment"/>
+                  <span class="input-group-btn">
+                  <button type="button" class="btn btn-default" ng-click="model.addComment(model.comment,model.recipeData)"> Add Comment </button>
+                  </span>
+                    </div><!-- /input-group -->
+                </div>
+                <div class="panel-body">
+                    <ul ng-repeat="c in model.comments" class="commentList">
+                        <li>
+                            <div class="commentText">
+                                <h5 style="font-weight: bold;">{{c.user}} said</h5>
+                                <p>&nbsp;&nbsp;&nbsp;{{c.comment}} <span class="date sub-text">on {{c.timePosted | date}}</span></p>
+                                <button type="button" class="btn btn-default" style="height: 10px; width: 10px;"
+                                        data-toggle="tooltip" data-placement="right" title="delete this comment"
+                                        ng-click="model.deleteComment(c)"></button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
         <div class="col-md-6">
-           <a href="{{model.eventData.url}}" target="_blank">
-            <h3>{{model.eventData.title}}</h3>
-           </a>
+            <br> <br> <br>
             <br>
-            City : {{model.eventData.city}}
+            <p id="signFont">City : {{model.eventData.city}}</p>
             <br>
-            Price Per Ticket : {{model.eventData.price}}
+            <p id="signFont">Price Per Ticket : {{model.eventData.price}}</p>
+            <p id="signFont"><a href="{{model.eventData.ticketLink}}">Want to book tickets?</a></p>
             <br>
-            Event Starts At : {{model.eventData.start_time}}
+            <p id="signFont">Event Starts At : {{model.eventData.start_time | date}}</p>
+
             <br>
-            <a href="{{model.eventData.ticketLink}}">Want to book tickets?</a>
+            <p id="signFont">Event Venue Name : {{model.eventData.venue_name}}</p>
             <br>
-            Event Venue Name : {{model.eventData.venue_name}}
-            <br>
-            Event Venue Address : {{model.eventData.venue_address}}
+            <p id="signFont">Event Venue Address : {{model.eventData.venue_address}}</p>
         </div>
     </div>
 </div>

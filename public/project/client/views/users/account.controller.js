@@ -15,7 +15,7 @@
         vm.myEvents = [];
         vm.user = "";
         vm.users = [];
-        vm.usersList = [];
+        vm.visible = true;
 
         vm.init = init;
 
@@ -28,30 +28,12 @@
         vm.getSavedEventBoards = getSavedEventBoards;
         vm.removeEvent = removeEvent;
 
-        vm.complete = complete;
-
-        function complete(){
-            $("#users").autocomplete({
-                source: vm.usersList
-            });
-        }
+        vm.findFollowers = findFollowers;
+        vm.findFollowing = findFollowing;
 
         init();
 
         function init() {
-
-            UserService.findAllUsers().then(
-                function(response)
-                {
-                    vm.users = response.data;
-
-                    for(var i=0;i<vm.users.length;i++)
-                    {
-                        vm.usersList.push(vm.users[i].username);
-                    }
-                }
-            );
-
             UserService.getCurrentUser()
                 .then(function (response) {
                     UserService.findUserById(response.data._id)
@@ -59,6 +41,8 @@
                             if (response.data) {
                                 vm.user = response.data;
                                 vm.userProfile = response.data;
+                                findFollowers(vm.userProfile);
+                                findFollowing(vm.userProfile);
                                 getSavedRecipeBoards(vm.userProfile);
                                 getSavedNewsBoards(vm.userProfile);
                                 getSavedEventBoards(vm.userProfile);
@@ -138,5 +122,33 @@
             );
 
         }
+        /******************************************************************************************/
+
+        /******************************************************************************************/
+        function findFollowers(user)
+        {
+            UserService.findUserFollowers(user._id).then(
+                function(response){
+                    if(response.data)
+                    {
+                        console.log(response.data);
+                        vm.followers = response.data;
+                    }
+                });
+        }
+
+        function findFollowing(user)
+        {
+            UserService.findUserFollowing(user._id).then(
+                function(response)
+                {
+                    if(response.data)
+                    {
+                        console.log(response.data);
+                        vm.following = response.data;
+                    }
+                });
+        }
+        /******************************************************************************************/
     }
 })();

@@ -1,51 +1,21 @@
 <div class="container-fluid">
     <br>
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-xs-12">
             <div class="input-group">
-                <input type="text" class="form-control" style="height: 41px" placeholder="City" ng-model="model.e.city">
+                <input type="text" class="form-control" style="height: 41px ; color: white;" placeholder="City" ng-model="model.e.city">
                   <span class="input-group-btn">
-                   <button type="submit" class="btn btn-default" ng-click="model.searchLocation(model.e)">Go</button>
+                   <button type="submit" class="btn btn-default" ng-click="model.searchLocation(model.e)" style="height: 41px">Go</button>
                   </span>
             </div><!-- /input-group -->
         </div><!-- /.col-lg-6 -->
     </div><!-- /.row -->
-    <!--<div class="row">-->
-        <!--<div class="col-xs-11">-->
-            <!--<form class="form-inline" role="form">-->
-                <!--<div class="form-group">-->
-                    <!--<label class="sr-only" for="location">Location</label>-->
-                    <!--<div class="input-group">-->
-                        <!--<div class="input-group-addon" style="font-size: xx-small">CITY</div>-->
-                        <!--<input type="text" class="form-control" id="location" placeholder="Newark" ng-model="model.e.city">-->
-                        <!--<label class="sr-only" for="radius">Radius</label>-->
-                        <!--<div class="input-group-addon" style="font-size: xx-small">RADIUS (miles)</div>-->
-                        <!--<input type="text" class="form-control" id="radius" placeholder="2" ng-model="model.e.radius">-->
-                    <!--</div>-->
-                    <!--<button type="submit" class="btn btn-info" ng-click="model.searchLocation(model.e)">Go</button>-->
-                <!--</div>-->
-            <!--</form>-->
-        <!--</div>-->
-    <!--</div>-->
-    <!--<br>-->
-    <!--<div class="row">-->
-        <!--<div class="col-lg-12">-->
-            <!--<ng-map center="{{model.where}}" zoom="10">-->
-                <!--<marker position = "{{event.latitude}},{{event.longitude}}"-->
-                        <!--ng-repeat="event in model.eventDetails"-->
-                        <!--on-click="clickEventInfo(event,event)">-->
-                <!--</marker>-->
-                <!--<marker position="current-location"></marker>-->
-                <!--<control name="overviewMap" opened="true"></control>-->
-            <!--</ng-map>-->
-        <!--</div>-->
-    <!--</div>-->
     <br>
     <div class="row">
         <div class="masonry">
-            <div class="item col-xs-12 col-md-3" ng-repeat="event in model.eventDetails">
-                <div class="thumbnail" style="border: inset ; border-color:white ; height: 500px; max-height: 500px">
-                    <img src="{{event.image}}"  width="245px" height="150px" style="border: inset ; border-color:blue">
+            <div class="item col-xs-12 col-md-3 col-sm-3" ng-repeat="event in model.eventDetails">
+                <div class="thumbnail" style="border-color:white ; height: 500px; max-height: 500px ; border-radius: 25px">
+                    <img src="{{event.image}}" style="width: 500px; height: 250px; border: inset ; border-color:blue ; border-radius: 25px">
                     <div class="caption">
                         <a href="#/event/{{event.id}}" style="text-align: center">
                             <p style="text-decoration: blink ; color:palevioletred ; font-size: smaller">{{event.title}}</p>

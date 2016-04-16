@@ -1,30 +1,44 @@
-<nav id="myHeader" class="navbar navbar-inverse navbar-fixed-top navbar-custom navbar-default" ng-controller="HeaderController as model">
+<nav class="navbar navbar-default navbar-fixed-top" ng-controller="HeaderController as model">
     <div class="container-fluid">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="#/home">InfoPinStrap</a>
-                <div class="input-group-btn navbar-right navbar-form">
-                    <button type="button" class="btn btn-default dropdown-toggle glyphicon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+            <ul class="nav navbar-nav">
+                <!--<li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>-->
+                <!--<li><a href="#">Link</a></li>-->
+                <li class="dropdown">
+                    <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                         Interests
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-right" ng-if="!currentuser.username">
-                        <li><a href="" ng-click="model.categoryClicked('event')">Events</a></li>
-                        <li><a href="" ng-click="model.categoryClicked('recipe')">Cooking Recipes</a></li>
-                        <li><a href="" ng-click="model.categoryClicked('news')">Space Exploration</a></li>
+                        <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu" ng-if="!currentuser.username">
+                        <li><a href="#/home" ng-click="model.categoryClicked('event')">Events</a></li>
+                        <li><a href="#/home" ng-click="model.categoryClicked('recipe')">Cooking Recipes</a></li>
+                        <li><a href="#/home" ng-click="model.categoryClicked('news')">Space Exploration</a></li>
                     </ul>
-                    <ul class="dropdown-menu dropdown-menu-right" ng-if="currentuser.username">
+                    <ul class="dropdown-menu" role="menu" ng-if="currentuser.username">
                         <li ng-repeat="cat in currentuser.interests">
-                            <a href="" ng-click="model.categoryClicked(cat)">{{cat}}</a>
+                        <a href="" ng-click="model.categoryClicked(cat)">{{cat}}</a>
                         </li>
                     </ul>
+                </li>
+            </ul>
+
+            <form class="navbar-form navbar-left" role="search" ng-if="currentuser.username">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="users" ng-model="model.selectedUser" ng-keyup="model.complete()" placeholder="Start typing the username" style="width: 200px;">
                 </div>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
+                      <a class="btn btn-default" ng-if="model.selectedUser != currentuser.username" href="#/user/{{model.selectedUser}}" style="text-align: center; height: 35px">Search Profile</a>
+                      <a class="btn btn-default" ng-if="model.selectedUser == currentuser.username" href="#/myAccount" style="text-align: center; height: 35px">Search Profile</a>
+                <!--<button type="submit" class="btn btn-default">Search</button>-->
+            </form>
 
             <ul class="nav navbar-nav navbar-right">
                 <li ng-class="{'active' : model.$location.url()=='/register'}"><a href="#/register" ng-if="!currentuser.username" id="myReg" >Register</a></li>
@@ -36,3 +50,45 @@
         </div>
     </div>
 </nav>
+
+<!--<nav class="navbar navbar-default navbar-fixed-top" ng-controller="HeaderController as model">-->
+    <!--<div class="container-fluid">-->
+        <!--<div class="navbar-header">-->
+            <!--<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">-->
+                <!--<span class="sr-only">Toggle navigation</span>-->
+                <!--<span class="icon-bar"></span>-->
+                <!--<span class="icon-bar"></span>-->
+                <!--<span class="icon-bar"></span>-->
+            <!--</button>-->
+            <!--<a class="navbar-brand" href="#">Brand</a>-->
+        <!--</div>-->
+
+        <!--<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">-->
+            <!--<ul class="nav navbar-nav">-->
+                <!--<li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>-->
+                <!--<li><a href="#">Link</a></li>-->
+                <!--<li class="dropdown">-->
+                    <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>-->
+                    <!--<ul class="dropdown-menu" role="menu">-->
+                        <!--<li><a href="#">Action</a></li>-->
+                        <!--<li><a href="#">Another action</a></li>-->
+                        <!--<li><a href="#">Something else here</a></li>-->
+                        <!--<li class="divider"></li>-->
+                        <!--<li><a href="#">Separated link</a></li>-->
+                        <!--<li class="divider"></li>-->
+                        <!--<li><a href="#">One more separated link</a></li>-->
+                    <!--</ul>-->
+                <!--</li>-->
+            <!--</ul>-->
+            <!--<form class="navbar-form navbar-left" role="search">-->
+                <!--<div class="form-group">-->
+                    <!--<input type="text" class="form-control" placeholder="Search">-->
+                <!--</div>-->
+                <!--<button type="submit" class="btn btn-default">Submit</button>-->
+            <!--</form>-->
+            <!--<ul class="nav navbar-nav navbar-right">-->
+                <!--<li><a href="#">Link</a></li>-->
+            <!--</ul>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</nav>-->

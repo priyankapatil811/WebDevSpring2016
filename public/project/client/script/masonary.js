@@ -1,12 +1,6 @@
 /**
  * Created by Priyanka on 3/9/16.
  */
-/* Demo Scripts for Making Twitter Bootstrap 3 Tab Play Nicely With The Masonry Library
- * on SitePoint by Maria Antonietta Perna
- */
-
-//Initialize Masonry inside Bootstrap 3 Tab component
-
 (function( $ ) {
 
     var $container = $('.masonry-container');
@@ -17,7 +11,6 @@
         });
     });
 
-    //Reinitialize masonry inside each panel after the relative tab link is clicked -
     $('a[data-toggle=tab]').each(function () {
         var $this = $(this);
 

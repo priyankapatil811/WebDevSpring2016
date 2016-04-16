@@ -9,8 +9,8 @@
 
     function UserService($rootScope, $http)
     {
-        $rootScope.selectedCategory = 'event';
-        $rootScope.currentuser = {"_id" : null, "firstName":null, "lastName":null, "username":null, "password":null , "interests" : null, "selectedCategory" : null};
+        $rootScope.selectedCategory = 'recipe';
+        $rootScope.currentuser = {"_id" : null, "firstName":null, "lastName":null, "username":null, "password":null , "interests" : null, "selectedCategory" : null, "users" : null};
 
         var api = {
             followUser : followUser,
