@@ -51,6 +51,7 @@ module.exports = function(app,userModel)
 
     function localStrategy(username,password,done)
     {
+        //userModel.findUserByCredentials(username,password).then(
         userModel.findUserByUsername(username).then(
             function(user)
             {
@@ -60,7 +61,7 @@ module.exports = function(app,userModel)
                 }
                 else
                 {
-                    if(user && bcrypt.compareSync(password,user.password))
+                    if(bcrypt.compareSync(password,user.password))
                         return done(null,user);
                 }
             },
@@ -105,7 +106,6 @@ module.exports = function(app,userModel)
         {
             userModel.findUserByCredentials(uName, uPwd).then(
                 function (doc) {
-                    req.session.currentUser = doc;
                     res.json(doc);
                 },
                 function (err) {
@@ -180,15 +180,14 @@ module.exports = function(app,userModel)
         upUser.password = bcrypt.hashSync(req.body.password);
 
         userModel.updateUser(userId,upUser).then(
-            function(doc)
-            {
-                req.session.currentUser = doc;
-                res.json(doc);
-            },
-            function(err)
-            {
-                res.status(400).send(err);
-            }
+                function(doc)
+                {
+                    res.json(doc);
+                },
+                function(err)
+                {
+                    res.status(600).send(err);
+                }
         );
     }
 
@@ -231,6 +230,7 @@ module.exports = function(app,userModel)
     {
         if(req.user.roles.indexOf("admin")>=0)
         {
+            console.log("is an admin");
             next();
         }
         else
@@ -250,4 +250,5 @@ module.exports = function(app,userModel)
             next();
         }
     }
+
 };

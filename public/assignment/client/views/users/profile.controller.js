@@ -10,20 +10,21 @@
     function ProfileController($rootScope, UserService, $location)
     {
         var vm = this;
+        vm.user = {};
+
         vm.update = update;
 
-       console.log($rootScope.currentuser);
-        vm.user = {
-            _id: $rootScope.currentuser._id,
-            username : $rootScope.currentuser.username,
-            password : $rootScope.currentuser.password,
-            firstName : $rootScope.currentuser.firstName,
-            lastName : $rootScope.currentuser.lastName,
-            emails : $rootScope.currentuser.emails,
-            phones : $rootScope.currentuser.phones,
-            roles : $rootScope.currentuser.roles
-        };
+        UserService.getCurrentUser().then(
+              function(response)
+              {
+                 if(response.data)
+                 {
+                     vm.user = response.data;
+                 }
+              }
+        );
 
+        console.log($rootScope.currentuser);
 
         function update(user)
         {
