@@ -18,7 +18,10 @@ module.exports = function(mongoose) {
     {
         likesNewsArticle : likesNewsArticle,
         findAllNewsForUser : findAllNewsForUser,
-        deleteNewsById : deleteNewsById
+        deleteNewsById : deleteNewsById,
+        addComment : addComment,
+        deleteComment : deleteComment,
+        findNewsById : findNewsById
 
         /********** POC ************/
        /* getNewsByIndex : getNewsByIndex,
@@ -56,11 +59,14 @@ module.exports = function(mongoose) {
             {
                 newArticle = new NewsModel(
                     {
-                        newsId : news.id,
+                        newsId : news.newsId,
                         image: news.image,
                         title: news.title,
+                        url : news.url,
+                        content : news.content,
                         publishedDate : news.publishedDate,
-                        users : []
+                        users : [],
+                        comments : []
                     });
 
                 newArticle.users.push(userId);
@@ -128,6 +134,115 @@ module.exports = function(mongoose) {
                     }
                     else
                     {
+                        deferred.resolve(doc);
+                    }
+                });
+            }
+        });
+
+        return deferred.promise;
+    }
+
+    function addComment(news,user,comment)
+    {
+        var deferred = q.defer();
+
+        console.log(news);
+        console.log(user);
+        console.log(comment);
+        NewsModel.findOne({newsId : news.id},function(err,doc)
+        {
+            if(err)
+                deferred.reject(err);
+
+            if(doc)
+            {
+                console.log(comment);
+                console.log(user);
+
+                doc.comments.push({user : user, comment: comment, timePosted: new Date()});
+
+                doc.save(function(err,doc)
+                {
+                    if(err)
+                        deferred.reject(err);
+                    else
+                        deferred.resolve(doc);
+                });
+            }
+            else
+            {
+                //create news as it does not exist
+                newArticle = new NewsModel(
+                    {
+                        newsId : news.newsId,
+                        image: news.image,
+                        title: news.title,
+                        url : news.url,
+                        content : news.content,
+                        publishedDate : news.publishedDate,
+                        users : [],
+                        comments : []
+                    });
+
+                newArticle.comments.push({user : user, comment:comment, timePosted: new Date()});
+
+                newArticle.save(function (err, doc) {
+                    if (err)
+                        deferred.reject(err);
+                    else
+                        deferred.resolve(doc);
+                });
+            }
+        });
+
+        return deferred.promise;
+    }
+
+    function findNewsById(newsId)
+    {
+        var deferred = q.defer();
+
+        NewsModel.findOne({newsId : newsId},function(err,doc)
+        {
+            if(err)
+            {
+                deferred.reject(err);
+            }
+            else
+            {
+                deferred.resolve(doc);
+            }
+        });
+
+        return deferred.promise;
+    }
+
+    function deleteComment(newsId,user,comment)
+    {
+        var deferred = q.defer();
+
+        NewsModel.findOne({newsId : newsId},function(err,news)
+        {
+            if(err)
+            {
+                deferred.reject(err);
+            }
+            else {
+                console.log(news.comments);
+
+                for (var i = 0; i < news.comments.length; i++) {
+                    if ((user == news.comments[i].user) && (comment == news.comments[i].comment)) {
+                        news.comments.splice(i, 1);
+                        break;
+                    }
+                }
+
+                news.save(function (err, doc) {
+                    if (err) {
+                        deferred.reject(err);
+                    }
+                    else {
                         deferred.resolve(doc);
                     }
                 });

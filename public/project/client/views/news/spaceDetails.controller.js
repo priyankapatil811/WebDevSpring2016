@@ -7,16 +7,101 @@
         .module("infoPinStrap")
         .controller("SpaceDetailsController", SpaceDetailsController);
 
-    function SpaceDetailsController(SpaceService, $routeParams) {
+    function SpaceDetailsController(SpaceService, $routeParams, UserService, $rootScope) {
 
         var vm = this;
 
-        SpaceService.findNewsById($routeParams.newsId,
-                function (response) {
-                    console.log("in news Id search");
-                    console.log($routeParams.newsId);
-                    vm.newsData = response;
-                    console.log(vm.newsData);
-            });
+        vm.user = {};
+        vm.comments = [];
+        vm.newsData = {};
+        vm.newsIdParam = $routeParams.newsId;
+
+        vm.addComment = addComment;
+        vm.deleteComment = deleteComment;
+        vm.init = init;
+        vm.getDetails = getDetails;
+
+        init();
+
+        function getDetails()
+        {
+            SpaceService.findNews(vm.newsIdParam).then(
+                function (response)
+                {
+                    if(response.data)
+                    {
+                        vm.comments = response.data.comments;
+                    }
+                }
+            );
         }
+
+        function init() {
+
+            console.log("in init");
+
+            for(var i=0;i<$rootScope.newsDetails.length;i++)
+            {
+                if($rootScope.newsDetails[i].id == vm.newsIdParam)
+                {
+                    vm.newsData = $rootScope.newsDetails[i];
+                }
+            }
+
+            if(!vm.newsData)
+            {
+                SpaceService.findNews(vm.newsIdParam).then(
+                    function (response)
+                    {
+                        if(response.data)
+                        {
+                            console.log(response.data);
+                            vm.newsData = response.data
+                        }
+                    }
+                );
+            }
+
+            UserService.getCurrentUser()
+                .then(function (response) {
+                    UserService.findUserById(response.data._id)
+                        .then(function (response) {
+                            if (response.data) {
+                                vm.user = response.data;
+                            }
+                        });
+                });
+
+            getDetails();
+
+        }
+
+        function addComment(comment,news) {
+
+            console.log(news);
+            SpaceService.addComment(news,vm.user.username,comment).then(
+                function (response) {
+                    if(response.data)
+                    {
+                        getDetails();
+                    }
+                }
+            );
+        }
+
+        function deleteComment(comment)
+        {
+            console.log(comment);
+            SpaceService.deleteComment(vm.newsIdParam,comment).then(
+                function(response)
+                {
+                    if(response.data)
+                    {
+                        getDetails();
+                    }
+                }
+            );
+        }
+
+    }
 })();

@@ -64,7 +64,6 @@ module.exports = function(app,userModel,eventModel)
         );
     });
 
-
     //added userId parameter
     app.delete("/api/project/event/:eventId/user/:userId", function(req,res) {
         var deleventId = req.params.eventId;
@@ -91,6 +90,60 @@ module.exports = function(app,userModel,eventModel)
         );
     });
 
+    app.delete("/api/project/event/:eventId/user/:user/comment/:comment",function(req,res)
+    {
+        var eventId = req.params.eventId;
+        var user = req.params.user;
+        var comment = req.params.comment;
+
+        eventModel.deleteComment(eventId,user,comment).then(
+            function(doc)
+            {
+                console.log(doc);
+                res.json(doc);
+            },
+            function(err)
+            {
+                res.status(400).send(err);
+            }
+        );
+    });
+
+    app.post("/api/project/event/user/:user",function(req,res)
+    {
+        var user = req.params.user;
+        var comment = req.query.comment;
+        var event = req.body;
+
+        eventModel.addComment(event,user,comment).then(
+            function(doc)
+            {
+                console.log(doc);
+                res.json(doc);
+            },
+            function(err)
+            {
+                console.log(err);
+                res.status(400).send(err);
+            }
+        );
+    });
+
+    app.get("/api/project/event/:eventId",function(req,res)
+    {
+        var eventId = req.params.eventId;
+
+        eventModel.findEventById(eventId).then(
+            function(doc)
+            {
+                res.json(doc);
+            },
+            function(err)
+            {
+                res.status(500).send(err);
+            }
+        )
+    });
 
     app.put("/api/project/event/:eventId", function(req,res)
     {

@@ -23,9 +23,16 @@
                         <hr>
                         <div style="text-align: center">
                             <p>{{event.city}}</p>
-                            <i class="fa fa-calendar"> {{event.start_time | date:"MM/dd/yyyy"}} </i>
-                            <p>{{event.venue_name}}</p>
-                            <a ng-if = "currentuser.username" href="" class="btn" ng-click="model.addEvent(event)"> <i class="fa fa-thumbs-up fa-2x" style="color: blue"></i> </a>
+                            <i class="fa fa-calendar"> {{event.startTime | date:"MM/dd/yyyy"}} </i>
+                            <p>{{event.venueName}}</p>
+                            <!-- add likes -->
+                            <a ng-if = "currentuser.username && event.color == 'blue'" href="" class="btn" ng-click="model.addEvent(event)">
+                                <i class="fa fa-thumbs-up fa-2x" style="color: blue"></i>
+                            </a>
+
+                            <a ng-if = "currentuser.username && event.color == 'green'" href="" class="btn" disabled>
+                                <i class="fa fa-thumbs-up fa-2x" style="color: green"></i>
+                            </a>
                         </div>
                     </div>
                 </div>

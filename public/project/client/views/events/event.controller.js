@@ -18,11 +18,7 @@
         vm.showError = showError;
         vm.showPosition = showPosition;
         vm.search = search;
-        /*vm.init = init;*/
         vm.addEvent = addEvent;
-        /*vm.selectEvent = selectEvent;
-        vm.updateEvent = updateEvent;
-        vm.deleteEvent = deleteEvent;*/
 
         /*
         if(angular.isUndefined(vm.e))
@@ -91,15 +87,16 @@
                 for (var j = 0; j < vm.eventData.events.event.length; j++) {
                     var eventObj = new Object();
                     eventObj.id = vm.eventData.events.event[j].id;
+                    eventObj.eventId = vm.eventData.events.event[j].id;
                     eventObj.url = vm.eventData.events.event[j].url;
                     eventObj.title = vm.eventData.events.event[j].title;
                     eventObj.desc = vm.eventData.events.event[j].description;
                     if (eventObj.desc == null)
                         eventObj.desc = "There is no description for this event.";
-                    eventObj.start_time = vm.eventData.events.event[j].start_time;
+                    eventObj.startTime = vm.eventData.events.event[j].start_time;
                     eventObj.stop_time = vm.eventData.events.event[j].stop_time;
-                    eventObj.venue_name = vm.eventData.events.event[j].venue_name;
-                    eventObj.venue_address = vm.eventData.events.event[j].venue_address;
+                    eventObj.venueName = vm.eventData.events.event[j].venue_name;
+                    eventObj.venueAddress = vm.eventData.events.event[j].venue_address;
                     eventObj.city = vm.eventData.events.event[j].city_name;
                     eventObj.latitude = vm.eventData.events.event[j].latitude;
                     eventObj.longitude = vm.eventData.events.event[j].longitude;
@@ -116,6 +113,7 @@
                         eventObj.image = vm.eventData.events.event[j].image.medium.url;
                     }
                     eventObj.categories = vm.eventData.events.event[j].categories.category;
+                    eventObj.color = 'blue';
 
                     vm.eventDetails.push(eventObj);
                     $rootScope.eventDetails.push(eventObj);
@@ -134,10 +132,12 @@
 
         function addEvent(event)
         {
-
+            console.log(event.color);
             EventService.createEvent(user._id,event).then(
                 function(response){
                     console.log(response.data);
+                    event.color = 'green';
+                    console.log(event.color);
                 });
         }
 

@@ -23,7 +23,14 @@
                     <hr>
                     <div style="text-align: center">
                         <p>{{recipe.source}}</p>
-                        <a ng-if = "currentuser.username" href="" class="btn" ng-click="model.addRecipe(recipe)"> <i class="fa fa-heart fa-2x" style="color: crimson"></i> </a>
+                        <!-- add likes -->
+                        <a ng-if = "currentuser.username && recipe.color == 'crimson'" href="" class="btn" ng-click="model.addRecipe(recipe)">
+                            <i class="fa fa-heart fa-2x" style="color: crimson"></i>
+                        </a>
+
+                        <a ng-if = "currentuser.username && recipe.color == 'green'" href="" class="btn" disabled>
+                            <i class="fa fa-heart fa-2x" style="color: green"></i>
+                        </a>
                     </div>
                 </div>
             </div>

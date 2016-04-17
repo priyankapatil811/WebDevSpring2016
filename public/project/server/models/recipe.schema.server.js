@@ -11,6 +11,7 @@ module.exports = function(mongoose) {
         source: String,
         users : [String],
         comments : [{user : String, comment : String, timePosted : Date}]
+
         // store user documents in this collection
     }, {collection: 'project.recipe'});
 

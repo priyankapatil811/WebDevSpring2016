@@ -66,7 +66,7 @@
         }
 
         function addComment(recipe, userId, comment) {
-            return $http.post("/api/project/user/" + userId + "?comment=" + comment, recipe);
+            return $http.post("/api/project/recipe/user/" + userId + "?comment=" + comment, recipe);
         }
 
         function deleteComment(recipeId, comment) {

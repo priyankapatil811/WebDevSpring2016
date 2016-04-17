@@ -8,8 +8,11 @@ module.exports = function(mongoose) {
         newsId : String,
         image: String,
         title: String,
+        url : String,
+        content : String,
         publishedDate : String,
-        users : [String]
+        users : [String],
+        comments : [{user : String, comment : String, timePosted : Date}]
 
         // store user documents in this collection
     }, {collection: 'project.news'});

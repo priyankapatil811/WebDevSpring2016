@@ -18,12 +18,10 @@ module.exports = function(mongoose)
     {
         likesEvent : likesEvent,
         findAllEventsForUser : findAllEventsForUser,
-        deleteEventById : deleteEventById
-     /*   getEventByIndex : getEventByIndex,
-        createEventForUser : createEventForUser,
-        findEvents : findEvents,
         deleteEventById : deleteEventById,
-        updateEventById : updateEventById */
+        addComment : addComment,
+        deleteComment : deleteComment,
+        findEventById : findEventById
     };
 
     return api;
@@ -57,9 +55,13 @@ module.exports = function(mongoose)
                         image: event.image,
                         title: event.title,
                         venueName : event.venue_name,
+                        venueAddress : event.venue_address,
                         startTime : event.start_time,
                         city : event.city,
-                        users : []
+                        price : event.price,
+                        ticketLink : event.ticketLink,
+                        users : [],
+                        comments : []
                     });
 
                 newEvent.users.push(userId);
@@ -136,102 +138,113 @@ module.exports = function(mongoose)
         return deferred.promise;
     }
 
-    /*
 
-    function getEventByIndex(index,userId)
+    function addComment(event,user,comment)
     {
-        var userEvents = [];
+        var deferred = q.defer();
 
-        for (var i = 0; i < events.length; i++)
+        EventModel.findOne({eventId : event.eventId},function(err,doc)
         {
-            if(userId == events[i].userId)
+            if(err)
+                deferred.reject(err);
+
+            if(doc)
             {
-                userEvents.push(events[i]);
+                console.log(comment);
+                console.log(user);
+
+                doc.comments.push({user : user, comment: comment, timePosted: new Date()});
+
+                doc.save(function(err,doc)
+                {
+                    if(err)
+                        deferred.reject(err);
+                    else
+                        deferred.resolve(doc);
+                });
             }
-        }
-
-        return userEvents[index];
-    }
-
-    function createEventForUser(userId,event)
-    {
-        var newEvent =
-        {
-            _id : uuid.v1(),
-            //_id : (new Date).getTime(),
-            "title":event.title,
-            "stime" :event.stime,
-            "etime":event.etime,
-            "location":event.location,
-            "venue":event.venue,
-            "userId": userId
-        };
-
-        events.push(newEvent);
-        //console.log(events);
-    }
-
-    function findEvents(userId)
-    {
-        var eventsForUserId = [];
-        for(var i=0;i<events.length;i++)
-        {
-            if(userId==events[i].userId)
+            else
             {
-                eventsForUserId.push(events[i]);
+                //create event as it does not exist
+                newEvent = new EventModel(
+                    {
+                        eventId : event.eventId,
+                        image: event.image,
+                        title: event.title,
+                        venueName : event.venue_name,
+                        venueAddress : event.venue_address,
+                        startTime : event.start_time,
+                        city : event.city,
+                        price : event.price,
+                        ticketLink : event.ticketLink,
+                        users : [],
+                        comments : []
+                    });
+
+                newEvent.comments.push({user : user, comment:comment, timePosted: new Date()});
+
+                newEvent.save(function(err,doc)
+                {
+                    if(err)
+                        deferred.reject(err);
+                    else
+                        deferred.resolve(doc);
+                });
             }
-        }
-
-        return eventsForUserId;
-    }
-
-    function deleteEventById(eventIndex, userId)
-    {
-        var userEvents = [];
-
-        for(var i=0;i<events.length;i++)
-        {
-            if(userId == events[i].userId)
-            {
-                userEvents.push(events[i]);
-            }
-        }
-
-        var eventId = userEvents[eventIndex]._id;
-        //console.log(eventId);
-
-        events = events.filter(function(eId){
-            return eId._id != eventId;
         });
 
-        //console.log(events);
+        return deferred.promise;
     }
 
-    function updateEventById(eventId, newEvent)
+    function findEventById(eventId)
     {
-        var index;
-        var userId;
+        var deferred = q.defer();
 
-        for(var i=0;i<events.length;i++) {
-            if (eventId == events[i]._id) {
-                index = i;
-                userId = events[i].userId;
-                break;
-            }
-        }
-
-        events[index] =
+        EventModel.findOne({eventId : eventId},function(err,doc)
         {
-            "_id" :eventId,
-            "title":newEvent.title,
-            "stime" :newEvent.stime,
-            "etime":newEvent.etime,
-            "location":newEvent.location,
-            "venue": newEvent.venue,
-            "userId":userId
-        };
+            if(err)
+            {
+                deferred.reject(err);
+            }
+            else
+            {
+                deferred.resolve(doc);
+            }
+        });
 
-        //console.log(events);
+        return deferred.promise;
+    }
 
-    }*/
+    function deleteComment(eventId,user,comment)
+    {
+        var deferred = q.defer();
+
+        EventModel.findOne({eventId : eventId},function(err,event)
+        {
+            if(err)
+            {
+                deferred.reject(err);
+            }
+            else {
+                console.log(event.comments);
+
+                for (var i = 0; i < event.comments.length; i++) {
+                    if ((user == event.comments[i].user) && (comment == event.comments[i].comment)) {
+                        event.comments.splice(i, 1);
+                        break;
+                    }
+                }
+
+                event.save(function (err, doc) {
+                    if (err) {
+                        deferred.reject(err);
+                    }
+                    else {
+                        deferred.resolve(doc);
+                    }
+                });
+            }
+        });
+        return deferred.promise;
+    }
 };

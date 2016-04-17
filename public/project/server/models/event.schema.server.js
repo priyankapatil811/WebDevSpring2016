@@ -9,9 +9,13 @@ module.exports = function(mongoose) {
         image: String,
         title: String,
         venueName : String,
+        venueAddress : String,
         startTime : String,
         city : String,
-        users : [String]
+        price : String,
+        ticketLink : String,
+        users : [String],
+        comments : [{user : String, comment : String, timePosted : Date}]
 
         // store user documents in this collection
     }, {collection: 'project.event'});

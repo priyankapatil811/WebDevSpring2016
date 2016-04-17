@@ -12,20 +12,22 @@
         $rootScope.newsDetails = [];
 
         var url = "";
-        var searchKeyWord = "";
 
         var api =
         {
             findAllNews : findAllNews,
             findNewsById : findNewsById,
+            createNews : createNews,
+            deleteNewsById : deleteNewsById,
+            addComment: addComment,
+            deleteComment: deleteComment,
+            findNews: findNews,
+            findNewsForUser : findNewsForUser
 
             /********** POC ************/
-            findNewsForUser : findNewsForUser,
-            createNews : createNews,
-            findNews : findNews,
-            deleteNewsById : deleteNewsById,
-            updateNewsById : updateNewsById,
-            getNewsByIndex : getNewsByIndex
+            //findNews : findNews,
+            //updateNewsById : updateNewsById,
+            //getNewsByIndex : getNewsByIndex
             /***************************/
         };
 
@@ -43,23 +45,13 @@
         function findNewsById(newsId,callback) {
 
             for(var i=0;i<$rootScope.newsDetails.length;i++){
+
                 if(newsId == $rootScope.newsDetails[i].id)
                 {
                     callback($rootScope.newsDetails[i]);
                 }
             }
-        }
-
-        /********** POC ************/
-
-        function findNewsForUser(userId)
-        {
-            return $http.get("/api/project/user/"+userId+"/news");
-        }
-
-        function getNewsByIndex(index,userId)
-        {
-            return $http.get("/api/project/news/"+index+"/user/"+userId);
+            callback({});
         }
 
         function createNews(userId,news)
@@ -67,20 +59,54 @@
             return $http.post("/api/project/user/"+userId+"/news",news);
         }
 
-        function findNews(userId)
-        {
-            return $http.get("/api/project/user/"+userId+"/news");
-        }
-
         function deleteNewsById(newsId,userId)
         {
             return $http.delete("/api/project/news/"+newsId+"/user/"+userId);
         }
 
-        function updateNewsById(newsId, newNews)
-        {
-            return $http.put("/api/project/news/"+newsId,newNews);
+        function addComment(news, user, comment) {
+            return $http.post("/api/project/news/user/" + user + "?comment=" + comment, news);
         }
+
+        function deleteComment(newsId, comment) {
+            return $http.delete("/api/project/news/"+newsId+"/user/"+comment.user+"/comment/"+comment.comment);
+        }
+
+        function findNews(newsId)
+        {
+            return $http.get("/api/project/news/"+newsId);
+        }
+
+        function findNewsForUser(userId)
+        {
+            return $http.get("/api/project/user/"+userId+"/news");
+        }
+
+        /********** POC ************/
+
+        //function findNewsForUser(userId)
+        //{
+        //    return $http.get("/api/project/user/"+userId+"/news");
+        //}
+        //
+        //function getNewsByIndex(index,userId)
+        //{
+        //    return $http.get("/api/project/news/"+index+"/user/"+userId);
+        //}
+        //
+        //
+        //
+        //function findNews(userId)
+        //{
+        //    return $http.get("/api/project/user/"+userId+"/news");
+        //}
+        //
+        //
+        //
+        //function updateNewsById(newsId, newNews)
+        //{
+        //    return $http.put("/api/project/news/"+newsId,newNews);
+        //}
         /***************************/
     }
 })();

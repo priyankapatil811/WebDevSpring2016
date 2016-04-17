@@ -97,6 +97,64 @@ module.exports = function(app,userModel,newsModel)
             );
     });
 
+    app.get("/api/project/news/:newsId",function(req,res)
+    {
+        var newsId = req.params.newsId;
+
+        newsModel.findNewsById(newsId).then(
+            function(doc)
+            {
+                res.json(doc);
+            },
+            function(err)
+            {
+                res.status(500).send(err);
+            }
+        )
+    });
+
+    app.post("/api/project/news/user/:user",function(req,res)
+    {
+        var user = req.params.user;
+        var comment = req.query.comment;
+        var news = req.body;
+
+        console.log("in service :"+news);
+        console.log("in service :"+comment);
+        console.log("in service :"+user);
+
+        newsModel.addComment(news,user,comment).then(
+            function(doc)
+            {
+                res.json(doc);
+            },
+            function(err)
+            {
+                console.log("err : "+err);
+                res.status(400).send(err);
+            }
+        );
+    });
+
+    app.delete("/api/project/news/:newsId/user/:user/comment/:comment",function(req,res)
+    {
+        var newsId = req.params.newsId;
+        var user = req.params.user;
+        var comment = req.params.comment;
+
+        newsModel.deleteComment(newsId,user,comment).then(
+            function(doc)
+            {
+                console.log(doc);
+                res.json(doc);
+            },
+            function(err)
+            {
+                res.status(400).send(err);
+            }
+        );
+    });
+
     //added userId parameter
     app.get("/api/project/news/:newsId/user/:userId", function(req,res)
     {

@@ -54,7 +54,7 @@
                         });
                 });
 
-            getDetails()
+            getDetails();
         }
 
         function addComment(comment,recipe) {

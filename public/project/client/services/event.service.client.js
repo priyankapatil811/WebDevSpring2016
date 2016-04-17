@@ -18,28 +18,18 @@
         var apiKey = "rcnxbzfT3dLNF3ff";
         var pageNo = 1;
         var sortOrder = "Popularity";
-        var range = 2;
         var url = "";
-        var searchKeyWord = "";
 
         var api =
         {
             findEventByLocation : findEventByLocation,
             findAllEvents : findAllEvents,
-            findEventById : findEventById,
             createEvent : createEvent,
             findEventsForUser : findEventsForUser,
-            deleteEventById : deleteEventById
-
-            /********** POC ************/
-          /*  setSearchKeyword : setSearchKeyword,
-            getSearchKeyword : getSearchKeyword,
-
-            findEvents : findEvents,
             deleteEventById : deleteEventById,
-            updateEventById : updateEventById,
-            getEventByIndex : getEventByIndex */
-            /***************************/
+            addComment : addComment,
+            deleteComment : deleteComment,
+            findEvent : findEvent
         };
 
         return api;
@@ -59,17 +49,6 @@
             return $http.jsonp(url);
         }
 
-        function findEventById(eventId,callback) {
-
-            for(var i=0;i<$rootScope.eventDetails.length;i++)
-            {
-                 if(eventId == $rootScope.eventDetails[i].id)
-                 {
-                     callback($rootScope.eventDetails[i]);
-                 }
-            }
-        }
-
         function createEvent(userId,event)
         {
             return $http.post("/api/project/user/"+userId+"/event",event);
@@ -85,27 +64,18 @@
             return $http.delete("/api/project/event/"+eventId+"/user/"+userId);
         }
 
-        /********** POC ************/
-        /*
-        function getEventByIndex(index,userId)
-        {
-            return $http.get("/api/project/event/"+index+"/user/"+userId);
+        function addComment(event, userId, comment) {
+
+            return $http.post("/api/project/event/user/" + userId + "?comment=" + comment, event);
         }
 
-        function findEvents(userId)
-        {
-            return $http.get("/api/project/user/"+userId+"/event");
+        function deleteComment(eventId, comment) {
+            return $http.delete("/api/project/event/"+eventId+"/user/"+comment.user+"/comment/"+comment.comment);
         }
 
-        function deleteEventById(eventId, userId)
+        function findEvent(eventId)
         {
-            return $http.delete("/api/project/event/"+eventId+"/user/"+userId);
+            return $http.get("/api/project/event/"+eventId);
         }
-
-        function updateEventById(eventId, newEvent)
-        {
-            return $http.put("/api/project/event/"+eventId,newEvent);
-        }*/
-        /***************************/
     }
 })();

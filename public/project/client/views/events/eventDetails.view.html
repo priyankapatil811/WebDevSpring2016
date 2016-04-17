@@ -13,9 +13,9 @@
                 <div class="panel-heading">
                     <div class="input-group">
                         <textarea class="form-control" placeholder="Start typing your comment" ng-model="model.comment"/>
-                  <span class="input-group-btn">
-                  <button type="button" class="btn btn-default" ng-click="model.addComment(model.comment,model.recipeData)"> Add Comment </button>
-                  </span>
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="model.addComment(model.comment,model.eventData)"> Add Comment </button>
+                        </span>
                     </div><!-- /input-group -->
                 </div>
                 <div class="panel-body">
@@ -41,12 +41,12 @@
             <p id="signFont">Price Per Ticket : {{model.eventData.price}}</p>
             <p id="signFont"><a href="{{model.eventData.ticketLink}}">Want to book tickets?</a></p>
             <br>
-            <p id="signFont">Event Starts At : {{model.eventData.start_time | date}}</p>
+            <p id="signFont">Event Starts At : {{model.eventData.startTime | date}}</p>
 
             <br>
-            <p id="signFont">Event Venue Name : {{model.eventData.venue_name}}</p>
+            <p id="signFont">Event Venue Name : {{model.eventData.venueName}}</p>
             <br>
-            <p id="signFont">Event Venue Address : {{model.eventData.venue_address}}</p>
+            <p id="signFont">Event Venue Address : {{model.eventData.venueAddress}}</p>
         </div>
     </div>
 </div>

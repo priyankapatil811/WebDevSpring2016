@@ -107,7 +107,7 @@ module.exports = function(app,userModel,recipeModel)
         );
     });
 
-    app.post("/api/project/user/:user",function(req,res)
+    app.post("/api/project/recipe/user/:user",function(req,res)
     {
         var user = req.params.user;
         var comment = req.query.comment;
