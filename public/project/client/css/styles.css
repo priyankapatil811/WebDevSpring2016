@@ -46,6 +46,8 @@ html * {
     font-size: 15px;
 }
 
+
+
 /*.navbar-custom*/
 /*{*/
     /*background: url(../images/border.png) repeat-x#f5f5f5;*/
@@ -219,16 +221,31 @@ h4 { color: black;
     text-align:center;
 }
 
+#divheader {
+    background-color:white;
+    color:white;
+    text-align:center;
+}
+
 #section {
     float:left;
-    width:350px;
+    width:800px;
     border-radius: 10px;
     border-color: saddlebrown;
     padding:10px;
 }
 
+#nav {
+    line-height:30px;
+    background-color:#eeeeee;
+    height:300px;
+    width:300px;
+    float:left;
+    padding:5px;
+}
+
 #footer {
-    background-color:black;
+    background-color:white;
     color:white;
     clear:both;
     text-align:center;
@@ -260,6 +277,7 @@ h4 { color: black;
     -moz-border-radius: 50%;
     -ms-border-radius: 50%;
     -o-border-radius: 50%;
+    position:absolute;
 }
 
 .memberImage, .pendingMemberImage {
@@ -284,4 +302,114 @@ h4 { color: black;
 }
 .commentList li > div {
     display:table-cell;
+}
+
+.headline.hl5{
+    font-weight: 400;
+    font-size: 42px;
+    text-transform: uppercase;
+    font-style: italic;
+    box-sizing: border-box;
+    padding: 10px 0 10px 0;
+}
+.headline.hl6{
+    font-weight: 400;
+    font-size: 18px;
+    box-sizing: border-box;
+    padding: 10px 0 10px 0;
+}
+
+/* USER PROFILE PAGE */
+.card {
+    margin-top: 20px;
+    padding: 30px;
+    background-color: rgba(214, 224, 226, 0.2);
+    -webkit-border-top-left-radius:5px;
+    -moz-border-top-left-radius:5px;
+    border-top-left-radius:5px;
+    -webkit-border-top-right-radius:5px;
+    -moz-border-top-right-radius:5px;
+    border-top-right-radius:5px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.card.hovercard {
+    position: relative;
+    padding-top: 0;
+    overflow: hidden;
+    text-align: center;
+    background: transparent;
+}
+.card.hovercard .card-background {
+    height: 130px;
+}
+
+.card-background{
+    background-image: none;
+}
+
+.card-background img {
+    -webkit-filter: blur(25px);
+    -moz-filter: blur(25px);
+    -o-filter: blur(25px);
+    -ms-filter: blur(25px);
+    filter: blur(25px);
+    margin-left: -100px;
+    margin-top: -200px;
+    min-width: 130%;
+}
+
+.card.hovercard .useravatar {
+    position: absolute;
+    top: 15px;
+    left: 0;
+    right: 0;
+}
+.card.hovercard .useravatar img {
+    width: 200px;
+    height: 200px;
+    max-width: 200px;
+    max-height: 200px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    border: 5px solid rgba(255, 255, 255, 0.5);
+}
+.card.hovercard .card-info {
+    position: absolute;
+    bottom: 14px;
+    left: 0;
+    right: 0;
+}
+.card.hovercard .card-info .card-title {
+    font-family: "Great Vibes", cursive;
+    font-weight: bold;
+    padding:0 5px;
+    font-size: 20px;
+    line-height: 1;
+    color: white;
+    background-color: rgba(255, 255, 255, 0.1);
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+.card.hovercard .card-info {
+    overflow: hidden;
+    font-size: 12px;
+    line-height: 0;
+    color: #737373;
+    text-overflow: ellipsis;
+}
+.card.hovercard .bottom {
+    padding: 0 20px;
+    margin-bottom: 17px;
+}
+.btn-pref .btn {
+    -webkit-border-radius:0 !important;
+}
+
+#cover {
+    height: 100%;
+    width: 100%;
 }

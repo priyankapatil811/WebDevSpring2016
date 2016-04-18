@@ -10,34 +10,18 @@
     function EventController(EventService, $rootScope, UserService) {
 
         var vm = this;
+        vm.showSpinner = false;
         vm.eventDetails = [];
         vm.eventList = [];
         vm.where = "";
-        vm.getGeoLoc = getGeoLoc;
+
         vm.searchLocation = searchLocation;
-        vm.showError = showError;
-        vm.showPosition = showPosition;
         vm.search = search;
         vm.addEvent = addEvent;
 
-        /*
-        if(angular.isUndefined(vm.e))
-            getGeoLoc();
-        else
-            searchLocation(vm.e); */
-
-        function getGeoLoc()
-        {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(showPosition, showError);
-            }
-            else {
-                vm.error = "Geolocation is not supported by this browser";
-            }
-        }
-
         function searchLocation(e)
          {
+             vm.showSpinner = true;
              EventService.findEventByLocation(e.city).then(function (mapData) {
                  console.log(mapData.data);
                  if (mapData.data.results.length != 0) {
@@ -52,31 +36,6 @@
              });
 
          }
-
-        function showPosition(position)
-        {
-            console.log("in show position");
-            vm.where = position.coords.latitude + "," + position.coords.longitude;
-            search(vm.where,2);
-        }
-
-        function showError()
-        {
-            switch (error.code) {
-                case error.PERMISSION_DENIED:
-                    error = "User denied the request for Geolocation.";
-                    break;
-                case error.POSITION_UNAVAILABLE:
-                    error = "Location information is unavailable.";
-                    break;
-                case error.TIMEOUT:
-                    error = "The request to get user location timed out.";
-                    break;
-                case error.UNKNOWN_ERROR:
-                    error = "An unknown error occurred.";
-                    break;
-            }
-        }
 
         function search(where,radius)
         {
@@ -117,6 +76,7 @@
 
                     vm.eventDetails.push(eventObj);
                     $rootScope.eventDetails.push(eventObj);
+                    vm.showSpinner = false;
                 }
                 console.log(vm.eventDetails);
             });

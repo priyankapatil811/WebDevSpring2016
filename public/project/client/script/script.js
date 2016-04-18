@@ -30,3 +30,16 @@ var everythingLoaded = setInterval(function() {
 $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();
 });
+
+$(document).ready(function() {
+    $(".btn-pref .btn").click(function () {
+        $(".btn-pref .btn").removeClass("btn-primary").addClass("btn-default");
+        // $(".tab").addClass("active"); // instead of this do the below
+        $(this).removeClass("btn-default").addClass("btn-primary");
+    });
+});
+
+$('img').click(function(){
+ //   $('.selected').removeClass('selected'); // removes the previous selected class
+    $(this).addClass('selected'); // adds the class to the clicked image
+});

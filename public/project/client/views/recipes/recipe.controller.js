@@ -10,6 +10,7 @@
     function RecipeController(RecipeService, UserService, $http) {
 
         var vm = this;
+        vm.showSpinner = false;
         vm.recipeList = [];
         vm.recipeDetails = [];
         vm.searchRecipe = searchRecipe;
@@ -25,6 +26,7 @@
 
         function searchRecipe(r)
         {
+            vm.showSpinner = true;
             RecipeService.findAllRecipes(r.recipe).then(function (response) {
 
                 vm.recipeDetails = [];
@@ -45,6 +47,7 @@
                     vm.recipeDetails.push(recipeObj);
                 }
                 console.log(vm.recipeDetails);
+                vm.showSpinner = false;
             });
         }
 

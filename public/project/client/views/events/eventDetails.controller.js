@@ -11,6 +11,7 @@
 
         var vm = this;
         vm.user = {};
+        vm.eventData = null;
         vm.comments = [];
         vm.eventIdParam = $routeParams.eventId;
 

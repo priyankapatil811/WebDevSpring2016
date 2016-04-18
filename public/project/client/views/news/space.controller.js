@@ -10,6 +10,7 @@
     function SpaceController(SpaceService, $rootScope, UserService) {
 
         var vm = this;
+        vm.showSpinner = false;
         vm.newsDetails = [];
         vm.spaceDetails = [];
         vm.searchSpaceNews = searchSpaceNews;
@@ -17,6 +18,7 @@
 
         function searchSpaceNews(s)
         {
+            vm.showSpinner = true;
               SpaceService.findAllNews(s.spacenews).then(function (response) {
                 vm.newsDetails = [];
                 console.log("in space related news search");
@@ -44,8 +46,8 @@
                 }
                   console.log(vm.newsDetails);
                   console.log($rootScope.newsDetails);
+                  vm.showSpinner = false;
             });
-
         }
 
         var user = "";

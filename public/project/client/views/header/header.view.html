@@ -7,7 +7,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#/home">InfoPinStrap</a>
+            <a class="navbar-brand" href="#/home">Info<span style="color: crimson; font-size: large">Pin</span>Strap</a>
         </div>
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
@@ -33,7 +33,7 @@
 
             <form class="navbar-form navbar-left" role="search" ng-if="currentuser.username">
                 <div class="form-group">
-                    <input type="text" class="form-control" id="users" ng-model="model.selectedUser" ng-keyup="model.complete()" placeholder="Start typing the username" style="width: 200px;">
+                    <input type="text" class="form-control" id="users"  ng-model="model.selectedUser" ng-keydown="model.complete()" placeholder="Start typing the username" style="width: 200px;">
                 </div>
                       <a class="btn btn-default" ng-if="model.selectedUser != currentuser.username" href="#/user/{{model.selectedUser}}" style="text-align: center; height: 35px">Search Profile</a>
                       <a class="btn btn-default" ng-if="model.selectedUser == currentuser.username" href="#/myAccount" style="text-align: center; height: 35px">Search Profile</a>

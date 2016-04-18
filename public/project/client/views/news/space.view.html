@@ -13,10 +13,11 @@
         </div><!-- /.row -->
 
         <br>
+        <i ng-show="model.showSpinner" id="cover" class="fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom" style="color: white"></i>
         <div class="masonry">
             <div class="col-xs-12 col-sm-3 col-md-3 item" ng-repeat="news in model.newsDetails">
                 <div class="thumbnail" style="border: groove ; border-color:white ; height: 450px; max-height: 500px ;border-radius: 25px;">
-                    <img ng-src="{{news.image}}" style="width: 100% ; height: 162px; border: groove ; border-color: purple ;border-radius: 25px;">
+                    <img ng-src="{{news.image}}" style="width: 100% ; height: 162px; border: groove ; border-color: purple ;border-radius: 25px;" alt="No Image Found">
                     <div class="caption">
                         <a href="#/news/{{news.id}}" style="text-decoration: blink ; color:purple">
                             <p>{{news.title}}</p>

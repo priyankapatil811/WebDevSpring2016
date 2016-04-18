@@ -11,14 +11,14 @@ module.exports = function(app,userModel)
     var auth = authorized;
     var isAdmin = isAdmin;
 
-    passport.use(new LocalStrategy(localStrategy));
+    passport.use('assignment',new LocalStrategy(assignLocalStrategy));
     passport.serializeUser(serializeUser);
     passport.deserializeUser(deserializeUser);
 
-    app.post('/api/assignment/login', passport.authenticate('local'), login);
+    app.post('/api/assignment/login', passport.authenticate('assignment'), login);
     app.get("/api/assignment/loggedin", loggedIn);
     app.post("/api/assignment/logout", logout);
-    app.get("/api/assignment/user", auth,findUser);
+    app.get("/api/assignment/user", auth, findUser);
     app.post("/api/assignment/user", createUser);
     app.put("/api/assignment/user/:userId", auth,updateUser);
     app.delete("/api/assignment/user/:userId", auth,deleteUser);
@@ -49,7 +49,7 @@ module.exports = function(app,userModel)
         res.send(200);
     }
 
-    function localStrategy(username,password,done)
+    function assignLocalStrategy(username,password,done)
     {
         //userModel.findUserByCredentials(username,password).then(
         userModel.findUserByUsername(username).then(
@@ -61,8 +61,11 @@ module.exports = function(app,userModel)
                 }
                 else
                 {
-                    if(bcrypt.compareSync(password,user.password))
-                        return done(null,user);
+                    console.log(user);
+                    if(user && bcrypt.compareSync(password,user.password)) {
+                        console.log("in compare sync");
+                        return done(null, user);
+                    }
                 }
             },
             function(err)
@@ -214,16 +217,16 @@ module.exports = function(app,userModel)
 
     function deserializeUser(user,done)
     {
-        userModel.findUserById(user._id).then(
-            function(user)
-            {
-                done(null,user);
-            },
-            function(err)
-            {
-                done(err,null);
-            }
-        );
+        if(user.type == 'assignment') {
+            userModel.findUserById(user._id).then(
+                function (user) {
+                    done(null, user);
+                },
+                function (err) {
+                    done(err, null);
+                }
+            );
+        }
     }
 
     function isAdmin(req,res,next)

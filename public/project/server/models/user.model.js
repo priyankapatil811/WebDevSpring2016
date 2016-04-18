@@ -30,6 +30,8 @@ module.exports = function(db,mongoose)
         removeEventLikes : removeEventLikes,
         updateFollowerInfo : updateFollowerInfo,
         updateFollowingInfo : updateFollowingInfo,
+        removeFollowerInfo : removeFollowerInfo,
+        removeFollowingInfo : removeFollowingInfo,
         getUserFollowers : getUserFollowers,
         getUserFollowing : getUserFollowing
     };
@@ -137,7 +139,10 @@ module.exports = function(db,mongoose)
                 interests : categories,
                 likesRecipe : [],
                 likesEvent : [],
-                likesArticle : []
+                likesArticle : [],
+                following : [],
+                follower : [],
+                type : 'project'
             });
 
         newUser.save(function(err,doc)
@@ -165,7 +170,6 @@ module.exports = function(db,mongoose)
                 deferred.reject(err);
             else
             {
-                console.log(doc);
                 deferred.resolve(doc);
             }
         });
@@ -187,8 +191,8 @@ module.exports = function(db,mongoose)
                 loggedInUser.lastName = user.lastName;
                 loggedInUser.password = user.password;
                 loggedInUser.username = user.username;
-                loggedInUser.emails = user.emails;
-                loggedInUser.phones = user.phones;
+                loggedInUser.email = user.email;
+                loggedInUser.type = 'project';
                 loggedInUser.save(function (err,doc) {
                     if(err)
                         deferred.reject(err);
@@ -427,6 +431,67 @@ module.exports = function(db,mongoose)
 
         return deferred.promise;
     }
+
+    function removeFollowerInfo(friendId,currentUserId)
+    {
+        var deferred = q.defer();
+
+        UserModel.findById(friendId,function(err,loggedInUser){
+            if(err)
+                deferred.reject(err);
+            else
+            {
+                for(var i=0;i<loggedInUser.follower.length;i++)
+                {
+                    if(loggedInUser.follower[i] == currentUserId)
+                    {
+                        loggedInUser.follower.splice(i,1);
+                    }
+                }
+
+                loggedInUser.save(function (err,doc) {
+                    if(err)
+                        deferred.reject(err);
+                    else {
+                        deferred.resolve(doc);
+                    }
+                });
+            }
+        });
+
+        return deferred.promise;
+    }
+
+
+    function removeFollowingInfo(currentUserId,friend)
+    {
+        var deferred = q.defer();
+
+        UserModel.findById(currentUserId,function(err,loggedInUser){
+            if(err)
+                deferred.reject(err);
+            else
+            {
+                for(var i=0;i<loggedInUser.following.length;i++) {
+                    if(loggedInUser.following[i]==friend._id)
+                    {
+                        loggedInUser.following.splice(i,1);
+                    }
+                }
+
+                loggedInUser.save(function (err,doc) {
+                    if(err)
+                        deferred.reject(err);
+                    else {
+                        deferred.resolve(doc);
+                    }
+                });
+            }
+        });
+
+        return deferred.promise;
+    }
+
 
     function getUserFollowers(userIds)
     {

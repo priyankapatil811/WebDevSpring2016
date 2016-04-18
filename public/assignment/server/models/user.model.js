@@ -106,6 +106,7 @@ module.exports = function(db,mongoose)
     function createUser(user)
     {
         var deferred = q.defer();
+        user.type = 'assignment';
 
         UserModel.create(user,function(err,doc)
         {
@@ -156,6 +157,7 @@ module.exports = function(db,mongoose)
                loggedInUser.emails = user.emails;
                loggedInUser.phones = user.phones;
                loggedInUser.roles = user.roles;
+               loggedInUser.type = 'assignment';
                loggedInUser.save(function (err,doc) {
                    if(err)
                        deferred.reject(err);

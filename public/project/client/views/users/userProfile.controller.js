@@ -18,10 +18,12 @@
 
         vm.userParam = $routeParams.username;
         vm.user = "";
+        vm.userProfile = "";
         vm.loggedInUser = "";
         vm.users = [];
         vm.followers = [];
         vm.following = [];
+        vm.followed = false;
 
 
         vm.init = init;
@@ -30,6 +32,8 @@
         vm.getSavedNewsBoards = getSavedNewsBoards;
         vm.getSavedEventBoards = getSavedEventBoards;
         vm.followUser = followUser;
+        vm.isFollowed = isFollowed;
+        vm.unfollowUser = unfollowUser;
 
         init();
 
@@ -41,6 +45,7 @@
                         .then(function (response) {
                             if (response.data) {
                                 vm.loggedInUser = response.data;
+                                isFollowed(vm.loggedInUser);
                             }
                         });
                 });
@@ -50,6 +55,7 @@
                 .then(function (response) {
                     if (response.data) {
                         vm.user = response.data;
+                        vm.userProfile = response.data;
                         findFollowers(vm.user);
                         findFollowing(vm.user);
                         getSavedRecipeBoards(vm.user);
@@ -57,9 +63,21 @@
                         getSavedEventBoards(vm.user);
                     }
                 });
+
         }
 
         /******************************************************************************************/
+        function isFollowed(user)
+        {
+            for(var i=0;i<vm.user.follower.length;i++)
+            {
+                if(vm.user.follower[i] === user._id)
+                {
+                    vm.followed = true;
+                }
+            }
+        }
+
         function followUser()
         {
             console.log("user profile : " +vm.user._id + " loggedIn User : " +vm.loggedInUser._id);
@@ -68,6 +86,7 @@
                     if(response.data)
                     {
                         console.log(response.data);
+                        vm.followed = true;
                         findFollowers(vm.user);
                         findFollowing(vm.user);
                     }
@@ -99,6 +118,24 @@
                   }
               });
         }
+
+        function unfollowUser()
+        {
+            UserService.unFollowUser(vm.user._id,vm.loggedInUser._id).then(
+
+                function(response)
+                {
+                    if(response.data)
+                    {
+                        console.log(response.data);
+                        vm.followed = false;
+                        findFollowers(vm.user);
+                        findFollowing(vm.user);
+                    }
+                }
+            );
+        }
+
         /******************************************************************************************/
 
         /******************************************************************************************/

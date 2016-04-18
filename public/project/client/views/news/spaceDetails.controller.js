@@ -13,7 +13,7 @@
 
         vm.user = {};
         vm.comments = [];
-        vm.newsData = {};
+        vm.newsData = null;
         vm.newsIdParam = $routeParams.newsId;
 
         vm.addComment = addComment;
@@ -47,6 +47,7 @@
                     vm.newsData = $rootScope.newsDetails[i];
                 }
             }
+            console.log(vm.newsData);
 
             if(!vm.newsData)
             {

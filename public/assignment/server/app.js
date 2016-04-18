@@ -2,7 +2,7 @@
  * Created by Priyanka on 3/16/16.
  */
 
-"use strict"
+"use strict";
 
 module.exports = function (app,mongoose,db) {
 

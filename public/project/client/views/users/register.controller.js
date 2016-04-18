@@ -22,10 +22,12 @@
             {
                 UserService.createUser(vm.user).
                     then(function (response) {
+                    console.log("created user :"+response.data);
                         UserService.setCurrentUser(response.data);
+                        UserService.setSelectedCategory(response.data.interests[0]);
                         $location.url('/profile');
                     });
             }
-        };
-    };
+        }
+    }
 })();

@@ -1,13 +1,27 @@
 <div class="container">
     <div class="row">
+        <br> <br> <br>
+        <p style="font-size: x-large; color: white" align="center">{{model.recipeData.name}}</p>
         <div class="col-md-6">
-            <br> <br> <br>
-            <p style="font-size: x-large; color: white" align="center">{{model.recipeData.name}}</p>
             <p style="font-size: x-large; color: white" ng-if="model.recipeData.totalTime">Total Preparation Time : {{model.recipeData.totalTime}}</p>
             <br ng-if="!model.recipeData.totalTime">
             <br ng-if="!model.recipeData.totalTime">
             <img ng-src="{{model.recipeData.images[0].hostedLargeUrl}}" style="width: 100% ; height: 100%;"/>
-            <br> <br>
+        </div>
+        <div class="col-md-6">
+            <br><br>
+            <!--<div scrollend style="max-height: 430px; overflow: auto; overflow-y: scroll; padding-right: 0px;" id="recipeList">-->
+            <div>
+            <p style="font-size: x-large; color: white;">INGREDIENTS  <span style="font-size: smaller"> (No. of Servings : {{model.recipeData.numberOfServings}})</span></p>
+            <ul ng-repeat="ingredient in model.recipeData.ingredientLines track by $index">
+                <li style="color: white">{{ingredient}}</li>
+            </ul>
+            </div>
+        </div>
+        </div>
+    <br>
+    <div class="row">
+        <div class="col-md-6">
             <div class="panel panel-default" ng-if="currentuser.username">
                 <div class="panel-heading">
                     <div class="input-group">
@@ -31,18 +45,6 @@
                     </ul>
                 </div>
             </div>
-
         </div>
-        <div class="col-md-6">
-            <br> <br> <br> <br> <br>
-            <!--<div scrollend style="max-height: 430px; overflow: auto; overflow-y: scroll; padding-right: 0px;" id="recipeList">-->
-            <div>
-            <p style="font-size: x-large; color: white;">INGREDIENTS  (No. of Servings : {{model.recipeData.numberOfServings}})</p>
-            <ul ng-repeat="ingredient in model.recipeData.ingredientLines track by $index">
-                <li style="color: white">{{ingredient}}</li>
-            </ul>
-            </div>
-        </div>
-        <br> <br>
     </div>
 </div>

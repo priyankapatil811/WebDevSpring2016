@@ -64,11 +64,6 @@
                     getLoggedIn: getLoggedIn
                 }
             })
-            //.when("/recipeSearch/:recipe",
-            //{
-            //    templateUrl: "views/recipes/recipe.view.html",
-            //    controller: "RecipeController"
-            //})
             .when("/recipe/:recipeId",
             {
                 templateUrl: "views/recipes/recipeDetails.view.html",

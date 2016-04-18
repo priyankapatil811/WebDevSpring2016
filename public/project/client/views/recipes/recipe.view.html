@@ -10,8 +10,8 @@
             </div><!-- /input-group -->
         </div><!-- /.col-lg-6 -->
     </div><!-- /.row -->
-
     <br>
+    <i ng-show="model.showSpinner" id="cover" class="fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom" style="color: white"></i>
     <div class="masonry">
         <div class="item col-xs-12 col-md-3 col-sm-3" ng-repeat="recipe in model.recipeDetails">
             <div class="thumbnail" style="border-color:white ; height: 350px; max-height: 350px ;border-radius: 25px;">

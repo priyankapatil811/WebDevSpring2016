@@ -14,6 +14,7 @@
 
         var api = {
             followUser : followUser,
+            unFollowUser : unFollowUser,
             findUserFollowers : findUserFollowers,
             findUserFollowing : findUserFollowing,
             findUserById : findUserById,
@@ -33,7 +34,12 @@
 
         function followUser(friendId,currentUserId)
         {
-            return $http.put("/api/project/otherUser/"+friendId+"/user/"+currentUserId);
+            return $http.put("/api/project/followOtherUser/"+friendId+"/user/"+currentUserId);
+        }
+
+        function unFollowUser(friendId,currentUserId)
+        {
+            return $http.put("/api/project/unFollowOtherUser/"+friendId+"/user/"+currentUserId);
         }
 
         function findUserFollowers(userId)

@@ -1,45 +1,37 @@
 <div class="container">
  <div class="row">
-  <div class="col-md-6">
-   <br><br>
-   <h3 style="color: white;font-style:italic ;font-size:x-large">{{model.newsData.title}}</h3>
-   <p>{{model.newsData.publishedDate}}</p>
-   <img src="{{model.newsData.image}}" style="width:50% ; height: 50%;"/>
-   <a href="{{model.newsData.url}}" target="_blank">
-    <h4>Want to read this article?</h4>
-   </a>
   <br><br>
-  <div class="panel panel-default" ng-if="currentuser.username">
-   <div class="panel-heading">
-    <div class="input-group">
-     <textarea class="form-control" placeholder="Start typing your comment" ng-model="model.comment"/>
-       <span class="input-group-btn">
-          <button type="button" class="btn btn-default" ng-click="model.addComment(model.comment,model.newsData)"> Add Comment </button>
-       </span>
-    </div><!-- /input-group -->
-   </div>
-   <div class="panel-body">
-    <ul ng-repeat="c in model.comments" class="commentList">
-     <li>
-      <div class="commentText">
-       <h5 style="font-weight: bold;">{{c.user}} said</h5>
-       <p>&nbsp;&nbsp;&nbsp;{{c.comment}} <span class="date sub-text">on {{c.timePosted | date}}</span></p>
-       <button type="button" class="btn btn-default" style="height: 10px; width: 10px;"
-               data-toggle="tooltip" data-placement="right" title="delete this comment"
-               ng-click="model.deleteComment(c)"></button>
+         <span class="headline hl5" style="color: white">{{model.newsData.title}}</span>
+            <br>
+         <span class="headline hl6" style="color: white">{{model.newsData.publishedDate | date}}</span>
+     <div class="col-xs-12">
+      <img src="{{model.newsData.image}}" class="img-responsive" alt="No Image Found"/>
+      <p style="color: white">{{model.newsData.content}}</p>
+     </div>
+
+ <div class="col-md-6">
+      <div class="panel panel-default" ng-if="currentuser.username">
+          <div class="panel-heading">
+             <div class="input-group">
+                  <textarea class="form-control" placeholder="Start typing your comment" ng-model="model.comment"/>
+                       <span class="input-group-btn">
+                       <button type="button" class="btn btn-default" ng-click="model.addComment(model.comment,model.newsData)"> Add Comment </button>
+                       </span>
+             </div><!-- /input-group -->
+          </div>
+
+           <div class="panel-body">
+               <ul ng-repeat="c in model.comments" class="commentList">
+                  <li>
+                     <div class="commentText">
+                     <h5 style="font-weight: bold;">{{c.user}} said</h5>
+                     <p>&nbsp;&nbsp;&nbsp;{{c.comment}} <span class="date sub-text">on {{c.timePosted | date}}</span></p>
+                     <button type="button" class="btn btn-default" style="height: 10px; width: 10px;" data-toggle="tooltip" data-placement="right" title="delete this comment" ng-click="model.deleteComment(c)"></button>
+                     </div>
+                  </li>
+               </ul>
+           </div>
       </div>
-     </li>
-    </ul>
-   </div>
-  </div>
-  </div>
-  <div class="col-md-6">
-   <p style="color: white">{{model.newsData.content}}</p>
-   <!--<h2 style="font-style: italic;font-size:x-large">Related Stories</h2>-->
-   <!--<h4>Want to read these articles? Click on the links below!</h4>-->
-   <!--<ul ng-if="model.relatedStories" ng-repeat="news in model.relatedStories">-->
-    <!--<a href="{{model.news.url}}" style="text-decoration: none; color: darkblue"> <li>{{model.news.title}}</li></a>-->
-  <!--</ul>-->
-  </div>
  </div>
-</div>
+ </div>
+ </div>

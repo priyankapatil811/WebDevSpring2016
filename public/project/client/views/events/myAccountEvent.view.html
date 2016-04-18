@@ -1,7 +1,6 @@
 <div class="container-fluid">
     <div class="row">
-        <!--<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">-->
-        <h2 class="page-header">Saved Pins</h2>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
         <div>
             <ul class="nav nav-tabs nav-justified">
                 <li role="presentation" class="active">
@@ -14,80 +13,34 @@
             <!-- events -->
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="event">
-                    <div class="table-responsive">
-                        <table class="table table-striped table-bordered">
-                            <tr>
-                                <th>
-                                    <span class="glyphicon glyphicon-triangle-bottom"></span>
-                                    Event Title
-                                </th>
-                                <th>
-                                    <span class="glyphicon glyphicon-triangle-bottom"></span>
-                                    Start Time
-                                </th>
-                                <th>
-                                    <span class="glyphicon glyphicon-triangle-bottom"></span>
-                                    End Time
-                                </th>
-                                <th>
-                                    <span class="glyphicon glyphicon-triangle-bottom"></span>
-                                    Location
-                                </th>
-                                <th>
-                                    <span class="glyphicon glyphicon-triangle-bottom"></span>
-                                    Venue
-                                </th>
-                                <th>
-                                    <span class="glyphicon glyphicon-triangle-bottom"></span>
-                                    Action
-                                </th>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input type="text" class="form-control" ng-model="model.event.title" id="title" placeholder="Title">
-                                </td>
-                                <td>
-                                    <input type="text" class="form-control" ng-model="model.event.stime" id="stime" placeholder="StartTime">
-                                </td>
-                                <td>
-                                    <input type="text" class="form-control" ng-model="model.event.etime" id="etime" placeholder="EndTime">
-                                </td>
-                                <td>
-                                    <input type="text" class="form-control" ng-model="model.event.location" id="loc" placeholder="Location">
-                                </td>
-                                <td>
-                                    <input type="text" class="form-control" ng-model="model.event.venue" id="venue" placeholder="Venue">
-                                </td>
-                                <td align="right" style="white-space:nowrap">
-                                    <button type="button" class="glyphicon glyphicon-thumbs-up btn btn-primary" ng-click="model.addEvent()"></button>
-                                    <button type="button" class="glyphicon glyphicon-ok btn btn-primary btn-success" ng-click="model.updateEvent()"></button>
-                                </td>
-                            </tr>
-                            <tr ng-repeat="event in model.eventList">
-                                <td>
-                                    {{event.title}}
-                                </td>
-                                <td>
-                                    {{event.stime}}
-                                </td>
-                                <td>
-                                    {{event.etime}}
-                                </td>
-                                <td>
-                                    {{event.location}}
-                                </td>
-                                <td>
-                                    {{event.venue}}
-                                </td>
-                                <td align="right" style="white-space:nowrap">
-                                    <button type="button" class="glyphicon glyphicon-remove btn btn-danger" ng-click="model.deleteEvent($index)"></button>
-                                    <button type="button" class="glyphicon glyphicon-pencil btn btn-warning" ng-click="model.selectEvent($index)"></button>
-                                </td>
-                            </tr>
-                        </table>
+                    <div class="panel panel-default" style="border-radius : 25px">
+                        <div id="panel-heading" class="panel-heading" style="border-top-left-radius : 25px ;border-top-right-radius : 25px"><center>Events Board</center></div>
+                        <div class="panel-body">
+                            <div class="masonry">
+                                <div class="item col-xs-12 col-md-3" ng-repeat="event in model.myEvents">
+                                    <div class="thumbnail" style="border: outset; border-color:lightgrey ; height: 400px; max-height: 500px; border-radius: 25px;">
+                                        <img ng-src="{{event.image}}"  width="245px" height="150px" style="border: inset ; border-color:blue; border-radius: 25px;">
+                                        <div class="caption">
+                                            <a href="#/event/{{event.eventId}}" style="text-align: center">
+                                                <p style="text-decoration: blink ; color:palevioletred ; font-size: smaller">{{event.title}}</p>
+                                            </a>
+                                            <hr>
+                                            <div style="text-align: center">
+                                                <p>{{event.city}}</p>
+                                                <i class="fa fa-calendar"> {{event.start_time | date:"MM/dd/yyyy"}} </i>
+                                                <p>{{event.venue_name}}</p>
+                                                <a ng-if = "currentuser.username" href="" class="btn" ng-click="model.removeEvent(event)">
+                                                    <i class="fa fa-times fa-2x" style="color: blue"></i> </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><!--/.item  -->
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     </div>
 </div>
