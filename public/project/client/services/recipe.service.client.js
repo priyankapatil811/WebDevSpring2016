@@ -7,9 +7,16 @@
         .module("infoPinStrap")
         .factory("RecipeService",RecipeService);
 
+<<<<<<< HEAD
     function RecipeService($http) {
         var apiId = "5b171984";
         var apiKey = "9f46fd1c44408240f0b10f3fbc39dca3";
+=======
+    function RecipeService($http)
+    {
+        var apiId = "";
+        var apiKey = "";
+>>>>>>> origin/master
         var url = "";
 
         var api =
