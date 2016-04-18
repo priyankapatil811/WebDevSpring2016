@@ -1,14 +1,21 @@
 /**
  * Created by Priyanka on 3/16/16.
  */
+
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+var bcrypt = require('bcrypt-nodejs');
+
 module.exports = function(app,userModel)
 {
+    var auth = authorized;
+
     app.get("/api/project/loggedin", loggedIn);
     app.post("/api/project/logout", logout);
-    app.get("/api/project/user", findUser);
+    app.get("/api/project/user", auth, findUser);
     app.post("/api/project/user", createUser);
-    app.put("/api/project/user/:userId", updateUser);
-    app.delete("/api/project/user/:userId", deleteUser);
+    app.put("/api/project/user/:userId", auth, updateUser);
+    app.delete("/api/project/user/:userId", auth, deleteUser);
 
     /**************** FUNCTIONALITY RELATED*****************/
     app.get("/api/project/user/:id",findUserById);
@@ -18,13 +25,25 @@ module.exports = function(app,userModel)
     app.put("/api/project/unFollowOtherUser/:friendId/user/:currentUserId",updateUserUnfollowInfo);
     /*******************************************************/
 
-    //logged in
-    function loggedIn(req, res) {
-        res.json(req.session.currentUser);
+    function authorized(req,res,next)
+    {
+        if(!req.isAuthenticated())
+        {
+            res.send(401);
+        }
+        else
+        {
+            next();
+        }
     }
 
-    function logout(req, res) {
-        req.session.destroy();
+    function loggedIn(req, res) {
+        res.send(req.isAuthenticated() ? req.user : '0');
+    }
+
+    function logout(req,res)
+    {
+        req.logOut();
         res.send(200);
     }
 
@@ -32,11 +51,13 @@ module.exports = function(app,userModel)
     {
         var uName = req.query.username;
         var uPwd = req.query.password;
+        console.log(uName);
+        console.log(uPwd);
 
         if(typeof uName == 'undefined' && typeof uPwd == 'undefined') {
             userModel.findAllUsers().then(
                 function (doc) {
-                    console.log("returning all users : "+doc);
+                    console.log("getting all the users : " +doc);
                     res.json(doc);
                 },
                 function (err) {
@@ -74,6 +95,7 @@ module.exports = function(app,userModel)
     function createUser(req,res)
     {
         var newUser = req.body;
+        newUser.password = bcrypt.hashSync(req.body.password);
 
         userModel.findUserByUsername(newUser.username).then(
             function(doc)
@@ -94,8 +116,17 @@ module.exports = function(app,userModel)
             .then(
                 function(user)
                 {
-                    req.session.currentUser = user;
-                    res.json(user);
+                    if(user)
+                    {
+                        req.login(user,function(err)
+                        {
+                            if(err) {
+                                res.status(500).send(err);
+                            } else {
+                                res.json(user);
+                            }
+                        });
+                    }
                 },
                 function(err)
                 {
@@ -109,6 +140,8 @@ module.exports = function(app,userModel)
     {
         var userId = req.params.userId;
         var upUser = req.body;
+
+        upUser.password = bcrypt.hashSync(req.body.password);
 
         userModel.updateUser(userId,upUser).then(
             function(doc)
@@ -139,6 +172,39 @@ module.exports = function(app,userModel)
             }
         );
     }
+
+    //function serializeUser(user,done)
+    //{
+    //    done(null,user);
+    //}
+
+    function deserializeUser(user,done)
+    {
+        console.log("inside deserialize");
+        if(user.type == 'project') {
+            console.log("in check for project");
+            userModel.findUserById(user._id).then(
+                function (user) {
+                    done(null, user);
+                },
+                function (err) {
+                    done(err, null);
+                }
+            );
+        }
+    }
+
+    //function authorized(req,res,next)
+    //{
+    //    if(!req.isAuthenticated())
+    //    {
+    //        res.send(401);
+    //    }
+    //    else
+    //    {
+    //        next();
+    //    }
+    //}
 
     function findUserById(req,res)
     {
@@ -223,6 +289,23 @@ module.exports = function(app,userModel)
             }
         );
     }
+
+    //
+    //app.post("/api/project/user",function(req,res){
+    //    var newUser = req.body;
+    //    userModel.createUser(newUser).then(
+    //        function(doc)
+    //        {
+    //            req.session.currentUser = doc;
+    //            res.json(doc);
+    //        },
+    //        function(err)
+    //        {
+    //            res.status(400).send(err);
+    //        }
+    //    );
+    //});
+
 
     function updateUserFollowInfo(req,res)
     {

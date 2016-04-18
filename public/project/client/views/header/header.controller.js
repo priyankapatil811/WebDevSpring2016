@@ -31,8 +31,10 @@
         init();
 
         function init() {
+            console.log("inside header init");
             UserService.findAllUsers().then(
                 function (response) {
+                    console.log(response.data);
                     vm.users = response.data;
 
                     for (var i = 0; i < vm.users.length; i++) {

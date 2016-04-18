@@ -6,16 +6,19 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var bcrypt = require('bcrypt-nodejs');
 
-module.exports = function(app,userModel)
+module.exports = function(app,userModel,userProjModel)
 {
     var auth = authorized;
     var isAdmin = isAdmin;
 
     passport.use('assignment',new LocalStrategy(assignLocalStrategy));
+    passport.use('project',new LocalStrategy(projectLocalStrategy));
     passport.serializeUser(serializeUser);
     passport.deserializeUser(deserializeUser);
 
+    /******************ASSIGNMENT******************/
     app.post('/api/assignment/login', passport.authenticate('assignment'), login);
+    app.post('/api/project/login', passport.authenticate('project'), login);
     app.get("/api/assignment/loggedin", loggedIn);
     app.post("/api/assignment/logout", logout);
     app.get("/api/assignment/user", auth, findUser);
@@ -53,6 +56,36 @@ module.exports = function(app,userModel)
     {
         //userModel.findUserByCredentials(username,password).then(
         userModel.findUserByUsername(username).then(
+            function(user)
+            {
+                if(!user)
+                {
+                    return done(null,false);
+                }
+                else
+                {
+                    console.log(user);
+                    if(user && bcrypt.compareSync(password,user.password)) {
+                        console.log("in compare sync");
+                        return done(null, user);
+                    }
+                }
+            },
+            function(err)
+            {
+                if(err)
+                {
+                    return done(err);
+                }
+            }
+        );
+    }
+
+
+    function projectLocalStrategy(username,password,done)
+    {
+        //userModel.findUserByCredentials(username,password).then(
+        userProjModel.findUserByUsername(username).then(
             function(user)
             {
                 if(!user)
@@ -218,7 +251,19 @@ module.exports = function(app,userModel)
     function deserializeUser(user,done)
     {
         if(user.type == 'assignment') {
+            console.log("in check for assignment");
             userModel.findUserById(user._id).then(
+                function (user) {
+                    done(null, user);
+                },
+                function (err) {
+                    done(err, null);
+                }
+            );
+        }
+        else if(user.type == 'project') {
+            console.log("in check for project");
+            userProjModel.getUserById(user._id).then(
                 function (user) {
                     done(null, user);
                 },

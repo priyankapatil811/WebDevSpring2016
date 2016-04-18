@@ -64,7 +64,8 @@
 
         function findUserByCredentials(username,password)
         {
-            return $http.get("/api/project/user?username="+username+"&password="+password)
+            //return $http.get("/api/project/user?username="+username+"&password="+password)
+            return $http.post("/api/project/login", {username : username, password: password});
         }
 
         function findAllUsers()
@@ -74,7 +75,6 @@
 
         function createUser(user)
         {
-            console.log(user);
             return $http.post("/api/project/user",user)
         }
 
