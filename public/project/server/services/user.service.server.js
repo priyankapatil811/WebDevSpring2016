@@ -16,6 +16,7 @@ module.exports = function(app,userModel)
     app.post("/api/project/user", createUser);
     app.put("/api/project/user/:userId", auth, updateUser);
     app.delete("/api/project/user/:userId", auth, deleteUser);
+    app.put("/api/project/user",auth,updatePassword)
 
     /**************** FUNCTIONALITY RELATED*****************/
     app.get("/api/project/user/:id",findUserById);
@@ -45,6 +46,25 @@ module.exports = function(app,userModel)
     {
         req.logOut();
         res.send(200);
+    }
+
+    function updatePassword(req,res)
+    {
+        var user = req.body;
+
+        user.password = bcrypt.hashSync(req.body.password);
+
+        userModel.updatePassword(user).then
+        (
+            function(doc)
+            {
+                res.json(doc);
+            },
+            function(err)
+            {
+                res.status(700).send(err);
+            }
+        );
     }
 
     function findUser(req,res)

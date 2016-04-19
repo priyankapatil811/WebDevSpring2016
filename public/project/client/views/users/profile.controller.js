@@ -16,6 +16,7 @@
 
         vm.update = update;
         vm.setInterests = setInterests;
+        vm.updatePwd = updatePwd;
         vm.user = {};
 
         UserService.getCurrentUser().then(
@@ -66,7 +67,17 @@
             {
                 vm.news = 'Space Exploration';
             }
+        }
 
+        function updatePwd(user)
+        {
+            UserService.updatePwd(user).then(
+              function(response)
+              {
+                  console.log(response.data);
+                  //vm.user = response.data;
+              }
+            );
         }
     }
 

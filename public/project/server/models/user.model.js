@@ -22,6 +22,7 @@ module.exports = function(db,mongoose)
         createUser : createUser,
         deleteUserById : deleteUserById,
         updateUser : updateUser,
+        updatePassword : updatePassword,
         userLikesRecipe : userLikesRecipe,
         userLikesEvent : userLikesEvent,
         userLikesArticle : userLikesArticle,
@@ -37,6 +38,32 @@ module.exports = function(db,mongoose)
     };
 
     return api;
+
+    function updatePassword(user)
+    {
+        var deferred = q.defer();
+
+        UserModel.findById(user._id,function(err,dbUser)
+        {
+            if(err)
+            {
+                deferred.reject(err);
+            }
+            else
+            {
+                dbUser.password = user.password;
+                dbUser.save(function (err,doc) {
+                    if(err)
+                        deferred.reject(err);
+                    else {
+                        console.log(doc);
+                        deferred.resolve(doc);
+                    }
+                });
+            }
+        });
+        return deferred.promise;
+    }
 
     function getUserById(userId)
     {
@@ -189,7 +216,6 @@ module.exports = function(db,mongoose)
             {
                 loggedInUser.firstName = user.firstName;
                 loggedInUser.lastName = user.lastName;
-                loggedInUser.password = user.password;
                 loggedInUser.username = user.username;
                 loggedInUser.email = user.email;
                 loggedInUser.interests = user.interests;
@@ -204,6 +230,7 @@ module.exports = function(db,mongoose)
                 });
             }
         });
+
 
         return deferred.promise;
     }

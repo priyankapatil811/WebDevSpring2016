@@ -23,6 +23,7 @@
             findAllUsers : findAllUsers,
             createUser : createUser,
             updateUser : updateUser,
+            updatePwd : updatePwd,
             deleteUserById : deleteUserById,
             setCurrentUser : setCurrentUser,
             setSelectedCategory : setSelectedCategory,
@@ -31,6 +32,12 @@
         };
 
         return api;
+
+        function updatePwd(user)
+        {
+            console.log(user);
+            return $http.put("/api/project/user",user);
+        }
 
         function followUser(friendId,currentUserId)
         {
