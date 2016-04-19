@@ -15,7 +15,7 @@
     {
         $rootScope.eventDetails = [];
 
-        var apiKey = "";
+        var apiKey = "rcnxbzfT3dLNF3ff";
         var pageNo = 1;
         var sortOrder = "Popularity";
         var url = "";

@@ -1,13 +1,15 @@
 <div class="container" id="main">
+    <div align="right" style="margin-top: 10px">
+        <a ng-if = "currentuser.username && model.newsData.color=='purple'" href="" class="btn" ng-click="model.addNews(model.newsData)">
+            <i class="fa fa-bookmark fa-2x" style="color: purple"></i>
+        </a>
+        <a ng-if = "currentuser.username && model.newsData.color=='green'" href="" class="btn" disabled>
+            <i class="fa fa-bookmark fa-2x" style="color: green"></i>
+        </a>
+    </div>
  <div class="row">
      <h2>{{model.newsData.title}}</h2>
      <p>&nbsp;&nbsp;&nbsp;&nbsp;Published Date : {{model.newsData.publishedDate | date}}
-     <a ng-if = "currentuser.username && model.newsData.color=='purple'" href="" class="btn" ng-click="model.addNews(model.newsData)">
-         <i class="fa fa-bookmark fa-2x" style="color: purple"></i>
-     </a>
-     <a ng-if = "currentuser.username && model.newsData.color=='green'" href="" class="btn" disabled>
-         <i class="fa fa-bookmark fa-2x" style="color: green"></i>
-     </a>
      </p>
      <div class="col-xs-12">
          <div style="float:left ; padding-right: 20px">

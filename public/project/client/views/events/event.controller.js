@@ -22,7 +22,7 @@
 
         function searchLocation(e)
          {
-             if(!vm.e)
+             if(!e)
              {
                  vm.showSpinner = false;
                  alert("Please enter city name to search for events");
@@ -55,48 +55,51 @@
             EventService.findAllEvents(where,radius).then(function (response) {
                 console.log("in search!");
                 vm.eventData = response.data;
+                console.log(vm.eventData);
 
-                for (var j = 0; j < vm.eventData.events.event.length; j++) {
-                    var eventObj = new Object();
-                    eventObj.id = vm.eventData.events.event[j].id;
-                    eventObj.eventId = vm.eventData.events.event[j].id;
-                    eventObj.url = vm.eventData.events.event[j].url;
-                    eventObj.title = vm.eventData.events.event[j].title;
-                    eventObj.desc = vm.eventData.events.event[j].description;
-                    if (eventObj.desc == null)
-                        eventObj.desc = "There is no description for this event.";
-                    eventObj.startTime = vm.eventData.events.event[j].start_time;
-                    eventObj.stop_time = vm.eventData.events.event[j].stop_time;
-                    eventObj.venueName = vm.eventData.events.event[j].venue_name;
-                    eventObj.venueAddress = vm.eventData.events.event[j].venue_address;
-                    eventObj.city = vm.eventData.events.event[j].city_name;
-                    eventObj.latitude = vm.eventData.events.event[j].latitude;
-                    eventObj.longitude = vm.eventData.events.event[j].longitude;
-                    eventObj.image = "images/NoImage.png";
-                    eventObj.price = "Free";
-                    if (vm.eventData.events.event[j].links != null)
-                        eventObj.ticketLink = vm.eventData.events.event[j].links.link[0].url;
-                    else
-                        eventObj.ticketLink = "";
-                    if (vm.eventData.events.event[j].price != null) {
-                        eventObj.price = "$ " + vm.eventData.events.event[j].price;
-                    }
-                    if (vm.eventData.events.event[j].image != null) {
-                        eventObj.image = vm.eventData.events.event[j].image.medium.url;
-                    }
-                    eventObj.categories = vm.eventData.events.event[j].categories.category;
-                    eventObj.color = 'blue';
-
-                    vm.eventDetails.push(eventObj);
-                    $rootScope.eventDetails.push(eventObj);
-                    vm.showSpinner = false;
-                }
-
-                if(vm.eventDetails.length<1) {
+                if(vm.eventData.total_items<=0)
+                {
                     vm.showError = true;
                     vm.showSpinner = false;
                 }
+                else {
+                    for (var j = 0; j < vm.eventData.events.event.length; j++) {
+                        var eventObj = new Object();
+                        eventObj.id = vm.eventData.events.event[j].id;
+                        eventObj.eventId = vm.eventData.events.event[j].id;
+                        eventObj.url = vm.eventData.events.event[j].url;
+                        eventObj.title = vm.eventData.events.event[j].title;
+                        eventObj.desc = vm.eventData.events.event[j].description;
+                        if (eventObj.desc == null)
+                            eventObj.desc = "There is no description for this event.";
+                        eventObj.startTime = vm.eventData.events.event[j].start_time;
+                        eventObj.stop_time = vm.eventData.events.event[j].stop_time;
+                        eventObj.venueName = vm.eventData.events.event[j].venue_name;
+                        eventObj.venueAddress = vm.eventData.events.event[j].venue_address;
+                        eventObj.city = vm.eventData.events.event[j].city_name;
+                        eventObj.latitude = vm.eventData.events.event[j].latitude;
+                        eventObj.longitude = vm.eventData.events.event[j].longitude;
+                        eventObj.image = "images/NoImage.png";
+                        eventObj.price = "Free";
+                        if (vm.eventData.events.event[j].links != null)
+                            eventObj.ticketLink = vm.eventData.events.event[j].links.link[0].url;
+                        else
+                            eventObj.ticketLink = "";
+                        if (vm.eventData.events.event[j].price != null) {
+                            eventObj.price = "$ " + vm.eventData.events.event[j].price;
+                        }
+                        if (vm.eventData.events.event[j].image != null) {
+                            eventObj.image = vm.eventData.events.event[j].image.medium.url;
+                        }
+                        eventObj.categories = vm.eventData.events.event[j].categories.category;
+                        eventObj.color = 'blue';
+
+                        vm.eventDetails.push(eventObj);
+                        $rootScope.eventDetails.push(eventObj);
+                        vm.showSpinner = false;
+                    }
                     console.log(vm.eventDetails);
+                }
             });
         }
 

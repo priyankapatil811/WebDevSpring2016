@@ -1,4 +1,13 @@
 <div class="container" id="main">
+    <div align="right" style="margin-top: 10px">
+        <a ng-if = "currentuser.username && model.eventData.color == 'blue'" href="" class="btn" ng-click="model.addEvent(model.eventData)">
+            <i class="fa fa-thumbs-up fa-2x" style="color: blue"></i>
+        </a>
+
+        <a ng-if = "currentuser.username && model.eventData.color == 'green'" href="" class="btn" disabled>
+            <i class="fa fa-thumbs-up fa-2x" style="color: green"></i>
+        </a>
+    </div>
     <div class="row">
         <a id="a" href="{{model.eventData.url}}" target="_blank">
             <h2>
@@ -15,13 +24,6 @@
             <p>Event Starts At : {{model.eventData.startTime | date}}</p>
             <p>Event Venue Name : {{model.eventData.venueName}}</p>
             <p>Event Venue Address : {{model.eventData.venueAddress}}</p>
-            <a ng-if = "currentuser.username && model.eventData.color == 'blue'" href="" class="btn" ng-click="model.addEvent(model.eventData)">
-                <i class="fa fa-thumbs-up fa-2x" style="color: blue"></i>
-            </a>
-
-            <a ng-if = "currentuser.username && model.eventData.color == 'green'" href="" class="btn" disabled>
-                <i class="fa fa-thumbs-up fa-2x" style="color: green"></i>
-            </a>
         </div>
         <div class="col-md-6">
             <ng-map center="{{model.eventData.latitude}},{{model.eventData.longitude}}" zoom="15">

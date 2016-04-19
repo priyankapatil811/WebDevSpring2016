@@ -64,10 +64,10 @@
             <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <p id="signFont" style="color: crimson" class="modal-title">Enter New Password</p>
-                        <br>
-                        <label for="placeholder">PlaceHolder</label>
-                        <input type="password" class="form-control input-sm" id="placeholder" placeholder="" ng-model="model.user.password">
+                        <div class="col-sm-8 input-list style-4 clearfix">
+                            <p id="signFont" style="color: crimson" class="modal-title">Enter New Password</p>
+                            <input type="password" class="form-control input-sm" id="placeholder" placeholder="" ng-model="model.user.password">
+                        </div>
                     </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" ng-click="model.updatePwd(model.user)" data-dismiss="modal">Update</button>

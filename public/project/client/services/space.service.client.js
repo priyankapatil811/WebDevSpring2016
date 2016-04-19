@@ -12,51 +12,26 @@
         $rootScope.newsDetails = [];
 
         var url = "";
-<<<<<<< HEAD
-=======
-        var searchKeyWord = "";
-        var token = "";
->>>>>>> origin/master
-
+        var token = "def15a08-b97c-44b7-a238-8bb4bc04360b";
+        
         var api =
         {
             findAllNews : findAllNews,
-            findNewsById : findNewsById,
             createNews : createNews,
             deleteNewsById : deleteNewsById,
             addComment: addComment,
             deleteComment: deleteComment,
             findNews: findNews,
             findNewsForUser : findNewsForUser
-
-            /********** POC ************/
-            //findNews : findNews,
-            //updateNewsById : updateNewsById,
-            //getNewsByIndex : getNewsByIndex
-            /***************************/
         };
 
         return api;
 
         function findAllNews(keyword) {
-          /*  url = "https://ajax.googleapis.com/ajax/services/search/news?v=1.0&q="+keyword+
-                "&dataType=json&callback=JSON_CALLBACK"; */
 
             url = "https://webhose.io/search?token="+token+"&format=json&q=(site_type%3Anews)"+keyword;
 
             return $http.get(url);
-        }
-
-        function findNewsById(newsId,callback) {
-
-            for(var i=0;i<$rootScope.newsDetails.length;i++){
-
-                if(newsId == $rootScope.newsDetails[i].id)
-                {
-                    callback($rootScope.newsDetails[i]);
-                }
-            }
-            callback({});
         }
 
         function createNews(userId,news)
@@ -86,32 +61,5 @@
         {
             return $http.get("/api/project/user/"+userId+"/news");
         }
-
-        /********** POC ************/
-
-        //function findNewsForUser(userId)
-        //{
-        //    return $http.get("/api/project/user/"+userId+"/news");
-        //}
-        //
-        //function getNewsByIndex(index,userId)
-        //{
-        //    return $http.get("/api/project/news/"+index+"/user/"+userId);
-        //}
-        //
-        //
-        //
-        //function findNews(userId)
-        //{
-        //    return $http.get("/api/project/user/"+userId+"/news");
-        //}
-        //
-        //
-        //
-        //function updateNewsById(newsId, newNews)
-        //{
-        //    return $http.put("/api/project/news/"+newsId,newNews);
-        //}
-        /***************************/
     }
 })();

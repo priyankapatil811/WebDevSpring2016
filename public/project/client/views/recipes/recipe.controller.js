@@ -49,24 +49,26 @@
                         vm.showSpinner = false;
                         vm.showError = true;
                     }
+                    else {
 
-                    if(vm.recipeData.matches.length < 100)
+                        if (vm.recipeData.matches.length < 100)
+                            vm.showSpinner = false;
+
+                        for (var i = 0; i < vm.recipeData.matches.length; i++) {
+                            var recipeObj = new Object();
+                            recipeObj.id = vm.recipeData.matches[i].id;
+                            recipeObj.title = vm.recipeData.matches[i].recipeName;
+                            if (vm.recipeData.matches[i].smallImageUrls)
+                                recipeObj.image = vm.recipeData.matches[i].smallImageUrls[0];
+                            else
+                                recipeObj.image = "images/NoImage.png";
+                            recipeObj.source = vm.recipeData.matches[i].sourceDisplayName;
+                            recipeObj.color = 'crimson';
+                            vm.recipeDetails.push(recipeObj);
+                        }
+                        console.log(vm.recipeDetails);
                         vm.showSpinner = false;
-
-                    for (var i = 0; i < vm.recipeData.matches.length; i++) {
-                        var recipeObj = new Object();
-                        recipeObj.id = vm.recipeData.matches[i].id;
-                        recipeObj.title = vm.recipeData.matches[i].recipeName;
-                        if(vm.recipeData.matches[i].smallImageUrls)
-                            recipeObj.image = vm.recipeData.matches[i].smallImageUrls[0];
-                        else
-                            recipeObj.image = "images/NoImage.png";
-                        recipeObj.source = vm.recipeData.matches[i].sourceDisplayName;
-                        recipeObj.color = 'crimson';
-                        vm.recipeDetails.push(recipeObj);
                     }
-                    console.log(vm.recipeDetails);
-                    vm.showSpinner = false;
                 });
             }
         }

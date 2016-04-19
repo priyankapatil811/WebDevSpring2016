@@ -1,17 +1,19 @@
 <div class="container" id="main">
+    <div align="right" style="margin-top: 10px">
+        <a ng-if = "currentuser.username && !model.dbRecipe && model.color != 'green'" href="" class="btn" ng-click="model.addRecipe(model.recipeData)">
+            <i class="fa fa-heart fa-2x" style="color: crimson"></i>
+        </a>
+
+        <a ng-if = "currentuser.username && model.dbRecipe || model.color == 'green'" href="" class="btn" disabled>
+            <i class="fa fa-heart fa-2x" style="color: green"></i>
+        </a>
+    </div>
     <div class="row">
         <div>
          <a id="a" href="{{model.recipeData.attribution.url}}" target="_blank"><h2 align="center">{{model.recipeData.name}}</h2></a>
         </div>
         <div class="col-md-6">
             <p style="font-size: x-large;" ng-if="model.recipeData.totalTime">Total Preparation Time : {{model.recipeData.totalTime}}
-            <a ng-if = "currentuser.username && !model.dbRecipe && model.color != 'green'" href="" class="btn" ng-click="model.addRecipe(model.recipeData)">
-                <i class="fa fa-heart fa-2x" style="color: crimson"></i>
-            </a>
-
-            <a ng-if = "currentuser.username && model.dbRecipe || model.color == 'green'" href="" class="btn" disabled>
-                <i class="fa fa-heart fa-2x" style="color: green"></i>
-            </a>
             </p>
             <br ng-if="!model.recipeData.totalTime">
             <br ng-if="!model.recipeData.totalTime">

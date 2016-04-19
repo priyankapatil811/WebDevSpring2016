@@ -39,27 +39,28 @@
                         vm.showSpinner = false;
                         vm.showError = true;
                     }
+                    else {
+                        for (var i = 0; i < vm.newsData.posts.length; i++) {
+                            var newsObj = new Object();
+                            newsObj.id = vm.newsData.posts[i].uuid;
+                            newsObj.newsId = vm.newsData.posts[i].uuid;
+                            newsObj.title = vm.newsData.posts[i].thread.title;
+                            newsObj.url = vm.newsData.posts[i].url;
+                            newsObj.publishedDate = vm.newsData.posts[i].thread.published;
+                            if (vm.newsData.posts[i].thread.main_image == "")
+                                newsObj.image = "images/NoImage.png";
+                            newsObj.image = vm.newsData.posts[i].thread.main_image;
+                            newsObj.content = vm.newsData.posts[i].text;
+                            newsObj.relatedStories = [];
+                            newsObj.color = 'purple';
 
-                    for (var i = 0; i < vm.newsData.posts.length; i++) {
-                        var newsObj = new Object();
-                        newsObj.id = vm.newsData.posts[i].uuid;
-                        newsObj.newsId = vm.newsData.posts[i].uuid;
-                        newsObj.title = vm.newsData.posts[i].thread.title;
-                        newsObj.url = vm.newsData.posts[i].url;
-                        newsObj.publishedDate = vm.newsData.posts[i].thread.published;
-                        if (vm.newsData.posts[i].thread.main_image == "")
-                            newsObj.image = "images/NoImage.png";
-                        newsObj.image = vm.newsData.posts[i].thread.main_image;
-                        newsObj.content = vm.newsData.posts[i].text;
-                        newsObj.relatedStories = [];
-                        newsObj.color = 'purple';
-
-                        vm.newsDetails.push(newsObj);
-                        $rootScope.newsDetails.push(newsObj);
+                            vm.newsDetails.push(newsObj);
+                            $rootScope.newsDetails.push(newsObj);
+                        }
+                        console.log(vm.newsDetails);
+                        console.log($rootScope.newsDetails);
+                        vm.showSpinner = false;
                     }
-                    console.log(vm.newsDetails);
-                    console.log($rootScope.newsDetails);
-                    vm.showSpinner = false;
                 });
             }
         }
