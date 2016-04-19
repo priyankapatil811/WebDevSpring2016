@@ -16,6 +16,9 @@
         <br>
         <i ng-show="model.showSpinner" id="cover" class="fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom" style="color: white"></i>
         <div class="masonry">
+            <div ng-if="model.newsDetails.length<1" ng-show="model.showError">
+                <h4 style="color: white;">No News Articles Found!!</h4>
+            </div>
             <div class="col-xs-12 col-sm-3 col-md-3 item" ng-repeat="news in model.newsDetails">
                 <div class="thumbnail" style="border: groove ; border-color:white ; height: 500px; max-height: 500px ;border-radius: 25px;">
                     <img ng-src="{{news.image}}" style="width: 100% ; height: 162px; border: groove ; border-color: purple ;border-radius: 25px;" alt="No Image Found">

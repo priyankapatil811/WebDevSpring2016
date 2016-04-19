@@ -11,6 +11,7 @@
 
         var vm = this;
         vm.showSpinner = false;
+        vm.showError = false;
         vm.eventDetails = [];
         vm.eventList = [];
         vm.where = "";
@@ -30,6 +31,11 @@
                  vm.showSpinner = true;
                  EventService.findEventByLocation(e.city).then(function (mapData) {
                      console.log(mapData.data);
+                     if(mapData.data.results.length<1)
+                     {
+                         vm.showError = true;
+                         vm.showSpinner = false;
+                     }
                      if (mapData.data.results.length != 0) {
                          vm.where = mapData.data.results[0].geometry.location.lat + "," + mapData.data.results[0].geometry.location.lng;
                          vm.eventDetails = [];
@@ -85,7 +91,12 @@
                     $rootScope.eventDetails.push(eventObj);
                     vm.showSpinner = false;
                 }
-                console.log(vm.eventDetails);
+
+                if(vm.eventDetails.length<1) {
+                    vm.showError = true;
+                    vm.showSpinner = false;
+                }
+                    console.log(vm.eventDetails);
             });
         }
 

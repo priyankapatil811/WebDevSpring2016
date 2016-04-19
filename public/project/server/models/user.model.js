@@ -181,15 +181,6 @@ module.exports = function(db,mongoose)
     {
         var deferred = q.defer();
 
-        var categories = [];
-
-        if(user.category.event)
-            categories.push(user.category.event);
-        if(user.category.recipe)
-            categories.push(user.category.recipe);
-        if(user.category.news)
-            categories.push(user.category.news);
-
         UserModel.findById(userId,function(err,loggedInUser)
         {
             if(err)
@@ -201,7 +192,7 @@ module.exports = function(db,mongoose)
                 loggedInUser.password = user.password;
                 loggedInUser.username = user.username;
                 loggedInUser.email = user.email;
-                loggedInUser.interests = categories;
+                loggedInUser.interests = user.interests;
                 loggedInUser.type = 'project';
                 loggedInUser.save(function (err,doc) {
                     if(err)

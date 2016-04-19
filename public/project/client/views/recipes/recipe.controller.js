@@ -11,6 +11,7 @@
 
         var vm = this;
         vm.showSpinner = false;
+        vm.showError = false;
         vm.recipeList = [];
         vm.recipeDetails = [];
         vm.searchRecipe = searchRecipe;
@@ -42,6 +43,12 @@
 
                     console.log(vm.recipeData);
                     console.log(vm.recipeData.matches.length);
+
+                    if(vm.recipeData.matches.length < 1)
+                    {
+                        vm.showSpinner = false;
+                        vm.showError = true;
+                    }
 
                     if(vm.recipeData.matches.length < 100)
                         vm.showSpinner = false;

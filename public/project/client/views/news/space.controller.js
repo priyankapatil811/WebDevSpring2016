@@ -11,10 +11,12 @@
 
         var vm = this;
         vm.showSpinner = false;
+        vm.showError = false;
         vm.newsDetails = [];
         vm.spaceDetails = [];
         vm.searchSpaceNews = searchSpaceNews;
         vm.addNews = addNews;
+
 
         function searchSpaceNews(s)
         {
@@ -31,6 +33,12 @@
                     console.log(s.spacenews);
                     vm.newsData = response.data;
                     console.log("News Data : " + vm.newsData);
+
+                    if(vm.newsData.posts.length < 1)
+                    {
+                        vm.showSpinner = false;
+                        vm.showError = true;
+                    }
 
                     for (var i = 0; i < vm.newsData.posts.length; i++) {
                         var newsObj = new Object();
