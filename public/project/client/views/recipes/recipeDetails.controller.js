@@ -94,7 +94,7 @@
 
             var newRecipe =
             {
-                recipeId : vm.recipeIdParam,
+                id : vm.recipeIdParam,
                 image : recipe.images[0].hostedLargeUrl,
                 title : recipe.name,
                 source : recipe.source.sourceDisplayName,

@@ -6,6 +6,7 @@ module.exports = function(app,userModel,recipeModel)
     app.post("/api/project/user/:userId/recipe", function(req,res) {
         var userId = req.params.userId;
         var newrecipe = req.body;
+        console.log(newrecipe);
 
         recipeModel.likesRecipe(userId,newrecipe).then(
             function(doc)

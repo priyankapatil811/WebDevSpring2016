@@ -107,8 +107,7 @@
             EventService.createEvent(vm.user._id,event).then(
                 function(response){
                     console.log(response.data);
-                    event.color = 'green';
-                    console.log(event.color);
+                    vm.eventData.color = 'green';
                 });
         }
     }

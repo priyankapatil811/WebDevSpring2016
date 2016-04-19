@@ -110,7 +110,7 @@
             SpaceService.createNews(vm.user._id, news).then(
                 function(response){
                     console.log(response.data);
-                    news.color = 'green';
+                    vm.newsData.color = 'green';
                 });
         }
 
