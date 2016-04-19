@@ -1,5 +1,6 @@
 <div class="container-fluid">
     <br>
+    <h6 style="color: white;">Events</h6>
     <div class="row">
         <div class="col-xs-12">
             <div class="input-group">
@@ -15,8 +16,8 @@
     <div class="row">
         <div class="masonry">
             <div class="item col-xs-12 col-md-3 col-sm-3" ng-repeat="event in model.eventDetails">
-                <div class="thumbnail" style="border-color:white ; height: 500px; max-height: 500px ; border-radius: 25px">
-                    <img src="{{event.image}}" style="width: 500px; height: 250px; border: inset ; border-color:blue ; border-radius: 25px">
+                <div class="thumbnail" style="border-color:white ; height: 700px; max-height: 700px ; border-radius: 25px">
+                    <img ng-src="{{event.image}}" style="width: 500px; height: 250px; border: inset ; border-color:blue ; border-radius: 25px">
                     <div class="caption">
                         <a href="#/event/{{event.id}}" style="text-align: center">
                             <p style="text-decoration: blink ; color:palevioletred ; font-size: smaller">{{event.title}}</p>

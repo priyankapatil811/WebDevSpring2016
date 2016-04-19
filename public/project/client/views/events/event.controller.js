@@ -21,19 +21,26 @@
 
         function searchLocation(e)
          {
-             vm.showSpinner = true;
-             EventService.findEventByLocation(e.city).then(function (mapData) {
-                 console.log(mapData.data);
-                 if (mapData.data.results.length != 0) {
-                     vm.where = mapData.data.results[0].geometry.location.lat + "," + mapData.data.results[0].geometry.location.lng;
-                     vm.eventDetails = [];
-                     search(vm.where,2);
-                 }
-                 else {
-                     vm.error = "Could not find entered location";
-                     vm.showErr = true;
-                 }
-             });
+             if(!vm.e)
+             {
+                 vm.showSpinner = false;
+                 alert("Please enter city name to search for events");
+             }
+             else {
+                 vm.showSpinner = true;
+                 EventService.findEventByLocation(e.city).then(function (mapData) {
+                     console.log(mapData.data);
+                     if (mapData.data.results.length != 0) {
+                         vm.where = mapData.data.results[0].geometry.location.lat + "," + mapData.data.results[0].geometry.location.lng;
+                         vm.eventDetails = [];
+                         search(vm.where, 2);
+                     }
+                     else {
+                         vm.error = "Could not find entered location";
+                         vm.showErr = true;
+                     }
+                 });
+             }
 
          }
 

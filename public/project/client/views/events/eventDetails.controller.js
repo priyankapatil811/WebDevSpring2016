@@ -19,6 +19,7 @@
         vm.deleteComment = deleteComment;
         vm.init = init;
         vm.getDetails = getDetails;
+        vm.addEvent = addEvent;
 
         init();
 
@@ -38,7 +39,6 @@
                 EventService.findEvent(vm.eventIdParam).then(
                     function (response) {
                         if (response.data) {
-                            console.log(response.data);
                             vm.eventData = response.data;
                         }
                     }
@@ -99,6 +99,17 @@
                     }
                 }
             );
+        }
+
+        function addEvent(event)
+        {
+            console.log(event.color);
+            EventService.createEvent(vm.user._id,event).then(
+                function(response){
+                    console.log(response.data);
+                    event.color = 'green';
+                    console.log(event.color);
+                });
         }
     }
 })();

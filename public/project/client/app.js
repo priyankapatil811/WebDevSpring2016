@@ -3,5 +3,5 @@
  */
 (function(){
     angular
-        .module("infoPinStrap", ['ngRoute','ui.bootstrap']);
+        .module("infoPinStrap", ['ngRoute','ui.bootstrap','ngMap']);
 })();

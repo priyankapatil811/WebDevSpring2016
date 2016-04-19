@@ -1,21 +1,46 @@
-<div class="container">
+<div class="container" id="main">
+    <div class="row">
+        <a id="a" href="{{model.eventData.url}}" target="_blank">
+            <h2>
+                {{model.eventData.title}}
+            </h2>
+        </a>
+        <div class="col-md-3">
+            <img src="{{model.eventData.image}}" width="252px"/>
+        </div>
+        <div class="col-md-3">
+            <p>City : {{model.eventData.city}}</p>
+            <p>Price Per Ticket : {{model.eventData.price}}</p>
+            <p><a id="a" href="{{model.eventData.ticketLink}}" target="_blank">Want to book tickets?</a></p>
+            <p>Event Starts At : {{model.eventData.startTime | date}}</p>
+            <p>Event Venue Name : {{model.eventData.venueName}}</p>
+            <p>Event Venue Address : {{model.eventData.venueAddress}}</p>
+            <a ng-if = "currentuser.username && model.eventData.color == 'blue'" href="" class="btn" ng-click="model.addEvent(model.eventData)">
+                <i class="fa fa-thumbs-up fa-2x" style="color: blue"></i>
+            </a>
+
+            <a ng-if = "currentuser.username && model.eventData.color == 'green'" href="" class="btn" disabled>
+                <i class="fa fa-thumbs-up fa-2x" style="color: green"></i>
+            </a>
+        </div>
+        <div class="col-md-6">
+            <ng-map center="{{model.eventData.latitude}},{{model.eventData.longitude}}" zoom="15">
+                <marker position = "{{model.eventData.latitude}},{{model.eventData.longitude}}"></marker>
+                <!--<marker position="current-location"></marker>-->
+                <control name="overviewMap" opened="true"></control>
+            </ng-map>
+        </div>
+    </div>
+    <br>
     <div class="row">
         <div class="col-md-6">
-            <br> <br> <br>
-            <a href="{{model.eventData.url}}" target="_blank">
-                <p style="font-size: x-large; color: white">
-                    {{model.eventData.title}}
-                </p>
-            </a>
-            <img src="{{model.eventData.image}}" width="252px"/>
-            <br> <br>
             <div class="panel panel-default" ng-if="currentuser.username">
                 <div class="panel-heading">
                     <div class="input-group">
                         <textarea class="form-control" placeholder="Start typing your comment" ng-model="model.comment"/>
-                        <span class="input-group-btn">
-                            <button type="button" class="btn btn-default" ng-click="model.addComment(model.comment,model.eventData)"> Add Comment </button>
-                        </span>
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="model.addComment(model.comment,model.eventData)"> Add Comment </button>
+                            </span>
                     </div><!-- /input-group -->
                 </div>
                 <div class="panel-body">
@@ -32,21 +57,6 @@
                     </ul>
                 </div>
             </div>
-        </div>
-        <div class="col-md-6">
-            <br> <br> <br>
-            <br>
-            <p id="signFont">City : {{model.eventData.city}}</p>
-            <br>
-            <p id="signFont">Price Per Ticket : {{model.eventData.price}}</p>
-            <p id="signFont"><a href="{{model.eventData.ticketLink}}">Want to book tickets?</a></p>
-            <br>
-            <p id="signFont">Event Starts At : {{model.eventData.startTime | date}}</p>
-
-            <br>
-            <p id="signFont">Event Venue Name : {{model.eventData.venueName}}</p>
-            <br>
-            <p id="signFont">Event Venue Address : {{model.eventData.venueAddress}}</p>
         </div>
     </div>
 </div>

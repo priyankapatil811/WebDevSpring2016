@@ -5,7 +5,11 @@ module.exports = function(mongoose) {
 
     // use mongoose to declare a event schema
     var event = mongoose.Schema({
+        color : String,
         eventId : String,
+        url : String,
+        latitude : String,
+        longitude : String,
         image: String,
         title: String,
         venueName : String,

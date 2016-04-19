@@ -20,6 +20,7 @@
         vm.deleteComment = deleteComment;
         vm.init = init;
         vm.getDetails = getDetails;
+        vm.addNews = addNews;
 
         init();
 
@@ -102,6 +103,15 @@
                     }
                 }
             );
+        }
+
+        function addNews(news)
+        {
+            SpaceService.createNews(vm.user._id, news).then(
+                function(response){
+                    console.log(response.data);
+                    news.color = 'green';
+                });
         }
 
     }

@@ -11,6 +11,8 @@
 
         var vm = this;
         vm.user = {};
+        vm.color = 'crimson';
+        vm.dbRecipe = null;
         vm.comments = [];
         vm.recipeIdParam = $routeParams.recipeId;
 
@@ -18,11 +20,13 @@
         vm.deleteComment = deleteComment;
         vm.init = init;
         vm.getDetails = getDetails;
+        vm.addRecipe = addRecipe;
 
         init();
 
         function getDetails()
         {
+            console.log("in get details");
             RecipeService.findRecipe(vm.recipeIdParam).then(
                 function (response)
                 {
@@ -30,6 +34,7 @@
                     {
                         console.log(response.data.comments);
                         vm.comments = response.data.comments;
+                        vm.dbRecipe = response.data;
                     }
                 }
             );
@@ -82,6 +87,32 @@
                }
             );
         }
+
+        function addRecipe(recipe) {
+
+            console.log("in add recipe : "+vm.recipeIdParam);
+
+            var newRecipe =
+            {
+                recipeId : vm.recipeIdParam,
+                image : recipe.images[0].hostedLargeUrl,
+                title : recipe.name,
+                source : recipe.source.sourceDisplayName,
+                users : [],
+                comments : []
+            };
+
+            console.log("newRecipe : "+newRecipe.recipeId);
+
+            RecipeService.createRecipe(vm.user._id, newRecipe).then(
+                function (response)
+                {
+                    console.log(response.data);
+                    vm.color = 'green';
+                    getDetails();
+                });
+        }
+
     }
 
 })();

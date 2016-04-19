@@ -1,24 +1,32 @@
-<div class="container">
+<div class="container" id="main">
     <div class="row">
-        <br> <br> <br>
-        <p style="font-size: x-large; color: white" align="center">{{model.recipeData.name}}</p>
+        <div>
+         <a id="a" href="{{model.recipeData.attribution.url}}" target="_blank"><h2 align="center">{{model.recipeData.name}}</h2></a>
+        </div>
         <div class="col-md-6">
-            <p style="font-size: x-large; color: white" ng-if="model.recipeData.totalTime">Total Preparation Time : {{model.recipeData.totalTime}}</p>
+            <p style="font-size: x-large;" ng-if="model.recipeData.totalTime">Total Preparation Time : {{model.recipeData.totalTime}}
+            <a ng-if = "currentuser.username && !model.dbRecipe && model.color != 'green'" href="" class="btn" ng-click="model.addRecipe(model.recipeData)">
+                <i class="fa fa-heart fa-2x" style="color: crimson"></i>
+            </a>
+
+            <a ng-if = "currentuser.username && model.dbRecipe || model.color == 'green'" href="" class="btn" disabled>
+                <i class="fa fa-heart fa-2x" style="color: green"></i>
+            </a>
+            </p>
             <br ng-if="!model.recipeData.totalTime">
             <br ng-if="!model.recipeData.totalTime">
             <img ng-src="{{model.recipeData.images[0].hostedLargeUrl}}" style="width: 100% ; height: 100%;"/>
         </div>
         <div class="col-md-6">
             <br><br>
-            <!--<div scrollend style="max-height: 430px; overflow: auto; overflow-y: scroll; padding-right: 0px;" id="recipeList">-->
             <div>
-            <p style="font-size: x-large; color: white;">INGREDIENTS  <span style="font-size: smaller"> (No. of Servings : {{model.recipeData.numberOfServings}})</span></p>
+            <p style="font-size: x-large;">INGREDIENTS  <span style="font-size: smaller"> (No. of Servings : {{model.recipeData.numberOfServings}})</span></p>
             <ul ng-repeat="ingredient in model.recipeData.ingredientLines track by $index">
-                <li style="color: white">{{ingredient}}</li>
+                <li>{{ingredient}}</li>
             </ul>
             </div>
         </div>
-        </div>
+    </div>
     <br>
     <div class="row">
         <div class="col-md-6">

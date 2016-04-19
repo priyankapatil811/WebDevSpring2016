@@ -51,7 +51,11 @@ module.exports = function(mongoose)
             {
                 newEvent = new EventModel(
                     {
+                        color : event.color,
                         eventId : event.id,
+                        latitude : event.latitude,
+                        longitude : event.longitude,
+                        url : event.url,
                         image: event.image,
                         title: event.title,
                         venueName : event.venueName,
@@ -168,7 +172,11 @@ module.exports = function(mongoose)
                 //create event as it does not exist
                 newEvent = new EventModel(
                     {
+                        color : event.color,
                         eventId : event.eventId,
+                        latitude : event.latitude,
+                        longitude : event.longitude,
+                        url : event.url,
                         image: event.image,
                         title: event.title,
                         venueName : event.venueName,

@@ -46,52 +46,23 @@ html * {
     font-size: 15px;
 }
 
-
-
-/*.navbar-custom*/
-/*{*/
-    /*background: url(../images/border.png) repeat-x#f5f5f5;*/
-    /*background-color: white;*/
-    /*color: black;*/
-/*}*/
-
-/*.navbar-default{ !* assigning the top bar to the entire navbar div element *!*/
-    /*text-align: center;*/
-    /*border-color: white;*/
-    /*color : black;*/
-    /*!*box-shadow: inset 0px 6px 0px crimson; !* initial gray color to the top bar*!*!*/
-/*}*/
-/*.navbar-default .navbar-nav > li > a:hover,*/
-/*.navbar-default .navbar-nav > li > a:focus {*/
-    /*color: black;*/
-    /*background-color: lightcoral;*/
-  /*!*  box-shadow: inset 0px 6px 0px #000; !* switch to a darker color on hover *!*/
-/*}*/
-
-
-/*.navbar-default .navbar-nav > .active > a,*/
-/*.navbar-default .navbar-nav > .active > a:hover,*/
-/*.navbar-default .navbar-nav > .active > a:focus {*/
-    /*color: white;*/
-    /*background-color: lightcoral;*/
-    /*!*box-shadow: inset 0px 6px 0px #AAA; !* switch to a lighter color for active element *!*!*/
-/*}*/
-
-/*.navbar-default .navbar-brand {*/
-    /*color: black;*/
-/*}*/
-/*.navbar-default .navbar-brand > .active > a,*/
-/*.navbar-default .navbar-brand > .active > a:hover,*/
-/*.navbar-default .navbar-brand > .active > a:focus {*/
-    /*color: white;*/
-    /*background-color: lightcoral;*/
-    /*!*box-shadow: inset 0px 6px 0px #AAA; !* switch to a lighter color for active element *!*!*/
-/*}*/
-
+#a {
+    text-decoration: none;
+}
 
 h1 { color: crimson;
     font-family: "Great Vibes", cursive;
     font-size: 65px;
+    line-height: 90px;
+    font-weight: normal;
+    /*margin-bottom: 0px;
+    margin-top: 40px;*/
+    text-align: center;
+    text-shadow: 0 1px 1px #fff; }
+
+h2 { color: crimson;
+    font-family: "Great Vibes", cursive;
+    font-size: 50px;
     line-height: 90px;
     font-weight: normal;
     /*margin-bottom: 0px;
@@ -117,6 +88,16 @@ h4 { color: black;
     font-weight: normal;
     /*margin-bottom: 0px;
     margin-top: 40px; */
+    text-align: center;
+    text-shadow: 0 1px 1px #fff; }
+
+h6 { color: white;
+    font-family: "Great Vibes", cursive;
+    font-size: 40px;
+    line-height: 50px;
+    font-weight: normal;
+    /*margin-bottom: 0px;
+    margin-top: 40px;*/
     text-align: center;
     text-shadow: 0 1px 1px #fff; }
 
@@ -413,3 +394,15 @@ h4 { color: black;
     height: 100%;
     width: 100%;
 }
+
+#main
+{
+    margin: 50px 0;
+    background-color: white;
+    color: black;
+    border-style: solid;
+    border-width: 5px;
+    border-color: black;
+}
+
+#event { height: 100px; width: 200px; overflow: hidden; }

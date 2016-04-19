@@ -39,6 +39,7 @@ module.exports = function(app,userModel,userProjModel)
     function login(req,res)
     {
         var user = req.user;
+        console.log(user);
         res.json(user);
     }
 

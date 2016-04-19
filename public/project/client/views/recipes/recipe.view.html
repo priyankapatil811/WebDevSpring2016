@@ -1,5 +1,6 @@
 <div class="container">
     <br>
+    <h6 style="color: white;">Cooking Recipes</h6>
     <div class="row">
         <div class="col-xs-12">
             <div class="input-group">
@@ -14,8 +15,8 @@
     <i ng-show="model.showSpinner" id="cover" class="fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom" style="color: white"></i>
     <div class="masonry">
         <div class="item col-xs-12 col-md-3 col-sm-3" ng-repeat="recipe in model.recipeDetails">
-            <div class="thumbnail" style="border-color:white ; height: 350px; max-height: 350px ;border-radius: 25px;">
-                <img src="{{recipe.image}}" style="width: 100%; border: groove; border-color: crimson ;border-radius: 25px;">
+            <div class="thumbnail" style="border-color:white ; height: 400px; max-height: 400px ;border-radius: 25px;">
+                <img ng-src="{{recipe.image}}" style="width: 500px; height: 150px; border: groove; border-color: crimson ;border-radius: 25px;">
                 <div class="caption">
                     <a href="#/recipe/{{recipe.id}}" style="text-align: center">
                         <p style="text-decoration: blink ; color:palevioletred ; font-size: smaller">{{recipe.title}}</p>
