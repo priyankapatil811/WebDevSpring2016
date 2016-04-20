@@ -3,7 +3,7 @@
  */
 module.exports = function(mongoose) {
 
-    // use mongoose to declare a recipe schema
+    // use mongoose to declare a news schema
     var news = mongoose.Schema({
         newsId : String,
         image: String,

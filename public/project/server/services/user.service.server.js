@@ -3,7 +3,6 @@
  */
 
 var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
 var bcrypt = require('bcrypt-nodejs');
 
 module.exports = function(app,userModel)
@@ -16,14 +15,14 @@ module.exports = function(app,userModel)
     app.post("/api/project/user", createUser);
     app.put("/api/project/user/:userId", auth, updateUser);
     app.delete("/api/project/user/:userId", auth, deleteUser);
-    app.put("/api/project/user",auth,updatePassword)
+    app.put("/api/project/user",auth,updatePassword);
 
     /**************** FUNCTIONALITY RELATED*****************/
-    app.get("/api/project/user/:id",findUserById);
-    app.get("/api/project/user/followers/:userId",findFollowersByUserId);
-    app.get("/api/project/user/following/:userId",findFollowingByUserId);
-    app.put("/api/project/followOtherUser/:friendId/user/:currentUserId",updateUserFollowInfo);
-    app.put("/api/project/unFollowOtherUser/:friendId/user/:currentUserId",updateUserUnfollowInfo);
+    app.get("/api/project/user/:id",auth,findUserById);
+    app.get("/api/project/user/followers/:userId",auth,findFollowersByUserId);
+    app.get("/api/project/user/following/:userId",auth,findFollowingByUserId);
+    app.put("/api/project/followOtherUser/:friendId/user/:currentUserId",auth,updateUserFollowInfo);
+    app.put("/api/project/unFollowOtherUser/:friendId/user/:currentUserId",auth,updateUserUnfollowInfo);
     /*******************************************************/
 
     function authorized(req,res,next)
@@ -193,39 +192,6 @@ module.exports = function(app,userModel)
         );
     }
 
-    //function serializeUser(user,done)
-    //{
-    //    done(null,user);
-    //}
-
-    function deserializeUser(user,done)
-    {
-        console.log("inside deserialize");
-        if(user.type == 'project') {
-            console.log("in check for project");
-            userModel.findUserById(user._id).then(
-                function (user) {
-                    done(null, user);
-                },
-                function (err) {
-                    done(err, null);
-                }
-            );
-        }
-    }
-
-    //function authorized(req,res,next)
-    //{
-    //    if(!req.isAuthenticated())
-    //    {
-    //        res.send(401);
-    //    }
-    //    else
-    //    {
-    //        next();
-    //    }
-    //}
-
     function findUserById(req,res)
     {
         var userId = req.params.id;
@@ -309,22 +275,6 @@ module.exports = function(app,userModel)
             }
         );
     }
-
-    //
-    //app.post("/api/project/user",function(req,res){
-    //    var newUser = req.body;
-    //    userModel.createUser(newUser).then(
-    //        function(doc)
-    //        {
-    //            req.session.currentUser = doc;
-    //            res.json(doc);
-    //        },
-    //        function(err)
-    //        {
-    //            res.status(400).send(err);
-    //        }
-    //    );
-    //});
 
 
     function updateUserFollowInfo(req,res)

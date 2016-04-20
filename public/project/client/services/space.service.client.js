@@ -13,7 +13,7 @@
 
         var url = "";
         var token = "def15a08-b97c-44b7-a238-8bb4bc04360b";
-        
+
         var api =
         {
             findAllNews : findAllNews,

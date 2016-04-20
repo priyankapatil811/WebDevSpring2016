@@ -53,19 +53,15 @@
 
         function setInterests(interests)
         {
-            console.log(interests);
-
-            if(interests.indexOf('Events') >-1)
-            {
-                vm.event = 'Events';
-            }
-            if(interests.indexOf('Cooking Recipes') >-1)
-            {
-                vm.recipe = 'Cooking Recipes';
-            }
-            if(interests.indexOf('Space Exploration') >-1)
-            {
-                vm.news = 'Space Exploration';
+            for(var i=0;i<interests.length;i++) {
+                if (interests[i] === 'Events')
+                    vm.event = 'Events';
+                else
+                if (interests[i] === 'Cooking Recipes')
+                    vm.recipe = 'Cooking Recipes';
+                else
+                if (interests[i] === 'Space Exploration')
+                    vm.news = 'Space Exploration';
             }
         }
 

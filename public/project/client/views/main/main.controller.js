@@ -7,8 +7,9 @@
         .module("infoPinStrap")
         .controller("MainController",MainController);
 
-    function MainController($scope,$location)
+    function MainController($location)
     {
-        $scope.$location = $location;
+        var vm = this;
+        vm.$location = $location;
     }
 })();

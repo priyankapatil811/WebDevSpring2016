@@ -40,6 +40,7 @@
                     function (response) {
                         if (response.data) {
                             vm.eventData = response.data;
+                            vm.eventData.color = 'green';
                         }
                     }
                 );

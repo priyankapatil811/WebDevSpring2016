@@ -40,30 +40,30 @@
                     getLoggedIn: getLoggedIn
                 }
             })
-            .when("/maevent", {
-                templateUrl: "views/events/myAccountEvent.view.html",
-                controller: "EventController",
-                controllerAs : "model",
-                resolve: {
-                    getLoggedIn: getLoggedIn
-                }
-            })
-            .when("/marecipe", {
-                templateUrl: "views/recipes/myAccountRecipe.view.html",
-                controller: "RecipeController",
-                controllerAs : "model",
-                resolve: {
-                    getLoggedIn: getLoggedIn
-                }
-            })
-            .when("/maspace", {
-                templateUrl: "views/news/myAccountSpace.view.html",
-                controller: "SpaceController",
-                controllerAs : "model",
-                resolve: {
-                    getLoggedIn: getLoggedIn
-                }
-            })
+            //.when("/maevent", {
+            //    templateUrl: "views/events/myAccountEvent.view.html",
+            //    controller: "EventController",
+            //    controllerAs : "model",
+            //    resolve: {
+            //        getLoggedIn: getLoggedIn
+            //    }
+            //})
+            //.when("/marecipe", {
+            //    templateUrl: "views/recipes/myAccountRecipe.view.html",
+            //    controller: "RecipeController",
+            //    controllerAs : "model",
+            //    resolve: {
+            //        getLoggedIn: getLoggedIn
+            //    }
+            //})
+            //.when("/maspace", {
+            //    templateUrl: "views/news/myAccountSpace.view.html",
+            //    controller: "SpaceController",
+            //    controllerAs : "model",
+            //    resolve: {
+            //        getLoggedIn: getLoggedIn
+            //    }
+            //})
             .when("/recipe/:recipeId",
             {
                 templateUrl: "views/recipes/recipeDetails.view.html",

@@ -11,7 +11,7 @@ body {
     width: 100%;
     color:#7a7a7a;
     line-height:24px;
-    background-image: url("../images/pinterest.jpg");
+    background-image: url("../images/background1.png");
     background-color: white;
     background-repeat: no-repeat;
     background-position: center center;
@@ -51,69 +51,49 @@ html * {
 }
 
 h1 { color: crimson;
-    font-family: "Great Vibes", cursive;
     font-size: 65px;
     line-height: 90px;
     font-weight: normal;
-    /*margin-bottom: 0px;
-    margin-top: 40px;*/
     text-align: center;
     text-shadow: 0 1px 1px #fff; }
 
 h2 { color: crimson;
-    font-family: "Great Vibes", cursive;
     font-size: 50px;
     line-height: 90px;
     font-weight: normal;
-    /*margin-bottom: 0px;
-    margin-top: 40px;*/
     text-align: center;
     text-shadow: 0 1px 1px #fff; }
 
 h3 { color: crimson;
-    font-family: "Great Vibes", cursive;
     font-size: 65px;
     line-height: 90px;
     font-weight: normal;
-    /*margin-bottom: 0px;
-    margin-top: 40px;*/
     text-align: center;
     text-shadow: 0 1px 1px #fff; }
 
 
 h4 { color: black;
-    font-family: "Great Vibes", cursive;
     font-size: 20px;
     line-height: 90px;
     font-weight: normal;
-    /*margin-bottom: 0px;
-    margin-top: 40px; */
     text-align: center;
     text-shadow: 0 1px 1px #fff; }
 
 h6 { color: white;
-    font-family: "Great Vibes", cursive;
     font-size: 40px;
     line-height: 50px;
     font-weight: normal;
-    /*margin-bottom: 0px;
-    margin-top: 40px;*/
     text-align: center;
     text-shadow: 0 1px 1px #fff; }
 
 #signFont { color: black;
-    font-family: "Great Vibes", cursive;
     font-size: 20px;
     line-height: 30px;
     font-weight: normal;
     color: white;
-    /*margin-bottom: 0px;
-    margin-top: 40px;
-    text-align: center;*/
     text-shadow: 0 1px 1px #fff; }
 
 #myFont{
-    font-family: "Great Vibes", cursive;
     color: white;
 }
 
@@ -364,7 +344,7 @@ h6 { color: white;
     right: 0;
 }
 .card.hovercard .card-info .card-title {
-    font-family: "Great Vibes", cursive;
+    /*font-family: "Great Vibes", cursive;*/
     font-weight: bold;
     padding:0 5px;
     font-size: 20px;
@@ -398,11 +378,11 @@ h6 { color: white;
 #main
 {
     margin: 50px 0;
-    background-color: white;
+    background-image: url("../images/background3.jpg");
     color: black;
     border-style: solid;
     border-width: 5px;
-    border-color: black;
+    border-color: grey;
 }
 
 #event { height: 100px; width: 200px; overflow: hidden; }

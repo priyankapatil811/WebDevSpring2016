@@ -59,6 +59,7 @@
                         {
                             console.log(response.data);
                             vm.newsData = response.data
+                            vm.newsData.color = 'green';
                         }
                     }
                 );

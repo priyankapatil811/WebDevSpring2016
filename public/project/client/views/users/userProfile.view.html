@@ -1,21 +1,20 @@
-<div class="col-xs-12">
-    <div class="card hovercard">
+<div class="col-xs-12" style="margin-top: 40px">
+    <div class="card hovercard" style="background-color: white">
         <div class="card-background">
-            <!--<img class="card-bkimg" alt="" src="images/background.jpg">-->
         </div>
         <div class="useravatar">
             <img alt="" ng-src="images/avatar.jpeg">
         </div>
         <br><br><br><br>
-        <div class="card-info"> <span class="card-title">{{model.userProfile.username}}</span>
+        <div class="card-info"> <span class="card-title" style="color: black">{{model.userProfile.username}}</span></div>
+        <div style="margin-bottom: 10px">
+            <a ng-show = "!model.followed" href="" class="btn" ng-click="model.followUser()">
+                <i class="fa fa-user-plus fa-2x" style="color: green;"></i>
+            </a>
+            <a ng-show = "model.followed" href="" class="btn" ng-click="model.unfollowUser()">
+                <i class="fa fa-user-times fa-2x" style="color: green"></i>
+            </a>
         </div>
-        <a ng-show = "!model.followed" href="" class="btn" ng-click="model.followUser()">
-            <i class="fa fa-user-plus fa-2x" style="color: green;"></i>
-        </a>
-
-        <a ng-show = "model.followed" href="" class="btn" ng-click="model.unfollowUser()">
-            <i class="fa fa-user-times fa-2x" style="color: green"></i>
-        </a>
     </div>
     <div class="btn-pref btn-group btn-group-justified btn-group-lg" role="group" aria-label="...">
         <div class="btn-group" role="group">
@@ -43,39 +42,38 @@
     <div class="well">
         <div class="tab-content">
             <div class="tab-pane fade in active" id="tab1">
-                <div ng-repeat="interest in model.userProfile.interests">
+                <div ng-repeat="interest in model.userProfile.interests" style="color: black">
                     {{interest}}
                 </div>
             </div>
-            <div class="tab-pane fade in" id="tab2">
+            <div class="tab-pane fade in" id="tab2" style="color: black">
                 <div ng-if="model.followers.length == 0">
-                    <div align="center"> None Yet </div>
+                    <div align="center" style="color: black"> None Yet </div>
                 </div>
                 <ul ng-repeat="follower in model.followers">
                     <div ng-if="follower.username == currentuser.username">
                         <img class="memberImage img-circle" ng-src="images/avatar.jpeg">
-                        <a href="#/myAccount" >{{follower.username}}</a>
+                        <a href="#/myAccount" style="text-decoration: none; color: black">{{follower.username}}</a>
                     </div>
                     <div ng-if="follower.username != currentuser.username">
                         <img class="memberImage img-circle" ng-src="images/avatar.jpeg">
-                        <a href="#/user/{{follower.username}}" >{{follower.username}}</a>
+                        <a href="#/user/{{follower.username}}" style="text-decoration: none; color: black">{{follower.username}}</a>
                     </div>
                 </ul>
             </div>
-            <div class="tab-pane fade in" id="tab3">
+            <div class="tab-pane fade in" id="tab3" style="color: black">
                 <div ng-if="model.following.length == 0">
-                    <div align="center"> None Yet </div>
-                    <br>
+                    <div align="center" style="color: black"> None Yet </div>
                 </div>
                 <ul ng-repeat="following in model.following">
-                    <div>
+                        <!--<img class="memberImage img-circle" ng-src="images/avatar.jpeg">-->
+                    <div ng-if="following.username == currentuser.username">
                         <img class="memberImage img-circle" ng-src="images/avatar.jpeg">
-                        <div ng-if="following.username == currentuser.username">
-                            <a href="#/myAccount" >{{following.username}}</a>
-                        </div>
-                        <div ng-if="following.username != currentuser.username">
-                            <a href="#/user/{{following.username}}" >{{following.username}}</a>
-                        </div>
+                        <a href="#/myAccount" style="text-decoration: none; color: black">{{following.username}}</a>
+                    </div>
+                    <div ng-if="following.username != currentuser.username">
+                        <img class="memberImage img-circle" ng-src="images/avatar.jpeg">
+                        <a href="#/user/{{following.username}}" style="text-decoration: none; color: black">{{following.username}}</a>
                     </div>
                 </ul>
             </div>

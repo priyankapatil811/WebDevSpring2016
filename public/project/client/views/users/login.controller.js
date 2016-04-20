@@ -7,7 +7,7 @@
         .module("infoPinStrap")
         .controller("LoginController",LoginController);
 
-    function LoginController(UserService, $location, $rootScope)
+    function LoginController(UserService, $location)
     {
         console.log("in login controller");
 

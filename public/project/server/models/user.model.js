@@ -1,7 +1,6 @@
 /**
  * Created by Priyanka on 3/16/16.
  */
-var curUsers = require("./user.mock.json");
 
 //load q promise library
 var q = require("q");

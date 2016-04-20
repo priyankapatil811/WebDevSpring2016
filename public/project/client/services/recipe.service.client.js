@@ -67,30 +67,5 @@
         {
             return $http.get("/api/project/recipe/"+recipeId);
         }
-
-        /********** POC ************/
-
-
-
-/*
-        function getRecipeByIndex(index,userId)
-        {
-            return $http.get("/api/project/recipe/"+index+"/user/"+userId);
-        }
-
-
-        function findRecipes(userId)
-        {
-            return $http.get("/api/project/user/"+userId+"/recipe");
-        }
-
-
-        function updateRecipeById(recipeId, newRecipe)
-        {
-            return $http.put("/api/project/recipe/"+recipeId,newRecipe);
-        }
-        */
-        /***************************/
-
     }
 })();

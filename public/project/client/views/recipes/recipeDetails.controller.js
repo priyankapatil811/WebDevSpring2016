@@ -40,12 +40,12 @@
             );
         }
 
-        function init() {
-             RecipeService.findRecipeById(vm.recipeIdParam).then(function (response) {
+        function init()
+        {
+             RecipeService.findRecipeById(vm.recipeIdParam).then(function (response)
+             {
                 console.log("in recipe Id search");
-
                 vm.recipeData = response.data;
-
                 console.log(vm.recipeData);
             });
 

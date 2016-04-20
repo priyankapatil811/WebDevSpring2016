@@ -1,8 +1,6 @@
 /**
  * Created by Priyanka on 3/24/16.
  */
-var events = require("./event.mock.json");
-var uuid = require('node-uuid');
 
 var q = require("q");
 
