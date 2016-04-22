@@ -7,10 +7,10 @@ module.exports = function(mongoose)
     // use mongoose to declare a form schema
     var form = mongoose.Schema({
         userId: String,
-        title: String,
+        title: {type : String, default : 'New Form'},
         fields: [fieldSchema],
-        created: Date, //Default : Current Date
-        updated: Date  //Default : Current Date
+        created: {type : Date,default : Date.now}, //Default : Current Date
+        updated: {type : Date,default : Date.now}  //Default : Current Date
         // store form documents in this collection
     }, {collection: 'assignment.form'});
 

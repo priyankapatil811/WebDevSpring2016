@@ -1,7 +1,6 @@
 /**
  * Created by Priyanka on 3/16/16.
  */
-
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var bcrypt = require('bcrypt-nodejs');
@@ -16,7 +15,8 @@ module.exports = function(app,userModel,userProjModel)
     passport.serializeUser(serializeUser);
     passport.deserializeUser(deserializeUser);
 
-    /******************ASSIGNMENT******************/
+    /****************************************ASSIGNMENT************************************/
+
     app.post('/api/assignment/login', passport.authenticate('assignment'), login);
     app.post('/api/project/login', passport.authenticate('project'), login);
     app.get("/api/assignment/loggedin", loggedIn);
@@ -26,7 +26,7 @@ module.exports = function(app,userModel,userProjModel)
     app.put("/api/assignment/user/:userId", auth,updateUser);
     app.delete("/api/assignment/user/:userId", auth,deleteUser);
 
-    /******************ADMIN******************/
+    /****************************************ADMIN****************************************/
 
     app.post("/api/assignment/admin/user",auth,isAdmin,createUser);
     app.get("/api/assignment/admin/user",auth,isAdmin,findAllUsers);
@@ -34,7 +34,7 @@ module.exports = function(app,userModel,userProjModel)
     app.delete("/api/assignment/admin/user/:userId",auth,isAdmin,deleteUser);
     app.put("/api/assignment/admin/user/:userId",auth,isAdmin,updateUser);
 
-    /*****************************************/
+    /*************************************************************************************/
 
     function login(req,res)
     {
@@ -234,7 +234,7 @@ module.exports = function(app,userModel,userProjModel)
 
         upUser.password = bcrypt.hashSync(req.body.password);
 
-        userModel.updateUser(userId,upUser).then(
+        userModel.updateUser(userId,upUser,req).then(
                 function(doc)
                 {
                     res.json(doc);

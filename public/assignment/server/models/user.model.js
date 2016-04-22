@@ -1,8 +1,6 @@
 /**
  * Created by Priyanka on 3/16/16.
  */
-var curUsers = require("./user.mock.json");
-
 //load q promise library
 var q = require("q");
 
@@ -108,7 +106,6 @@ module.exports = function(db,mongoose)
 
     function findAllUsers()
     {
-     //   return curUsers;
         var deferred = q.defer();
 
         UserModel.find({},function(err,doc)
@@ -163,8 +160,11 @@ module.exports = function(db,mongoose)
         return deferred.promise;
     }
 
-    function updateUser(userId,user)
+    function updateUser(userId,user,req)
     {
+        console.log("old password : "+req.user.password);
+        console.log("new password : "+user.password);
+
         var deferred = q.defer();
 
         UserModel.findById(userId,function(err,loggedInUser)
@@ -175,7 +175,10 @@ module.exports = function(db,mongoose)
            {
                loggedInUser.firstName = user.firstName;
                loggedInUser.lastName = user.lastName;
-               loggedInUser.password = user.password;
+               if(user.password != req.user.password)
+               {
+                   loggedInUser.password = user.password;
+               }
                loggedInUser.username = user.username;
                loggedInUser.emails = user.emails;
                loggedInUser.phones = user.phones;
