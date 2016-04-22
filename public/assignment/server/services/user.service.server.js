@@ -22,7 +22,7 @@ module.exports = function(app,userModel,userProjModel)
     app.get("/api/assignment/loggedin", loggedIn);
     app.post("/api/assignment/logout", logout);
     app.get("/api/assignment/user", auth, findUser);
-    app.post("/api/assignment/user", createUser);
+    app.post("/api/assignment/user", register);
     app.put("/api/assignment/user/:userId", auth,updateUser);
     app.delete("/api/assignment/user/:userId", auth,deleteUser);
 
@@ -165,7 +165,7 @@ module.exports = function(app,userModel,userProjModel)
         }
     }
 
-    function createUser(req,res)
+    function register(req,res)
     {
         var newUser = req.body;
         newUser.roles = ["student"];
@@ -208,6 +208,26 @@ module.exports = function(app,userModel,userProjModel)
                 }
             );
     }
+
+
+    function createUser(req,res)
+    {
+        var newUser = req.body;
+        newUser.roles = ["student"];
+        newUser.password = bcrypt.hashSync(req.body.password);
+
+        userModel.createUser(newUser).then(
+                function(user)
+                {
+                    res.json(user);
+                },
+                function(err)
+                {
+                    res.status(600).send(err);
+                }
+            );
+    }
+
 
     function updateUser(req,res)
     {

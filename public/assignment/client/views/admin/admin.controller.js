@@ -42,7 +42,7 @@
 
         function addUser(user)
         {
-            UserService.createUser(user).then(
+            UserService.createUserByAdmin(user).then(
                   function(response)
                   {
                       if(response.data)
