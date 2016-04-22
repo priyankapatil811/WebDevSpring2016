@@ -232,9 +232,12 @@ module.exports = function(app,userModel,userProjModel)
         var userId = req.params.userId;
         var upUser = req.body;
 
-        upUser.password = bcrypt.hashSync(req.body.password);
+        if(typeof req.body.password != 'undefined')
+        {
+            upUser.password = bcrypt.hashSync(req.body.password);
+        }
 
-        userModel.updateUser(userId,upUser,req).then(
+        userModel.updateUser(userId,upUser).then(
                 function(doc)
                 {
                     res.json(doc);

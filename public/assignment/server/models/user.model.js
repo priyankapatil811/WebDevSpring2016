@@ -160,12 +160,11 @@ module.exports = function(db,mongoose)
         return deferred.promise;
     }
 
-    function updateUser(userId,user,req)
+    function updateUser(userId,user)
     {
-        console.log("old password : "+req.user.password);
-        console.log("new password : "+user.password);
-
         var deferred = q.defer();
+
+        console.log(user.password);
 
         UserModel.findById(userId,function(err,loggedInUser)
         {
@@ -175,10 +174,8 @@ module.exports = function(db,mongoose)
            {
                loggedInUser.firstName = user.firstName;
                loggedInUser.lastName = user.lastName;
-               if(user.password != req.user.password)
-               {
-                   loggedInUser.password = user.password;
-               }
+               if(typeof user.password != 'undefined')
+                    loggedInUser.password = user.password;
                loggedInUser.username = user.username;
                loggedInUser.emails = user.emails;
                loggedInUser.phones = user.phones;
