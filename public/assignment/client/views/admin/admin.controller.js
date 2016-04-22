@@ -22,7 +22,6 @@
         vm.updateUser = updateUser;
         vm.selectUser = selectUser;
 
-        console.log(vm.sortReverse);
         init();
 
         function init()
@@ -56,25 +55,23 @@
         function deleteUser(user)
         {
             UserService.deleteUserByIdByAdmin(user._id).then(
-                function(response)
-                {
-                    if(response.data)
-                    {
+                function (response) {
+                    if (response.data) {
                         init();
                     }
                 }
             );
         }
 
-        function selectUser(index)
+        function selectUser(user)
         {
             vm.user = {
-                _id : vm.users[index]._id,
-                username : vm.users[index].username,
-                password : vm.users[index].password,
-                firstName : vm.users[index].firstName,
-                lastName : vm.users[index].lastName,
-                roles : vm.users[index].roles
+                _id : user._id,
+                username : user.username,
+                password : user.password,
+                firstName : user.firstName,
+                lastName : user.lastName,
+                roles : user.roles
             };
         }
 

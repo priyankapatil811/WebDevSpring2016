@@ -55,7 +55,6 @@ module.exports = function(app,userModel,userProjModel)
 
     function assignLocalStrategy(username,password,done)
     {
-        //userModel.findUserByCredentials(username,password).then(
         userModel.findUserByUsername(username).then(
             function(user)
             {
@@ -85,7 +84,6 @@ module.exports = function(app,userModel,userProjModel)
 
     function projectLocalStrategy(username,password,done)
     {
-        //userModel.findUserByCredentials(username,password).then(
         userProjModel.findUserByUsername(username).then(
             function(user)
             {
@@ -213,10 +211,10 @@ module.exports = function(app,userModel,userProjModel)
     function createUser(req,res)
     {
         var newUser = req.body;
-        newUser.roles = ["student"];
+
         newUser.password = bcrypt.hashSync(req.body.password);
 
-        userModel.createUser(newUser).then(
+        userModel.createNewUser(newUser).then(
                 function(user)
                 {
                     res.json(user);

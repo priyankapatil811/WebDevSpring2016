@@ -20,11 +20,34 @@ module.exports = function(db,mongoose)
         findUserById : findUserById,
         findAllUsers : findAllUsers,
         createUser : createUser,
+        createNewUser : createNewUser,
         deleteUserById : deleteUserById,
         updateUser : updateUser
     };
 
     return api;
+
+
+    function createNewUser(newUser)
+    {
+        var deferred = q.defer();
+        newUser.type = 'assignment';
+
+        UserModel.create(newUser,function(err,doc)
+        {
+            if(err)
+            {
+                deferred.reject(err);
+            }
+            else
+            {
+                deferred.resolve(doc);
+            }
+        });
+
+        return deferred.promise;
+    }
+
 
     function findUserById(userId)
     {
