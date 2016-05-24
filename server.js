@@ -27,7 +27,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(multer());
 app.use(session(
 {
-    secret: "supernatural",
+    secret: process.env.PASSPORT_SECRET,
     resave : true,
     saveUninitialized : true
 }));
