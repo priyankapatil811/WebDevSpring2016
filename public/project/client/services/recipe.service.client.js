@@ -9,8 +9,8 @@
 
 
     function RecipeService($http) {
-        var apiId = "5b171984";
-        var apiKey = "9f46fd1c44408240f0b10f3fbc39dca3";
+        var apiId = "";
+        var apiKey = "";
         var url = "";
 
         var api =
